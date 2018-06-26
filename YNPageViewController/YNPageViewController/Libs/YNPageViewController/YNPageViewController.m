@@ -8,10 +8,10 @@
 
 #import "YNPageViewController.h"
 #import "UIView+YNPageExtend.h"
+#import "YNPageScrollView.h"
 #import "YNPageScrollMenuView.h"
 #import "UIScrollView+YNPageExtend.h"
 #import "YNPageHeaderScrollView.h"
-#import "YNPageScrollView.h"
 
 @interface YNPageViewController () <UIScrollViewDelegate, YNPageScrollMenuViewDelegate>
 /// 标题数组
