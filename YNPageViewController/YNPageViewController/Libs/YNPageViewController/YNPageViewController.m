@@ -10,7 +10,6 @@
 #import "UIView+YNPageExtend.h"
 #import "YNPageScrollMenuView.h"
 #import "UIScrollView+YNPageExtend.h"
-#import "MJRefresh.h"
 #import "YNPageHeaderScrollView.h"
 #import "YNPageScrollView.h"
 
