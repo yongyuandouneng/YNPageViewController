@@ -12,8 +12,6 @@ typedef void(^YNPageScrollViewDidScrollView)(UIScrollView *scrollView);
 
 @interface UIScrollView (YNPageExtend)
 
-@property (nonatomic, assign) BOOL yn_pageIsDragging;
-
 @property (nonatomic, assign) BOOL yn_observerDidScrollView;
 
 @property (nonatomic, copy) YNPageScrollViewDidScrollView yn_pageScrollViewDidScrollView;
