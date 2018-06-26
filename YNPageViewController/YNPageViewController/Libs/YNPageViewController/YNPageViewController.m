@@ -53,7 +53,6 @@
     [self setupSubViews];
     [self setSelectedPageIndex:self.pageIndex];
     
-    
     self.pageScrollView.backgroundColor = [UIColor clearColor];
 }
 
