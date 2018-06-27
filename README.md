@@ -40,17 +40,13 @@
 
 ## 使用方法
 ```
-
 1.新建控制器继承YNPageViewController 实现 YNPageViewControllerDataSource, YNPageViewControllerDelegate, delegate可选实现
 2.创建YNPageConfigration类进行配置信息
 3.创建实例方法
 + (instancetype)pageViewControllerWithControllers:(NSArray *)controllers
-titles:(NSArray *)titles
-config:(YNPageConfigration *)config;
+                                           titles:(NSArray *)titles
+                                           config:(YNPageConfigration *)config;
 4.具体使用方法可以查看Demos教程。
-
-
-
 ```
 
 ## CocoaPods更新日志
