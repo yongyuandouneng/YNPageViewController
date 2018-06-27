@@ -91,11 +91,6 @@
  */
 - (void)addSelfToParentViewController:(UIViewController *)parentViewControler {
     [self addChildViewControllerWithChildVC:self parentVC:parentViewControler];
-    
-    if (self.config.showNavigation) {
-        self.view.yn_y = kYNPAGE_NAVHEIGHT;
-    }
-    
 }
 
 /**
