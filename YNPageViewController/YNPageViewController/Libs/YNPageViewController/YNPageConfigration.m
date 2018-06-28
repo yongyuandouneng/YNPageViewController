@@ -56,6 +56,7 @@
         _itemMargin = 15;
         _itemLeftAndRightMargin = 15;
         _itemFont = [UIFont systemFontOfSize:14];
+        _selectedItemFont = _itemFont;
         _itemMaxScale = 0;
         _lineBottomMargin = 0;
         _lineLeftAndRightAddWidth = 0;

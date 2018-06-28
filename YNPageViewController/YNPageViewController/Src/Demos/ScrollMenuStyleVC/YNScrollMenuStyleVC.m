@@ -66,10 +66,20 @@
     
     YNPageScrollMenuView *style_4 = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, style_3.yn_bottom + 20, kSCREEN_WIDTH, 44) titles:@[@"QQ游戏", @"QQ邮箱", @"数码测色计"] configration:style_config_4 delegate:nil currentIndex:0];
     
+    /// style 5
+    YNPageConfigration *style_config_5 = [YNPageConfigration defaultConfig];
+    style_config_5.selectedItemColor = [UIColor redColor];
+    style_config_5.selectedItemFont = [UIFont systemFontOfSize:15];
+    
+    YNPageScrollMenuView *style_5 = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, style_4.yn_bottom + 20, kSCREEN_WIDTH, 44) titles:@[@"JAVA", @"Object-C", @"JS"] configration:style_config_5 delegate:nil currentIndex:0];
+    
+    
+    
     [_scrollView addSubview:style_1];
     [_scrollView addSubview:style_2];
     [_scrollView addSubview:style_3];
     [_scrollView addSubview:style_4];
+    [_scrollView addSubview:style_5];
     
     [self.view addSubview:_scrollView];
     

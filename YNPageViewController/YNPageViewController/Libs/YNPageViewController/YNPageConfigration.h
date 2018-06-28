@@ -115,6 +115,8 @@ typedef NS_ENUM(NSInteger, YNPageHeaderViewScaleMode) {
 @property (nonatomic, assign) CGFloat itemLeftAndRightMargin;
 /** 选项字体 14 */
 @property (nonatomic, strong) UIFont *itemFont;
+/** 选中字体 */
+@property (nonatomic, strong) UIFont *selectedItemFont;
 /** 缩放系数 */
 @property (nonatomic, assign) CGFloat itemMaxScale;
 /** 临时Top高度 */

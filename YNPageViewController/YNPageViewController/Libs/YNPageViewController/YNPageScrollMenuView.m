@@ -92,7 +92,7 @@
         
         CGFloat width = [title boundingRectWithSize:CGSizeMake(MAXFLOAT, 0)
                                             options:NSStringDrawingUsesLineFragmentOrigin
-                                         attributes:@{NSFontAttributeName : itemLabel.font} context:nil].size.width;
+                                         attributes:@{NSFontAttributeName : self.configration.selectedItemFont} context:nil].size.width;
         
         [self.itemsWidthArraM addObject:@(width)];
         [self.itemsArrayM addObject:itemLabel];
@@ -223,7 +223,7 @@
     
     /// 颜色
     currentLabel.textColor = self.configration.selectedItemColor;
-    
+    currentLabel.font = self.configration.selectedItemFont;
     /// 线条
     if (self.configration.showScrollLine) {
         self.lineView.yn_x = currentLabel.yn_x - self.configration.lineLeftAndRightAddWidth;
@@ -267,8 +267,10 @@
         /// 颜色
         [self.itemsArrayM enumerateObjectsUsingBlock:^(UILabel  * obj, NSUInteger idx, BOOL * _Nonnull stop) {
             obj.textColor = self.configration.normalItemColor;
+            obj.font = self.configration.itemFont;
             if (idx == self.itemsArrayM.count - 1) {
                 currentLabel.textColor = self.configration.selectedItemColor;
+                currentLabel.font = self.configration.selectedItemFont;
             }
         }];
         
@@ -355,14 +357,28 @@
         lastLabel.textColor = [UIColor colorWithRed:self.configration.deltaNorR green:self.configration.deltaNorG blue:self.configration.deltaNorB alpha:1];
         
         currentLabel.textColor = [UIColor colorWithRed:self.configration.deltaSelR green:self.configration.deltaSelG blue:self.configration.deltaSelB alpha:1];
-    }else{
+    } else{
         if (progress > 0.5) {
             lastLabel.textColor = self.configration.normalItemColor;
             currentLabel.textColor = self.configration.selectedItemColor;
-        }else if (progress < 0.5 && progress > 0){
+            currentLabel.font = self.configration.selectedItemFont;
+            
+        } else if (progress < 0.5 && progress > 0){
             lastLabel.textColor = self.configration.selectedItemColor;
+            lastLabel.font = self.configration.selectedItemFont;
+            
             currentLabel.textColor = self.configration.normalItemColor;
+            currentLabel.font = self.configration.itemFont;
+            
         }
+    }
+    
+    if (progress > 0.5) {
+        lastLabel.font = self.configration.itemFont;
+        currentLabel.font = self.configration.selectedItemFont;
+    } else if (progress < 0.5 && progress > 0){
+        lastLabel.font = self.configration.selectedItemFont;
+        currentLabel.font = self.configration.itemFont;
     }
     
     CGFloat xD = currentLabel.yn_x - lastLabel.yn_x;

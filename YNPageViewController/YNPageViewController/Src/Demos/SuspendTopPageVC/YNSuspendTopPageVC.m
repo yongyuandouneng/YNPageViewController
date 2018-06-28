@@ -71,15 +71,20 @@
     configration.showBottomLine = YES;
     
     YNSuspendTopPageVC *vc = [YNSuspendTopPageVC pageViewControllerWithControllers:[self getArrayVCs]
-                                                                                  titles:[self getArrayTitles]
-                                                                                  config:configration];
+                                                                            titles:[self getArrayTitles]
+                                                                            config:configration];
     vc.dataSource = vc;
     vc.delegate = vc;
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, kSCREEN_HEIGHT)];
     headerView.layer.contents = (id)[UIImage imageNamed:@"mine_header_bg"].CGImage;
+    /// 轮播图
+    SDCycleScrollView *autoScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 200) imageURLStringsGroup:vc.imagesURLs];
+    autoScrollView.delegate = vc;
     
-    vc.headerView = headerView;
+    vc.headerView = autoScrollView;
+    
+//    vc.headerView = headerView;
     /// 指定默认选择index 页面
     /// vc.pageIndex = 0;
     
