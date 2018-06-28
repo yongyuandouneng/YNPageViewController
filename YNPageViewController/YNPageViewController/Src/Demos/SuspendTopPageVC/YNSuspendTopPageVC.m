@@ -82,9 +82,9 @@
     SDCycleScrollView *autoScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 200) imageURLStringsGroup:vc.imagesURLs];
     autoScrollView.delegate = vc;
     
-    vc.headerView = autoScrollView;
+//    vc.headerView = autoScrollView;
     
-//    vc.headerView = headerView;
+    vc.headerView = headerView;
     /// 指定默认选择index 页面
     /// vc.pageIndex = 0;
     

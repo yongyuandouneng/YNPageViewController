@@ -40,6 +40,8 @@
 @property (nonatomic, assign) CGFloat scrollMenuViewOriginY;
 /// headerView的原始高度 用来处理头部伸缩效果
 @property (nonatomic, assign) CGFloat headerViewOriginHeight;
+/// 是否是悬浮状态
+@property (nonatomic, assign) BOOL supendStatus;
 
 @end
 
@@ -51,7 +53,12 @@
     [super viewDidLoad];
     [self initData];
     [self setupSubViews];
-    [self setSelectedPageIndex:self.pageIndex];
+    
+    if (self.pageIndex == 0) {
+        [self initViewControllerWithIndex:self.pageIndex];
+    } else {
+        [self setSelectedPageIndex:self.pageIndex];
+    }
     
     self.pageScrollView.backgroundColor = [UIColor clearColor];
 }
@@ -123,18 +130,6 @@
 - (void)initViewControllerWithIndex:(NSInteger)index {
     
     self.currentViewController = self.controllersM[index];
-    
-    BOOL needAdjust = NO;
-    CGFloat scrollMenuViewDeltaY = 0;
-    if (self.cacheDictM.count > 0 && ([self isSuspensionTopStyle] || [self isSuspensionBottomStyle])) {
-        /// 判断是否需要调整OffsetY
-        CGFloat offsetY = self.currentScrollView.contentOffset.y;
-        CGFloat scrollMenuViewY = [self.scrollMenuView convertRect:self.scrollMenuView.frame toView:self.view].origin.y;
-        scrollMenuViewDeltaY = _scrollMenuViewOriginY - scrollMenuViewY;
-        if (offsetY > -self.scrollMenuView.yn_height) {
-            needAdjust = YES;
-        }
-    }
 
     self.pageIndex = index;
     NSString *title = [self titleWithIndex:index];
@@ -142,12 +137,7 @@
     
     UIViewController *cacheViewController = [self.cacheDictM objectForKey:title];
     [self addViewControllerToParent:cacheViewController ?: self.controllersM[index] index:index];
-    
-    /// 需要调整当前的offsetY
-    if (needAdjust && self.currentScrollView.contentOffset.y < -self.scrollMenuView.yn_height) {
-        scrollMenuViewDeltaY = -_insetTop +  scrollMenuViewDeltaY;
-        [self.currentScrollView setContentOffset:CGPointMake(0, scrollMenuViewDeltaY) animated:NO];
-    }
+
 }
 /// 添加到父类控制器中
 - (void)addViewControllerToParent:(UIViewController *)viewController index:(NSInteger)index {
@@ -179,10 +169,23 @@
             
         } else {
             CGFloat scrollMenuViewY = [self.scrollMenuView.superview convertRect:self.scrollMenuView.frame toView:self.view].origin.y;
-            CGFloat scrollMenuViewDeltaY = _scrollMenuViewOriginY - scrollMenuViewY;
-            if (scrollMenuViewDeltaY < _scrollMenuViewOriginY) {
-                scrollMenuViewDeltaY = -_insetTop +  scrollMenuViewDeltaY;
-                [scrollView setContentOffset:CGPointMake(0, scrollMenuViewDeltaY) animated:NO];
+            
+            if (self.supendStatus) {
+                /// 首次已经悬浮 设置初始化 偏移量
+                if (![self.cacheDictM objectForKey:title]) {
+                    [scrollView setContentOffset:CGPointMake(0, -self.config.menuHeight) animated:NO];
+                } else {
+                    /// 再次悬浮 已经加载过 设置偏移量
+                    if (scrollView.contentOffset.y < -self.config.menuHeight) {
+                        [scrollView setContentOffset:CGPointMake(0, -self.config.menuHeight) animated:NO];
+                    }
+                }
+
+            } else {
+                CGFloat scrollMenuViewDeltaY = _scrollMenuViewOriginY - scrollMenuViewY;
+                    scrollMenuViewDeltaY = -_insetTop +  scrollMenuViewDeltaY;
+                    /// 求出偏移了多少 未悬浮 (多个ScrollView偏移量联动)
+                    [scrollView setContentOffset:CGPointMake(0, scrollMenuViewDeltaY) animated:NO];
             }
         }
         /// 设置TableView内容偏移
@@ -255,8 +258,10 @@
         
         if (offsetY > - self.scrollMenuView.yn_height) {
             self.scrollMenuView.yn_y = offsetY;
+            self.supendStatus = YES;
         } else {
             self.scrollMenuView.yn_y = self.headerBgView.yn_bottom;
+            self.supendStatus = NO;
         }
         
         [self invokeDelegateForScrollWithOffsetY:offsetY];
@@ -284,12 +289,10 @@
     
     if (pageIndex > self.controllersM.count - 1) return;
     
-    [self initViewControllerWithIndex:pageIndex];
-    
     CGRect frame = CGRectMake(self.pageScrollView.yn_width * pageIndex, 0, self.pageScrollView.yn_width, self.pageScrollView.yn_height);
     
     [self.pageScrollView scrollRectToVisible:frame animated:NO];
-    
+
     [self scrollViewDidEndDecelerating:self.pageScrollView];
     
 }
@@ -362,7 +365,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     _headerViewInTableView = YES;
-    
+
     _scrollMenuViewOriginY = _headerView.yn_height;
     
 }
@@ -417,14 +420,15 @@
 - (void)replaceHeaderViewFromView {
     if ([self isSuspensionBottomStyle] || [self isSuspensionTopStyle]) {
         if (!_headerViewInTableView) {
+            
             UIScrollView *scrollView = self.currentScrollView;
             
-            CGFloat headerViewY = [self.view convertRect:self.headerBgView.frame toView:scrollView].origin.y;
-            CGFloat scrollMenuViewY = [self.view convertRect:self.scrollMenuView.frame toView:scrollView].origin.y;
+            CGFloat headerViewY = [self.headerBgView.superview convertRect:self.headerBgView.frame toView:scrollView].origin.y;
+            CGFloat scrollMenuViewY = [self.scrollMenuView.superview convertRect:self.scrollMenuView.frame toView:scrollView].origin.y;
             
             [self.headerBgView removeFromSuperview];
             [self.scrollMenuView removeFromSuperview];
-           
+
             self.headerBgView.yn_y = headerViewY;
             self.scrollMenuView.yn_y = scrollMenuViewY;
             
@@ -440,13 +444,12 @@
 - (void)replaceHeaderViewFromTableView {
     if ([self isSuspensionBottomStyle] || [self isSuspensionTopStyle]) {
         if (_headerViewInTableView) {
-            UIScrollView *scrollView = self.currentScrollView;
-            CGFloat headerViewY = [scrollView convertRect:self.headerBgView.frame toView:self.view].origin.y;
-            CGFloat scrollMenuViewY = [scrollView convertRect:self.scrollMenuView.frame toView:self.view].origin.y;
+            
+            CGFloat headerViewY = [self.headerBgView.superview convertRect:self.headerBgView.frame toView:self.pageScrollView].origin.y;
+            CGFloat scrollMenuViewY = [self.scrollMenuView.superview convertRect:self.scrollMenuView.frame toView:self.pageScrollView].origin.y;
             
             [self.headerBgView removeFromSuperview];
             [self.scrollMenuView removeFromSuperview];
-            
             self.headerBgView.yn_y = headerViewY;
             self.scrollMenuView.yn_y = scrollMenuViewY;
             
