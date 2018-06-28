@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "YNPageViewController"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "特斯拉组件、多页面嵌套滚动、悬停效果"
 
   # This description is used to generate tags and improve search results.
