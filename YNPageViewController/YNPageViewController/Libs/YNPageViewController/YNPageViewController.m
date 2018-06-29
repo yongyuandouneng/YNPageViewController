@@ -188,9 +188,10 @@
                     [scrollView setContentOffset:CGPointMake(0, scrollMenuViewDeltaY) animated:NO];
             }
         }
-        /// 设置TableView内容偏移
-        scrollView.contentInset = UIEdgeInsetsMake(_insetTop, 0, 0, 0);
-        
+        if (![self.cacheDictM objectForKey:title]) {
+            /// 设置TableView内容偏移
+            scrollView.contentInset = UIEdgeInsetsMake(_insetTop, 0, 0, 0);
+        }
         if ([self isSuspensionBottomStyle]) {
             scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(_insetTop, 0, 0, 0);
         }
