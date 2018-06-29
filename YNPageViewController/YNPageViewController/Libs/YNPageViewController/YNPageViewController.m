@@ -246,6 +246,8 @@
     if ([self isSuspensionBottomStyle] || [self isSuspensionTopStyle]) {
         if (!_headerViewInTableView) return;
         
+        if (scrollView != self.currentScrollView) return;
+        
         CGFloat offsetY = scrollView.contentOffset.y;
         
         if (offsetY < -_insetTop) {
