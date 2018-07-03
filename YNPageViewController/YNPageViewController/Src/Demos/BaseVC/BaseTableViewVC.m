@@ -9,6 +9,10 @@
 #import "BaseTableViewVC.h"
 #import "MJRefresh.h"
 #import "BaseViewController.h"
+#import "UIViewController+YNPageExtend.h"
+
+/// 开启刷新头部高度
+#define kOpenRefreshHeaderViewHeight 1
 
 @interface BaseTableViewVC () <UITableViewDataSource, UITableViewDelegate>
 
@@ -49,8 +53,13 @@
     __weak typeof (self) weakSelf = self;
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [weakSelf.tableView.mj_header endRefreshing];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (kOpenRefreshHeaderViewHeight) {
+                [weakSelf suspendTopReloadHeaderViewHeight];
+            } else {
+                [weakSelf.tableView.mj_header endRefreshing];
+            }
+
         });
     }];
     
@@ -58,6 +67,24 @@
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [weakSelf.tableView.mj_footer endRefreshing];
         });
+    }];
+    
+}
+
+#pragma mark - 悬浮Center刷新高度方法
+- (void)suspendTopReloadHeaderViewHeight {
+    
+    /// 布局高度
+    CGFloat netWorkHeight = 300;
+    __weak typeof (self) weakSelf = self;
+    
+    /// 结束刷新时 刷新 HeaderView高度
+    [self.tableView.mj_header endRefreshingWithCompletionBlock:^{
+        YNPageViewController *VC = weakSelf.yn_pageViewController;
+        if (VC.headerView.frame.size.height != netWorkHeight) {
+            VC.headerView.frame = CGRectMake(0, 0, kSCREEN_WIDTH, netWorkHeight);
+            [VC reloadSuspendHeaderViewFrame];
+        }
     }];
     
 }

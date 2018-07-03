@@ -14,5 +14,6 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 
+- (void)addTableViewRefresh;
 
 @end

@@ -122,8 +122,6 @@
     }
     [self.view addSubview:self.scrollMenuView];
     
-    _insetTop = self.headerBgView.yn_height + self.scrollMenuView.yn_height;
-    
 }
 
 #pragma mark - 初始化子控制器
@@ -358,6 +356,33 @@
     self.controllersM = resultViewControllerArray;
 }
 
+- (void)reloadSuspendHeaderViewFrame {
+    if (self.headerView && ([self isSuspensionTopStyle] || [self isSuspensionBottomStyle])) {
+        /// 重新初始化headerBgView
+        [self setupHeaderBgView];
+        for (int i = 0; i < self.titlesM.count; i++) {
+            NSString *title = self.titlesM[i];
+            if(self.cacheDictM[title]) {
+                UIScrollView *scrollView = [self getScrollViewWithPageIndex:i];
+                scrollView.contentInset = UIEdgeInsetsMake(_insetTop, 0, 0, 0);
+                if ([self isSuspensionBottomStyle]) {
+                    /// 设置偏移量
+                    scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(_insetTop, 0, 0, 0);
+                }
+            }
+        }
+        /// 更新布局
+        [self replaceHeaderViewFromTableView];
+        [self replaceHeaderViewFromView];
+        [self yn_pageScrollViewDidScrollView:self.currentScrollView];
+        [self scrollViewDidScroll:self.pageScrollView];
+        if (!self.pageScrollView.isDragging) {
+            [self scrollViewDidEndDecelerating:self.pageScrollView];
+        }
+    }
+}
+
+
 #pragma mark - Private Method
 
 - (void)initData {
@@ -369,12 +394,11 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     _headerViewInTableView = YES;
 
-    _scrollMenuViewOriginY = _headerView.yn_height;
-    
 }
 /// 初始化子View
 - (void)setupSubViews {
     
+    [self setupHeaderBgView];
     [self setupPageScrollMenuView];
     [self setupPageScrollView];
 
@@ -401,6 +425,7 @@
     [self initPagescrollMenuViewWithFrame:CGRectMake(0, 0, self.config.menuWidth, self.config.menuHeight)];
 }
 
+/// 初始化背景headerView
 - (void)setupHeaderBgView {
     if ([self isSuspensionBottomStyle] || [self isSuspensionTopStyle]) {
         NSAssert(self.headerView, @"Please set headerView !");
@@ -416,6 +441,10 @@
             self.scaleBackgroundView.userInteractionEnabled = NO;
         }
         self.config.tempTopHeight = self.headerBgView.yn_height + self.config.menuHeight;
+        
+        _insetTop = self.headerBgView.yn_height + self.config.menuHeight;
+        
+        _scrollMenuViewOriginY = _headerView.yn_height;
     }
 }
 
@@ -522,7 +551,6 @@
     }
     NSAssert(isHasNotEqualTitle, @"TitleArray Not allow equal title.");
     
-    [self setupHeaderBgView];
 }
 #pragma mark - 样式取值
 - (BOOL)isTopStyle {
@@ -552,7 +580,6 @@
         [self.delegate pageViewController:self contentOffsetY:offsetY progress:progress > 1 ? 1 : progress];
     }
 }
-
 
 #pragma mark - Lazy Method
 - (YNPageScrollView *)pageScrollView {

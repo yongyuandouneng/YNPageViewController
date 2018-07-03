@@ -146,4 +146,12 @@
  */
 - (void)replaceTitleArray:(NSMutableArray *)titleArray;
 
+
+/**
+ * 刷新悬浮HeaderViewFrame
+ * YNPageStyleSuspensionTop 样式 1.需要对刷新控件进行特殊处理 2.需要在下拉刷新完成时调用该方法
+ * YNPageStyleSuspensionCenter 样式 1.需要在下拉刷新完成时调用该方法
+ */
+- (void)reloadSuspendHeaderViewFrame;
+
 @end
