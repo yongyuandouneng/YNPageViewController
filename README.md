@@ -34,8 +34,11 @@
 
 #### 2.CocoaPods安装:
 
-- `先pod search YNPageViewController 搜索一下`
+- `一、可以直接在项目Podfile 文件中 pod 'YNPageViewController'`
+
+- `二、先pod search YNPageViewController 搜索一下`
 - `如果发现pod search YNPageViewController 不是最新版本，在终端执行pod setup命令更新本地spec镜像缓存,重新搜索`
+- `搜索不到则执行1.pod repo update 2.rm ~/Library/Caches/CocoaPods/search_index.json`
 - `在Podfile文件中用 pod 'YNPageViewController'`
 
 ## 使用方法
