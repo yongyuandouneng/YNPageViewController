@@ -193,12 +193,14 @@
     if (self.configration.showBottomLine) {
         self.bottomLine = [[UIView alloc] init];
         self.bottomLine.backgroundColor = self.configration.bottomLineBgColor;
-        self.bottomLine.frame = CGRectMake(0, self.scrollView.yn_height - self.configration.bottomLineHeight, self.scrollView.contentSize.width, self.configration.bottomLineHeight);
+        self.bottomLine.frame = CGRectMake(self.configration.bottomLineLeftAndRightMargin, self.scrollView.yn_height - self.configration.bottomLineHeight, self.scrollView.yn_width - 2 * self.configration.bottomLineLeftAndRightMargin, self.configration.bottomLineHeight);
+        self.bottomLine.layer.cornerRadius = self.configration.bottomLineCorner;
         [self.scrollView addSubview:self.bottomLine];
     }
     
     if (self.configration.showScrollLine) {
-        self.lineView.frame = CGRectMake(lineX - self.configration.lineLeftAndRightAddWidth, lineY - self.configration.lineBottomMargin, lineW + self.configration.lineLeftAndRightAddWidth * 2, lineH);
+        self.lineView.frame = CGRectMake(lineX - self.configration.lineLeftAndRightAddWidth + self.configration.lineLeftAndRightMargin, lineY - self.configration.lineBottomMargin, lineW + self.configration.lineLeftAndRightAddWidth * 2 - 2 * self.configration.lineLeftAndRightMargin, lineH);
+        self.lineView.layer.cornerRadius = self.configration.lineCorner;
         [self.scrollView addSubview:self.lineView];
     }
     
@@ -226,13 +228,14 @@
     currentLabel.font = self.configration.selectedItemFont;
     /// 线条
     if (self.configration.showScrollLine) {
-        self.lineView.yn_x = currentLabel.yn_x - self.configration.lineLeftAndRightAddWidth;
-        self.lineView.yn_width = currentLabel.yn_width + self.configration.lineLeftAndRightAddWidth *2;
+        self.lineView.yn_x = currentLabel.yn_x - self.configration.lineLeftAndRightAddWidth + self.configration.lineLeftAndRightMargin;
+        self.lineView.yn_width = currentLabel.yn_width + self.configration.lineLeftAndRightAddWidth *2 - self.configration.lineLeftAndRightMargin * 2;
+        
         
         if (!self.configration.scrollMenu &&
             !self.configration.aligmentModeCenter &&
             self.configration.lineWidthEqualFontWidth) { /// 处理Line宽度等于字体宽度
-            self.lineView.yn_x = currentLabel.yn_x + ([currentLabel yn_width]  - ([self.itemsWidthArraM[currentLabel.tag] floatValue])) / 2 - self.configration.lineLeftAndRightAddWidth;;
+            self.lineView.yn_x = currentLabel.yn_x + ([currentLabel yn_width]  - ([self.itemsWidthArraM[currentLabel.tag] floatValue])) / 2 - self.configration.lineLeftAndRightAddWidth - self.configration.lineLeftAndRightAddWidth;
             self.lineView.yn_width = [self.itemsWidthArraM[currentLabel.tag] floatValue] + self.configration.lineLeftAndRightAddWidth *2;
         }
     }
@@ -276,8 +279,8 @@
         
         /// 线条
         if (self.configration.showScrollLine) {
-            self.lineView.yn_x = currentLabel.yn_x - self.configration.lineLeftAndRightAddWidth;
-            self.lineView.yn_width = currentLabel.yn_width + self.configration.lineLeftAndRightAddWidth *2;
+            self.lineView.yn_x = currentLabel.yn_x - self.configration.lineLeftAndRightAddWidth + self.configration.lineLeftAndRightMargin;
+            self.lineView.yn_width = currentLabel.yn_width + self.configration.lineLeftAndRightAddWidth * 2 - 2 * self.configration.lineLeftAndRightMargin;
             
             if (!self.configration.scrollMenu &&
                 !self.configration.aligmentModeCenter &&
@@ -386,8 +389,8 @@
     
     /// 线条
     if (self.configration.showScrollLine) {
-        self.lineView.yn_x = lastLabel.yn_x + xD *progress - self.configration.lineLeftAndRightAddWidth;
-        self.lineView.yn_width = lastLabel.yn_width + wD *progress + self.configration.lineLeftAndRightAddWidth *2;
+        self.lineView.yn_x = lastLabel.yn_x + xD *progress - self.configration.lineLeftAndRightAddWidth + self.configration.lineLeftAndRightMargin;
+        self.lineView.yn_width = lastLabel.yn_width + wD *progress + self.configration.lineLeftAndRightAddWidth *2 - 2 * self.configration.lineLeftAndRightMargin;
         
         if (!self.configration.scrollMenu &&
             !self.configration.aligmentModeCenter &&

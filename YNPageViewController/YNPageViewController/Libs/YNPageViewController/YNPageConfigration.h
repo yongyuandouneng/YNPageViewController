@@ -93,10 +93,18 @@ typedef NS_ENUM(NSInteger, YNPageHeaderViewScaleMode) {
 @property (nonatomic, strong) UIColor *selectedItemColor;
 /** 底部线条颜色 */
 @property (nonatomic, strong) UIColor *bottomLineBgColor;
+/** 底部线条左右偏移量 0 */
+@property (nonatomic, assign) CGFloat bottomLineLeftAndRightMargin;
+/** 线条圆角 0 */
+@property (nonatomic, assign) CGFloat bottomLineCorner;
 /** 线height 2 */
 @property (nonatomic, assign) CGFloat lineHeight;
 /** 线条底部距离 0*/
 @property (nonatomic, assign) CGFloat lineBottomMargin;
+/** 线条左右偏移量 0 */
+@property (nonatomic, assign) CGFloat lineLeftAndRightMargin;
+/** 线条圆角 0 */
+@property (nonatomic, assign) CGFloat lineCorner;
 /** 线条左右增加 0  默认线条宽度是等于 item宽度 */
 @property (nonatomic, assign) CGFloat lineLeftAndRightAddWidth;
 /** 底部线height 2 */
