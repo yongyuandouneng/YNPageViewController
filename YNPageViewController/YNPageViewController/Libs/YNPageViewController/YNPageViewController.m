@@ -20,8 +20,6 @@
 @property (nonatomic, strong) YNPageHeaderScrollView *headerBgView;
 /// 页面ScrollView
 @property (nonatomic, strong) YNPageScrollView *pageScrollView;
-/// 菜单栏
-@property (nonatomic, strong) YNPageScrollMenuView *scrollMenuView;
 /// 展示控制器的字典
 @property (nonatomic, strong) NSMutableDictionary *displayDictM;
 /// 字典控制器的字典

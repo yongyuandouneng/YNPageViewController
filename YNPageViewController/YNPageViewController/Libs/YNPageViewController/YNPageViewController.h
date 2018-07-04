@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "YNPageConfigration.h"
+#import "YNPageScrollMenuView.h"
 
 @class YNPageViewController;
 
@@ -74,6 +75,8 @@
 @property (nonatomic, strong) YNPageConfigration *config;
 /// 控制器数组
 @property (nonatomic, strong) NSMutableArray *controllersM;
+/// 菜单栏
+@property (nonatomic, strong) YNPageScrollMenuView *scrollMenuView;
 /// 头部headerView
 @property (nonatomic, strong) UIView *headerView;
 /// 数据源
