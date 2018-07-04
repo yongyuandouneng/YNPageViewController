@@ -64,7 +64,7 @@
 - (void)suspendTopReloadHeaderViewHeight {
     
     /// 布局高度
-    CGFloat netWorkHeight = 300;
+    CGFloat netWorkHeight = 900;
     __weak typeof (self) weakSelf = self;
     
     /// 结束刷新时 刷新 HeaderView高度
