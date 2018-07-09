@@ -255,7 +255,7 @@
             self.headerBgView.yn_y = -_insetTop;
         }
         
-        if (offsetY > - self.scrollMenuView.yn_height) {
+        if (offsetY > - self.scrollMenuView.yn_height + self.config.suspenOffsetY) {
             self.scrollMenuView.yn_y = offsetY;
             self.supendStatus = YES;
         } else {
