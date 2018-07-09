@@ -61,25 +61,31 @@
     style_config_4.itemFont = [UIFont systemFontOfSize:14];
     style_config_4.selectedItemColor = [UIColor redColor];
     style_config_4.normalItemColor = [UIColor blackColor];
-    style_config_4.itemMaxScale = 1.1;
+    style_config_4.itemMaxScale = 1.3;
     
     
-    YNPageScrollMenuView *style_4 = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, style_3.yn_bottom + 20, kSCREEN_WIDTH, 44) titles:@[@"QQ游戏", @"QQ邮箱", @"数码测色计"] configration:style_config_4 delegate:nil currentIndex:0];
+    YNPageScrollMenuView *style_4 = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, style_3.yn_bottom + 20, kSCREEN_WIDTH, 44) titles:@[@"QQ游戏", @"QQ邮箱", @"数码测色计"] configration:style_config_4 delegate:nil currentIndex:2];
     
     /// style 5
     YNPageConfigration *style_config_5 = [YNPageConfigration defaultConfig];
     style_config_5.selectedItemColor = [UIColor redColor];
     style_config_5.selectedItemFont = [UIFont systemFontOfSize:15];
     
-    YNPageScrollMenuView *style_5 = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, style_4.yn_bottom + 20, kSCREEN_WIDTH, 44) titles:@[@"JAVA", @"Object-C", @"JS"] configration:style_config_5 delegate:nil currentIndex:0];
+    YNPageScrollMenuView *style_5 = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, style_4.yn_bottom + 20, kSCREEN_WIDTH, 44) titles:@[@"JAVA", @"Object-C", @"JS"] configration:style_config_5 delegate:nil currentIndex:1];
     
+    /// style 6
+    YNPageConfigration *style_config_6 = [YNPageConfigration defaultConfig];
+    style_config_6.scrollMenu = YES;
+    style_config_6.aligmentModeCenter = NO;
     
+    YNPageScrollMenuView *style_6 = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, style_5.yn_bottom + 20, kSCREEN_WIDTH, 44) titles:@[@"JAVA", @"Object-C", @"JS"] configration:style_config_6 delegate:nil currentIndex:1];
     
     [_scrollView addSubview:style_1];
     [_scrollView addSubview:style_2];
     [_scrollView addSubview:style_3];
     [_scrollView addSubview:style_4];
     [_scrollView addSubview:style_5];
+    [_scrollView addSubview:style_6];
     
     [self.view addSubview:_scrollView];
     

@@ -205,7 +205,7 @@
     }
     
     if (self.configration.itemMaxScale > 1) {
-        ((UILabel *)self.itemsArrayM[0]).transform = CGAffineTransformMakeScale(self.configration.itemMaxScale, self.configration.itemMaxScale);
+        ((UILabel *)self.itemsArrayM[self.currentIndex]).transform = CGAffineTransformMakeScale(self.configration.itemMaxScale, self.configration.itemMaxScale);
     }
     
     [self setDefaultTheme];
