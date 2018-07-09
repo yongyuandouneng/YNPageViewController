@@ -43,7 +43,7 @@ typedef NS_ENUM(NSInteger, YNPageHeaderViewScaleMode) {
 @property (nonatomic, assign) BOOL showTabbar;
 /** 菜单位置风格 默认 YNPageStyleTop */
 @property (nonatomic, assign) YNPageStyle pageStyle;
-/** 悬浮偏移量 默认 0 */
+/** 悬浮ScrollMenu偏移量 默认 0 */
 @property (nonatomic, assign) CGFloat suspenOffsetY;
 
 /** 头部是否能伸缩效果   要伸缩效果最好不要有下拉刷新控件 NO */
