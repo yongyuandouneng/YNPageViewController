@@ -56,7 +56,7 @@
 
 ```
 
-• 2018-07-12 (tag 0.0.6): 解决 SectionHeader 挡住 ScrollMenu 的问题
+• 2018-07-12 (tag 0.0.7): 解决 SectionHeader 挡住 ScrollMenu 的问题
 
 • 2018-07-09 (tag 0.0.5): 新增悬浮Menu 偏移量
 
