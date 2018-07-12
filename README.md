@@ -55,6 +55,9 @@
 ## CocoaPods更新日志
 
 ```
+
+• 2018-07-12 (tag 0.0.6): 解决 SectionHeader 挡住 ScrollMenu 的问题
+
 • 2018-07-09 (tag 0.0.5): 新增悬浮Menu 偏移量
 
 • 2018-07-03 (tag 0.0.3): 新增刷新悬浮头部视图高度API
