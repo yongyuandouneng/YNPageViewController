@@ -263,9 +263,18 @@
             self.supendStatus = NO;
         }
         
+        [self adjustSectionHeader:scrollView];
+        
         [self invokeDelegateForScrollWithOffsetY:offsetY];
         
         [self headerScaleWithOffsetY:offsetY];
+    }
+}
+
+- (void)adjustSectionHeader:(UIScrollView *)scrollview {
+    
+    if (scrollview.subviews.lastObject != self.scrollMenuView) {
+        [scrollview bringSubviewToFront:self.scrollMenuView];
     }
 }
 
