@@ -154,6 +154,15 @@
     [viewController didMoveToParentViewController:self];
     
     if ([self isSuspensionBottomStyle] || [self isSuspensionTopStyle]) {
+        
+        if (![self.cacheDictM objectForKey:title]) {
+            /// 设置TableView内容偏移
+            scrollView.contentInset = UIEdgeInsetsMake(_insetTop, 0, 0, 0);
+        }
+        if ([self isSuspensionBottomStyle]) {
+            scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(_insetTop, 0, 0, 0);
+        }
+        
         if (self.cacheDictM.count == 0) {
             /// 初次添加headerView、scrollMenuView
             self.headerBgView.yn_y = - _insetTop;
@@ -184,14 +193,6 @@
                     [scrollView setContentOffset:CGPointMake(0, scrollMenuViewDeltaY) animated:NO];
             }
         }
-        if (![self.cacheDictM objectForKey:title]) {
-            /// 设置TableView内容偏移
-            scrollView.contentInset = UIEdgeInsetsMake(_insetTop, 0, 0, 0);
-        }
-        if ([self isSuspensionBottomStyle]) {
-            scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(_insetTop, 0, 0, 0);
-        }
-        
     }
     /// 缓存控制器
     if (![self.cacheDictM objectForKey:title]) {
@@ -425,6 +426,7 @@
     
     self.pageScrollView.contentSize = CGSizeMake(kYNPAGE_SCREEN_WIDTH * self.controllersM.count, contentHeight - ([self isTopStyle] ? self.config.menuHeight : 0));
     
+    self.config.contentHeight = self.pageScrollView.yn_height - self.config.menuHeight;
 }
 
 /// 初始化ScrollView

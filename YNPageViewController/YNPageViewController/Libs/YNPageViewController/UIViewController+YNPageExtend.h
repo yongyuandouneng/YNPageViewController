@@ -13,4 +13,6 @@
 
 - (YNPageViewController *)yn_pageViewController;
 
+- (YNPageConfigration *)config;
+
 @end

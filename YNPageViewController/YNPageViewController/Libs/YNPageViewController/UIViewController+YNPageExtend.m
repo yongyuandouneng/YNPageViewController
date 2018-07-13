@@ -14,4 +14,9 @@
     return (YNPageViewController *)self.parentViewController;
 }
 
+- (YNPageConfigration *)config {
+    YNPageViewController *v = (YNPageViewController *)self.parentViewController;
+    return v.config;
+}
+
 @end

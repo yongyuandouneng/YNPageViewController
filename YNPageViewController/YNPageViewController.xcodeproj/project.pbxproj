@@ -227,6 +227,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E3F8D1C20F8B0FA009FDA84 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		2E5F7D7820DCA5430069962B /* Demos */ = {
 			isa = PBXGroup;
 			children = (
@@ -445,6 +452,7 @@
 		2E5F7E9520DCA8A30069962B /* BaseVC */ = {
 			isa = PBXGroup;
 			children = (
+				2E3F8D1C20F8B0FA009FDA84 /* View */,
 				2E5F7E9620DCA8AF0069962B /* BaseTableViewVC.h */,
 				2E5F7E9720DCA8AF0069962B /* BaseTableViewVC.m */,
 				2E5F7EA420DCEB2C0069962B /* BaseCollectionViewVC.h */,

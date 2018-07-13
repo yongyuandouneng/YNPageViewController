@@ -132,6 +132,8 @@ typedef NS_ENUM(NSInteger, YNPageHeaderViewScaleMode) {
 @property (nonatomic, assign) CGFloat itemMaxScale;
 /** 临时Top高度 */
 @property (nonatomic, assign) CGFloat tempTopHeight;
+/** 内容区域 */
+@property (nonatomic, assign) CGFloat contentHeight;
 
 + (instancetype)new UNAVAILABLE_ATTRIBUTE;
 

@@ -11,11 +11,16 @@
 #import "BaseViewController.h"
 #import "UIViewController+YNPageExtend.h"
 
-
 /// 开启刷新头部高度
-#define kOpenRefreshHeaderViewHeight 1
+#define kOpenRefreshHeaderViewHeight 0
+
+#define kCellHeight 44
 
 @interface BaseTableViewVC () <UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, strong) NSMutableArray *dataArray;
+/// 占位cell高度
+@property (nonatomic, assign) CGFloat placeHolderCellHeight;
 
 @end
 
@@ -23,9 +28,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"id"];
     [self.view addSubview:self.tableView];
     
+    _dataArray = @[].mutableCopy;
+    /// 加载数据
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        for (int i = 0; i < 1; i++) {
+            [_dataArray addObject:@""];
+        }
+        [self.tableView reloadData];
+    });
     [self addTableViewRefresh];
 }
 
@@ -55,6 +68,11 @@
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            for (int i = 0; i < 3; i++) {
+                [self.dataArray addObject:@""];
+            }
+            [self.tableView reloadData];
             if (kOpenRefreshHeaderViewHeight) {
                 [weakSelf suspendTopReloadHeaderViewHeight];
             } else {
@@ -66,6 +84,10 @@
     
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            for (int i = 0; i < 3; i++) {
+                [self.dataArray addObject:@""];
+            }
+            [self.tableView reloadData];
             [weakSelf.tableView.mj_footer endRefreshing];
         });
     }];
@@ -88,6 +110,12 @@
         }
     }];
     
+}
+#pragma mark - 求出占位cell高度
+- (CGFloat)placeHolderCellHeight {
+    CGFloat height = self.config.contentHeight - kCellHeight * self.dataArray.count;
+    height = height < 0 ? 0 : height;
+    return height;
 }
 
 #pragma mark - UITableViewDelegate  UITableViewDataSource
@@ -114,28 +142,33 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return 10;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return 5;
+    return self.dataArray.count + 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 44;
+    if (indexPath.row < self.dataArray.count) {
+        return kCellHeight;
+    }
+    return self.placeHolderCellHeight;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString *identifier = @"identifier";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"id"];
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+    if (indexPath.row < self.dataArray.count) {
+        
+        cell.textLabel.text = [NSString stringWithFormat:@"%@ section: %zd row:%zd", self.cellTitle ?: @"测试", indexPath.section, indexPath.row];
+        return cell;
+    } else {
+        cell.textLabel.text = @"占位cell";
     }
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ section: %zd row:%zd", self.cellTitle ?: @"测试", indexPath.section, indexPath.row];
     
     return cell;
     
