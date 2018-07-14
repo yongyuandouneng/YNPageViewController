@@ -16,15 +16,15 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "YNPageViewController"
-  s.version      = "0.0.7"
-  s.summary      = "特斯拉组件、多页面嵌套滚动、悬停效果"
+  s.version      = "0.0.8"
+  s.summary      = "特斯拉组件、多页面嵌套滚动、悬停效果、QQ联系人"
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
-  s.description  = " 特斯拉组件、多页面嵌套滚动、悬停效果、美团、淘宝、京东、微博、腾讯新闻、网易新闻、今日头条等标题滚动视图 "
+  s.description  = " 特斯拉组件、多页面嵌套滚动、悬停效果、美团、淘宝、京东、微博、腾讯新闻、网易新闻、今日头条等标题滚动视图、QQ联系人"
 
   s.homepage     = "http://github.com.yongyuandouneng/YNPageViewController"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"

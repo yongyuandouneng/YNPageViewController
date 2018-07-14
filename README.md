@@ -55,6 +55,7 @@
 ## CocoaPods更新日志
 
 ```
+• 2018-07-14 (tag 0.0.8): 新增SuspensionTopPause样式和示例 (QQ联系人Tab布局)
 
 • 2018-07-12 (tag 0.0.7): 解决 SectionHeader 挡住 ScrollMenu 的问题
 
