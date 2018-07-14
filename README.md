@@ -50,7 +50,11 @@
                                            titles:(NSArray *)titles
                                            config:(YNPageConfigration *)config;
 4.具体使用方法可以查看Demos教程。
-```
+
+使用悬浮样式需要注意:
+   (1)SuspensionTop || SuspensionCenter 需要填充cell占位高度
+   (2)headerView高度较小建议使用 SuspensionTop，高度比较大建议使用 SuspensionCenter
+   (3)SuspensionTopPause不需要填充占位cell高度，只是头部上拉时停顿。可实现QQ联系人效果。
 
 ## CocoaPods更新日志
 
