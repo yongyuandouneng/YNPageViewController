@@ -15,4 +15,6 @@
 
 - (YNPageConfigration *)config;
 
+- (YNPageScrollView *)bgScrollView;
+
 @end

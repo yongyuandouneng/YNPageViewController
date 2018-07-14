@@ -1,30 +1,26 @@
 //
-//  BaseVC.m
+//  YNSuspendTopPauseBaseTableViewVC.m
 //  YNPageViewController
 //
-//  Created by ZYN on 2018/6/22.
+//  Created by ZYN on 2018/7/14.
 //  Copyright © 2018年 yongneng. All rights reserved.
 //
 
-#import "BaseTableViewVC.h"
+#import "YNSuspendTopPauseBaseTableViewVC.h"
 #import "MJRefresh.h"
 #import "BaseViewController.h"
 #import "UIViewController+YNPageExtend.h"
-
-/// 开启刷新头部高度
-#define kOpenRefreshHeaderViewHeight 0
+#import "YNPageTableView.h"
 
 #define kCellHeight 44
 
-@interface BaseTableViewVC () <UITableViewDataSource, UITableViewDelegate>
+@interface YNSuspendTopPauseBaseTableViewVC () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
-/// 占位cell高度
-@property (nonatomic, assign) CGFloat placeHolderCellHeight;
 
 @end
 
-@implementation BaseTableViewVC
+@implementation YNSuspendTopPauseBaseTableViewVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -34,7 +30,7 @@
     _dataArray = @[].mutableCopy;
     /// 加载数据
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 20; i++) {
             [_dataArray addObject:@""];
         }
         [self.tableView reloadData];
@@ -66,25 +62,10 @@
     
     __weak typeof (self) weakSelf = self;
     
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            
-            for (int i = 0; i < 3; i++) {
-                [self.dataArray addObject:@""];
-            }
-            [self.tableView reloadData];
-            if (kOpenRefreshHeaderViewHeight) {
-                [weakSelf suspendTopReloadHeaderViewHeight];
-            } else {
-                [weakSelf.tableView.mj_header endRefreshing];
-            }
-
-        });
-    }];
-    
+    /// 这里加 footer 刷新
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 10; i++) {
                 [self.dataArray addObject:@""];
             }
             [self.tableView reloadData];
@@ -92,30 +73,6 @@
         });
     }];
     
-}
-
-#pragma mark - 悬浮Center刷新高度方法
-- (void)suspendTopReloadHeaderViewHeight {
-    
-    /// 布局高度
-    CGFloat netWorkHeight = 300;
-    __weak typeof (self) weakSelf = self;
-    
-    /// 结束刷新时 刷新 HeaderView高度
-    [self.tableView.mj_header endRefreshingWithCompletionBlock:^{
-        YNPageViewController *VC = weakSelf.yn_pageViewController;
-        if (VC.headerView.frame.size.height != netWorkHeight) {
-            VC.headerView.frame = CGRectMake(0, 0, kSCREEN_WIDTH, netWorkHeight);
-            [VC reloadSuspendHeaderViewFrame];
-        }
-    }];
-    
-}
-#pragma mark - 求出占位cell高度
-- (CGFloat)placeHolderCellHeight {
-    CGFloat height = self.config.contentHeight - kCellHeight * self.dataArray.count;
-    height = height < 0 ? 0 : height;
-    return height;
 }
 
 #pragma mark - UITableViewDelegate  UITableViewDataSource
@@ -147,7 +104,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return self.dataArray.count + 1;
+    return self.dataArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -155,7 +112,7 @@
     if (indexPath.row < self.dataArray.count) {
         return kCellHeight;
     }
-    return self.placeHolderCellHeight;
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -166,7 +123,7 @@
         
         cell.textLabel.text = [NSString stringWithFormat:@"%@ section: %zd row:%zd", self.cellTitle ?: @"测试", indexPath.section, indexPath.row];
         return cell;
-    } 
+    }
     
     return cell;
     
@@ -180,10 +137,11 @@
 
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
+        _tableView = [[YNPageTableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
     }
     return _tableView;
 }
+
 @end

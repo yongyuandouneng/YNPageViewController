@@ -15,12 +15,14 @@
  - YNPageStyleNavigation: MenuView在系统导航条
  - YNPageStyleSuspensionTop: MenuView悬浮，刷新控件在HeaderView顶部
  - YNPageStyleSuspensionCenter: MenuView悬浮，刷新控件在HeaderView底部
+ - YNPageStyleSuspensionTopPause: MenuView悬浮，刷新控件在HeaderView顶部 停顿 类似QQ联系人页面
  */
 typedef NS_ENUM(NSInteger, YNPageStyle) {
     YNPageStyleTop = 0,
     YNPageStyleNavigation = 1,
     YNPageStyleSuspensionTop = 2,
     YNPageStyleSuspensionCenter = 3,
+    YNPageStyleSuspensionTopPause = 4,
 };
 
 /**

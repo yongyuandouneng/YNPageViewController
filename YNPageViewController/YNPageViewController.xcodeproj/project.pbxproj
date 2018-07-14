@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E3F8DDC20F9FA6A009FDA84 /* YNPageHeaderScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3F8DD020F9FA6A009FDA84 /* YNPageHeaderScrollView.m */; };
+		2E3F8DDD20F9FA6A009FDA84 /* YNPageScrollMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3F8DD220F9FA6A009FDA84 /* YNPageScrollMenuView.m */; };
+		2E3F8DDE20F9FA6A009FDA84 /* YNPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3F8DD420F9FA6A009FDA84 /* YNPageScrollView.m */; };
+		2E3F8DDF20F9FA6A009FDA84 /* UIScrollView+YNPageExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3F8DD720F9FA6A009FDA84 /* UIScrollView+YNPageExtend.m */; };
+		2E3F8DE020F9FA6A009FDA84 /* UIView+YNPageExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3F8DD920F9FA6A009FDA84 /* UIView+YNPageExtend.m */; };
+		2E3F8DE120F9FA6A009FDA84 /* UIViewController+YNPageExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3F8DDB20F9FA6A009FDA84 /* UIViewController+YNPageExtend.m */; };
+		2E3F8DE420FA0C0B009FDA84 /* YNPageTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3F8DE320FA0C0B009FDA84 /* YNPageTableView.m */; };
+		2E3F8DE720FA0C45009FDA84 /* YNPageCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3F8DE620FA0C45009FDA84 /* YNPageCollectionView.m */; };
+		2E3F8DEB20FA112D009FDA84 /* YNSuspendTopPausePageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3F8DEA20FA112D009FDA84 /* YNSuspendTopPausePageVC.m */; };
+		2E3F8DEE20FA1304009FDA84 /* YNSuspendTopPauseBaseTableViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3F8DED20FA1304009FDA84 /* YNSuspendTopPauseBaseTableViewVC.m */; };
 		2E5F7D8020DCA5430069962B /* DemosListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5F7D7A20DCA5430069962B /* DemosListVC.m */; };
 		2E5F7D8120DCA5430069962B /* YNTestBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5F7D7D20DCA5430069962B /* YNTestBaseVC.m */; };
 		2E5F7D8220DCA5430069962B /* YNTestPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5F7D7F20DCA5430069962B /* YNTestPageVC.m */; };
@@ -58,9 +68,7 @@
 		2E5F7EA920DCEEF10069962B /* YNNavPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5F7EA820DCEEF10069962B /* YNNavPageVC.m */; };
 		2E5F7EAC20E090480069962B /* YNSuspendTopPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5F7EAB20E090480069962B /* YNSuspendTopPageVC.m */; };
 		2E5F7EAF20E090C30069962B /* YNSuspendTopBaseTableViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5F7EAE20E090C30069962B /* YNSuspendTopBaseTableViewVC.m */; };
-		2E76F4EE20B7ACC8009D98C2 /* YNPageHeaderScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E76F4ED20B7ACC8009D98C2 /* YNPageHeaderScrollView.m */; };
 		2E88608F20A15CF7001E5FCE /* YNNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E88608E20A15CF7001E5FCE /* YNNavigationController.m */; };
-		2E88609320A1641A001E5FCE /* UIScrollView+YNPageExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E88609220A1641A001E5FCE /* UIScrollView+YNPageExtend.m */; };
 		2E89D00D208C569700D038D6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E89D00C208C569700D038D6 /* AppDelegate.m */; };
 		2E89D013208C569700D038D6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E89D011208C569700D038D6 /* Main.storyboard */; };
 		2E89D015208C569700D038D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E89D014208C569700D038D6 /* Assets.xcassets */; };
@@ -68,16 +76,32 @@
 		2E89D01B208C569700D038D6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E89D01A208C569700D038D6 /* main.m */; };
 		2E89D02E208C5A1100D038D6 /* YNPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E89D02D208C5A1100D038D6 /* YNPageViewController.m */; };
 		2E89D031208C5AFE00D038D6 /* YNPageConfigration.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E89D030208C5AFE00D038D6 /* YNPageConfigration.m */; };
-		2E89D037208C5B8F00D038D6 /* YNPageScrollMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E89D036208C5B8F00D038D6 /* YNPageScrollMenuView.m */; };
-		2E89D03A208C5FD000D038D6 /* YNPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E89D039208C5FD000D038D6 /* YNPageScrollView.m */; };
-		2E89D03E208C706500D038D6 /* UIView+YNPageExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E89D03D208C706500D038D6 /* UIView+YNPageExtend.m */; };
-		2E95435E20B81DB5000E963C /* UIViewController+YNPageExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E95435D20B81DB5000E963C /* UIViewController+YNPageExtend.m */; };
 		2EFDC1D520E0E9B10018455F /* YNScrollMenuStyleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EFDC1D420E0E9B10018455F /* YNScrollMenuStyleVC.m */; };
 		2EFDC1D920E213440018455F /* YNLoadPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EFDC1D820E213440018455F /* YNLoadPageVC.m */; };
 		2EFDC1DC20E2156E0018455F /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EFDC1DB20E2156E0018455F /* BaseViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2E3F8DCF20F9FA6A009FDA84 /* YNPageHeaderScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YNPageHeaderScrollView.h; sourceTree = "<group>"; };
+		2E3F8DD020F9FA6A009FDA84 /* YNPageHeaderScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YNPageHeaderScrollView.m; sourceTree = "<group>"; };
+		2E3F8DD120F9FA6A009FDA84 /* YNPageScrollMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YNPageScrollMenuView.h; sourceTree = "<group>"; };
+		2E3F8DD220F9FA6A009FDA84 /* YNPageScrollMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YNPageScrollMenuView.m; sourceTree = "<group>"; };
+		2E3F8DD320F9FA6A009FDA84 /* YNPageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YNPageScrollView.h; sourceTree = "<group>"; };
+		2E3F8DD420F9FA6A009FDA84 /* YNPageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YNPageScrollView.m; sourceTree = "<group>"; };
+		2E3F8DD620F9FA6A009FDA84 /* UIScrollView+YNPageExtend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+YNPageExtend.h"; sourceTree = "<group>"; };
+		2E3F8DD720F9FA6A009FDA84 /* UIScrollView+YNPageExtend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+YNPageExtend.m"; sourceTree = "<group>"; };
+		2E3F8DD820F9FA6A009FDA84 /* UIView+YNPageExtend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+YNPageExtend.h"; sourceTree = "<group>"; };
+		2E3F8DD920F9FA6A009FDA84 /* UIView+YNPageExtend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+YNPageExtend.m"; sourceTree = "<group>"; };
+		2E3F8DDA20F9FA6A009FDA84 /* UIViewController+YNPageExtend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+YNPageExtend.h"; sourceTree = "<group>"; };
+		2E3F8DDB20F9FA6A009FDA84 /* UIViewController+YNPageExtend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+YNPageExtend.m"; sourceTree = "<group>"; };
+		2E3F8DE220FA0C0B009FDA84 /* YNPageTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YNPageTableView.h; sourceTree = "<group>"; };
+		2E3F8DE320FA0C0B009FDA84 /* YNPageTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YNPageTableView.m; sourceTree = "<group>"; };
+		2E3F8DE520FA0C45009FDA84 /* YNPageCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YNPageCollectionView.h; sourceTree = "<group>"; };
+		2E3F8DE620FA0C45009FDA84 /* YNPageCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YNPageCollectionView.m; sourceTree = "<group>"; };
+		2E3F8DE920FA112D009FDA84 /* YNSuspendTopPausePageVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YNSuspendTopPausePageVC.h; sourceTree = "<group>"; };
+		2E3F8DEA20FA112D009FDA84 /* YNSuspendTopPausePageVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YNSuspendTopPausePageVC.m; sourceTree = "<group>"; };
+		2E3F8DEC20FA1304009FDA84 /* YNSuspendTopPauseBaseTableViewVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YNSuspendTopPauseBaseTableViewVC.h; sourceTree = "<group>"; };
+		2E3F8DED20FA1304009FDA84 /* YNSuspendTopPauseBaseTableViewVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YNSuspendTopPauseBaseTableViewVC.m; sourceTree = "<group>"; };
 		2E5F7D7920DCA5430069962B /* DemosListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemosListVC.h; sourceTree = "<group>"; };
 		2E5F7D7A20DCA5430069962B /* DemosListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemosListVC.m; sourceTree = "<group>"; };
 		2E5F7D7C20DCA5430069962B /* YNTestBaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YNTestBaseVC.h; sourceTree = "<group>"; };
@@ -182,12 +206,8 @@
 		2E5F7EAD20E090C30069962B /* YNSuspendTopBaseTableViewVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YNSuspendTopBaseTableViewVC.h; sourceTree = "<group>"; };
 		2E5F7EAE20E090C30069962B /* YNSuspendTopBaseTableViewVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YNSuspendTopBaseTableViewVC.m; sourceTree = "<group>"; };
 		2E76F48620B26A56009D98C2 /* YNPreHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YNPreHeader.h; sourceTree = "<group>"; };
-		2E76F4EC20B7ACC8009D98C2 /* YNPageHeaderScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YNPageHeaderScrollView.h; sourceTree = "<group>"; };
-		2E76F4ED20B7ACC8009D98C2 /* YNPageHeaderScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YNPageHeaderScrollView.m; sourceTree = "<group>"; };
 		2E88608D20A15CF7001E5FCE /* YNNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YNNavigationController.h; sourceTree = "<group>"; };
 		2E88608E20A15CF7001E5FCE /* YNNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YNNavigationController.m; sourceTree = "<group>"; };
-		2E88609120A1641A001E5FCE /* UIScrollView+YNPageExtend.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+YNPageExtend.h"; sourceTree = "<group>"; };
-		2E88609220A1641A001E5FCE /* UIScrollView+YNPageExtend.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+YNPageExtend.m"; sourceTree = "<group>"; };
 		2E89D008208C569700D038D6 /* YNPageViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YNPageViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E89D00B208C569700D038D6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2E89D00C208C569700D038D6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -200,14 +220,6 @@
 		2E89D02D208C5A1100D038D6 /* YNPageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YNPageViewController.m; sourceTree = "<group>"; };
 		2E89D02F208C5AFE00D038D6 /* YNPageConfigration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YNPageConfigration.h; sourceTree = "<group>"; };
 		2E89D030208C5AFE00D038D6 /* YNPageConfigration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YNPageConfigration.m; sourceTree = "<group>"; };
-		2E89D035208C5B8F00D038D6 /* YNPageScrollMenuView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YNPageScrollMenuView.h; sourceTree = "<group>"; };
-		2E89D036208C5B8F00D038D6 /* YNPageScrollMenuView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YNPageScrollMenuView.m; sourceTree = "<group>"; };
-		2E89D038208C5FD000D038D6 /* YNPageScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YNPageScrollView.h; sourceTree = "<group>"; };
-		2E89D039208C5FD000D038D6 /* YNPageScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YNPageScrollView.m; sourceTree = "<group>"; };
-		2E89D03C208C706500D038D6 /* UIView+YNPageExtend.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+YNPageExtend.h"; sourceTree = "<group>"; };
-		2E89D03D208C706500D038D6 /* UIView+YNPageExtend.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+YNPageExtend.m"; sourceTree = "<group>"; };
-		2E95435C20B81DB5000E963C /* UIViewController+YNPageExtend.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+YNPageExtend.h"; sourceTree = "<group>"; };
-		2E95435D20B81DB5000E963C /* UIViewController+YNPageExtend.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+YNPageExtend.m"; sourceTree = "<group>"; };
 		2EFDC1D320E0E9B10018455F /* YNScrollMenuStyleVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YNScrollMenuStyleVC.h; sourceTree = "<group>"; };
 		2EFDC1D420E0E9B10018455F /* YNScrollMenuStyleVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YNScrollMenuStyleVC.m; sourceTree = "<group>"; };
 		2EFDC1D720E213440018455F /* YNLoadPageVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YNLoadPageVC.h; sourceTree = "<group>"; };
@@ -227,11 +239,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2E3F8D1C20F8B0FA009FDA84 /* View */ = {
+		2E3F8DCE20F9FA6A009FDA84 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2E3F8DCF20F9FA6A009FDA84 /* YNPageHeaderScrollView.h */,
+				2E3F8DD020F9FA6A009FDA84 /* YNPageHeaderScrollView.m */,
+				2E3F8DD120F9FA6A009FDA84 /* YNPageScrollMenuView.h */,
+				2E3F8DD220F9FA6A009FDA84 /* YNPageScrollMenuView.m */,
+				2E3F8DD320F9FA6A009FDA84 /* YNPageScrollView.h */,
+				2E3F8DD420F9FA6A009FDA84 /* YNPageScrollView.m */,
+				2E3F8DE220FA0C0B009FDA84 /* YNPageTableView.h */,
+				2E3F8DE320FA0C0B009FDA84 /* YNPageTableView.m */,
+				2E3F8DE520FA0C45009FDA84 /* YNPageCollectionView.h */,
+				2E3F8DE620FA0C45009FDA84 /* YNPageCollectionView.m */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		2E3F8DD520F9FA6A009FDA84 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				2E3F8DD620F9FA6A009FDA84 /* UIScrollView+YNPageExtend.h */,
+				2E3F8DD720F9FA6A009FDA84 /* UIScrollView+YNPageExtend.m */,
+				2E3F8DD820F9FA6A009FDA84 /* UIView+YNPageExtend.h */,
+				2E3F8DD920F9FA6A009FDA84 /* UIView+YNPageExtend.m */,
+				2E3F8DDA20F9FA6A009FDA84 /* UIViewController+YNPageExtend.h */,
+				2E3F8DDB20F9FA6A009FDA84 /* UIViewController+YNPageExtend.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		2E3F8DE820FA10F1009FDA84 /* SuspendTopPausePageVC */ = {
+			isa = PBXGroup;
+			children = (
+				2E3F8DE920FA112D009FDA84 /* YNSuspendTopPausePageVC.h */,
+				2E3F8DEA20FA112D009FDA84 /* YNSuspendTopPausePageVC.m */,
+				2E3F8DEC20FA1304009FDA84 /* YNSuspendTopPauseBaseTableViewVC.h */,
+				2E3F8DED20FA1304009FDA84 /* YNSuspendTopPauseBaseTableViewVC.m */,
+			);
+			path = SuspendTopPausePageVC;
 			sourceTree = "<group>";
 		};
 		2E5F7D7820DCA5430069962B /* Demos */ = {
@@ -240,6 +286,7 @@
 				2E5F7E9520DCA8A30069962B /* BaseVC */,
 				2E5F7E9C20DCABCC0069962B /* SuspendCenterPageVC */,
 				2E5F7E9D20DCABCC0069962B /* SuspendTopPageVC */,
+				2E3F8DE820FA10F1009FDA84 /* SuspendTopPausePageVC */,
 				2E5F7E9920DCAA700069962B /* TopPageVC */,
 				2E5F7E9A20DCAA830069962B /* NavPageVC */,
 				2EFDC1D620E213310018455F /* LoadPageVC */,
@@ -452,7 +499,6 @@
 		2E5F7E9520DCA8A30069962B /* BaseVC */ = {
 			isa = PBXGroup;
 			children = (
-				2E3F8D1C20F8B0FA009FDA84 /* View */,
 				2E5F7E9620DCA8AF0069962B /* BaseTableViewVC.h */,
 				2E5F7E9720DCA8AF0069962B /* BaseTableViewVC.m */,
 				2E5F7EA420DCEB2C0069962B /* BaseCollectionViewVC.h */,
@@ -556,22 +602,12 @@
 		2E89D022208C56DE00D038D6 /* YNPageViewController */ = {
 			isa = PBXGroup;
 			children = (
+				2E3F8DD520F9FA6A009FDA84 /* Category */,
+				2E3F8DCE20F9FA6A009FDA84 /* View */,
 				2E89D02C208C5A1100D038D6 /* YNPageViewController.h */,
 				2E89D02D208C5A1100D038D6 /* YNPageViewController.m */,
 				2E89D02F208C5AFE00D038D6 /* YNPageConfigration.h */,
 				2E89D030208C5AFE00D038D6 /* YNPageConfigration.m */,
-				2E89D035208C5B8F00D038D6 /* YNPageScrollMenuView.h */,
-				2E89D036208C5B8F00D038D6 /* YNPageScrollMenuView.m */,
-				2E89D038208C5FD000D038D6 /* YNPageScrollView.h */,
-				2E89D039208C5FD000D038D6 /* YNPageScrollView.m */,
-				2E89D03C208C706500D038D6 /* UIView+YNPageExtend.h */,
-				2E89D03D208C706500D038D6 /* UIView+YNPageExtend.m */,
-				2E88609120A1641A001E5FCE /* UIScrollView+YNPageExtend.h */,
-				2E88609220A1641A001E5FCE /* UIScrollView+YNPageExtend.m */,
-				2E76F4EC20B7ACC8009D98C2 /* YNPageHeaderScrollView.h */,
-				2E76F4ED20B7ACC8009D98C2 /* YNPageHeaderScrollView.m */,
-				2E95435C20B81DB5000E963C /* UIViewController+YNPageExtend.h */,
-				2E95435D20B81DB5000E963C /* UIViewController+YNPageExtend.m */,
 			);
 			path = YNPageViewController;
 			sourceTree = "<group>";
@@ -669,22 +705,23 @@
 				2E5F7E8F20DCA5860069962B /* UIButton+WebCache.m in Sources */,
 				2E5F7EAC20E090480069962B /* YNSuspendTopPageVC.m in Sources */,
 				2E5F7E7820DCA5860069962B /* MJRefreshNormalHeader.m in Sources */,
+				2E3F8DDC20F9FA6A009FDA84 /* YNPageHeaderScrollView.m in Sources */,
 				2E5F7E8220DCA5860069962B /* TADotView.m in Sources */,
 				2E5F7E6E20DCA5860069962B /* MJRefreshComponent.m in Sources */,
-				2E89D03E208C706500D038D6 /* UIView+YNPageExtend.m in Sources */,
+				2E3F8DDE20F9FA6A009FDA84 /* YNPageScrollView.m in Sources */,
 				2E5F7E8520DCA5860069962B /* SDCycleScrollView.m in Sources */,
 				2E5F7E8720DCA5860069962B /* NSData+ImageContentType.m in Sources */,
 				2E89D031208C5AFE00D038D6 /* YNPageConfigration.m in Sources */,
-				2E89D037208C5B8F00D038D6 /* YNPageScrollMenuView.m in Sources */,
 				2E5F7EA020DCAC840069962B /* YNSuspendCenterPageVC.m in Sources */,
-				2E89D03A208C5FD000D038D6 /* YNPageScrollView.m in Sources */,
 				2E5F7E7220DCA5860069962B /* MJRefreshAutoNormalFooter.m in Sources */,
 				2E5F7E6F20DCA5860069962B /* MJRefreshFooter.m in Sources */,
 				2E5F7E8420DCA5860069962B /* SDCollectionViewCell.m in Sources */,
+				2E3F8DE120F9FA6A009FDA84 /* UIViewController+YNPageExtend.m in Sources */,
 				2E5F7E8920DCA5860069962B /* SDWebImageCompat.m in Sources */,
 				2E5F7E8D20DCA5860069962B /* SDWebImageManager.m in Sources */,
 				2E5F7E8120DCA5860069962B /* TAAnimatedDotView.m in Sources */,
 				2E5F7E9420DCA5860069962B /* UIView+WebCacheOperation.m in Sources */,
+				2E3F8DE020F9FA6A009FDA84 /* UIView+YNPageExtend.m in Sources */,
 				2E5F7EAF20E090C30069962B /* YNSuspendTopBaseTableViewVC.m in Sources */,
 				2E5F7E8820DCA5860069962B /* SDImageCache.m in Sources */,
 				2E5F7D8220DCA5430069962B /* YNTestPageVC.m in Sources */,
@@ -692,7 +729,9 @@
 				2E5F7E8320DCA5860069962B /* TAPageControl.m in Sources */,
 				2E5F7E7920DCA5860069962B /* MJRefreshStateHeader.m in Sources */,
 				2E5F7E8B20DCA5860069962B /* SDWebImageDownloader.m in Sources */,
+				2E3F8DDF20F9FA6A009FDA84 /* UIScrollView+YNPageExtend.m in Sources */,
 				2E5F7EA920DCEEF10069962B /* YNNavPageVC.m in Sources */,
+				2E3F8DEB20FA112D009FDA84 /* YNSuspendTopPausePageVC.m in Sources */,
 				2E5F7E7120DCA5860069962B /* MJRefreshAutoGifFooter.m in Sources */,
 				2E89D01B208C569700D038D6 /* main.m in Sources */,
 				2EFDC1D920E213440018455F /* YNLoadPageVC.m in Sources */,
@@ -700,16 +739,16 @@
 				2E5F7E9120DCA5860069962B /* UIImage+MultiFormat.m in Sources */,
 				2E5F7E6D20DCA5860069962B /* MJRefreshBackFooter.m in Sources */,
 				2E5F7E7C20DCA5860069962B /* NSBundle+MJRefresh.m in Sources */,
+				2E3F8DE720FA0C45009FDA84 /* YNPageCollectionView.m in Sources */,
 				2E5F7E7620DCA5860069962B /* MJRefreshBackStateFooter.m in Sources */,
 				2E5F7E7720DCA5860069962B /* MJRefreshGifHeader.m in Sources */,
 				2E89D02E208C5A1100D038D6 /* YNPageViewController.m in Sources */,
 				2E5F7E8620DCA5860069962B /* UIView+SDExtension.m in Sources */,
 				2E89D00D208C569700D038D6 /* AppDelegate.m in Sources */,
-				2E88609320A1641A001E5FCE /* UIScrollView+YNPageExtend.m in Sources */,
-				2E95435E20B81DB5000E963C /* UIViewController+YNPageExtend.m in Sources */,
 				2EFDC1DC20E2156E0018455F /* BaseViewController.m in Sources */,
 				2E5F7E8E20DCA5860069962B /* SDWebImagePrefetcher.m in Sources */,
 				2E5F7E6C20DCA5860069962B /* MJRefreshAutoFooter.m in Sources */,
+				2E3F8DDD20F9FA6A009FDA84 /* YNPageScrollMenuView.m in Sources */,
 				2E5F7E7B20DCA5860069962B /* MJRefreshConst.m in Sources */,
 				2E5F7E9220DCA5860069962B /* UIImageView+HighlightedWebCache.m in Sources */,
 				2E5F7E7420DCA5860069962B /* MJRefreshBackGifFooter.m in Sources */,
@@ -721,15 +760,16 @@
 				2E5F7E8020DCA5860069962B /* TAAbstractDotView.m in Sources */,
 				2E5F7E9320DCA5860069962B /* UIImageView+WebCache.m in Sources */,
 				2E5F7E7020DCA5860069962B /* MJRefreshHeader.m in Sources */,
+				2E3F8DEE20FA1304009FDA84 /* YNSuspendTopPauseBaseTableViewVC.m in Sources */,
 				2E5F7E7320DCA5860069962B /* MJRefreshAutoStateFooter.m in Sources */,
 				2E5F7EA320DCE7280069962B /* YNTopPageVC.m in Sources */,
 				2E88608F20A15CF7001E5FCE /* YNNavigationController.m in Sources */,
+				2E3F8DE420FA0C0B009FDA84 /* YNPageTableView.m in Sources */,
 				2E5F7E8C20DCA5860069962B /* SDWebImageDownloaderOperation.m in Sources */,
 				2E5F7E7520DCA5860069962B /* MJRefreshBackNormalFooter.m in Sources */,
 				2E5F7D8120DCA5430069962B /* YNTestBaseVC.m in Sources */,
 				2E5F7E7D20DCA5860069962B /* UIScrollView+MJExtension.m in Sources */,
 				2E5F7E7F20DCA5860069962B /* UIView+MJExtension.m in Sources */,
-				2E76F4EE20B7ACC8009D98C2 /* YNPageHeaderScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

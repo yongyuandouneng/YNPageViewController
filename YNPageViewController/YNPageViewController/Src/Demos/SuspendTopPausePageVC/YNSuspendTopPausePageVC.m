@@ -1,22 +1,27 @@
 //
-//  YNTestVC.m
+//  YNSuspendTopPausePageVC.m
 //  YNPageViewController
 //
-//  Created by ZYN on 2018/5/8.
+//  Created by ZYN on 2018/7/14.
 //  Copyright © 2018年 yongneng. All rights reserved.
 //
 
-#import "YNTestPageVC.h"
-#import "YNTestBaseVC.h"
+#import "YNSuspendTopPausePageVC.h"
 #import "SDCycleScrollView.h"
+#import "BaseTableViewVC.h"
+#import "YNSuspendTopPauseBaseTableViewVC.h"
+#import "MJRefresh.h"
+#import "UIView+YNPageExtend.h"
 
-@interface YNTestPageVC () <YNPageViewControllerDataSource, YNPageViewControllerDelegate, SDCycleScrollViewDelegate>
+#define kOpenRefreshHeaderViewHeight 0
+
+@interface YNSuspendTopPausePageVC () <YNPageViewControllerDataSource, YNPageViewControllerDelegate, SDCycleScrollViewDelegate>
 
 @property (nonatomic, copy) NSArray *imagesURLs;
 
 @end
 
-@implementation YNTestPageVC
+@implementation YNSuspendTopPausePageVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -43,7 +48,6 @@
 }
 
 
-
 #pragma mark - Event Response
 
 #pragma mark - --Notification Event Response
@@ -56,60 +60,70 @@
 
 #pragma mark - Custom Delegate
 
-
-
 #pragma mark - Public Function
 
-+ (instancetype)testPageVC {
++ (instancetype)suspendTopPausePageVC {
     
     YNPageConfigration *configration = [YNPageConfigration defaultConfig];
     configration.pageStyle = YNPageStyleSuspensionTopPause;
-//    configration.pageStyle = YNPageStyleNavigation;
-//    configration.pageStyle = YNPageStyleTop;
     configration.headerViewCouldScale = YES;
-//    configration.headerViewScaleMode = YNPageHeaderViewScaleModeCenter;
-    configration.headerViewScaleMode = YNPageHeaderViewScaleModeTop;
     configration.showTabbar = NO;
     configration.showNavigation = YES;
     configration.scrollMenu = NO;
     configration.aligmentModeCenter = NO;
     configration.lineWidthEqualFontWidth = NO;
-//    configration.menuWidth = 250;
+    configration.showBottomLine = YES;
     
-    YNTestPageVC *vc = [YNTestPageVC pageViewControllerWithControllers:[self getArrayVCs]
-                                                                titles:[self getArrayTitles]
-                                                                config:configration];
+    YNSuspendTopPausePageVC *vc = [YNSuspendTopPausePageVC pageViewControllerWithControllers:[self getArrayVCs]
+                                                                                      titles:[self getArrayTitles]
+                                                                                      config:configration];
     vc.dataSource = vc;
     vc.delegate = vc;
+    
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, kSCREEN_HEIGHT)];
+    headerView.layer.contents = (id)[UIImage imageNamed:@"mine_header_bg"].CGImage;
     /// 轮播图
     SDCycleScrollView *autoScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 200) imageURLStringsGroup:vc.imagesURLs];
     autoScrollView.delegate = vc;
-//
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 200)];
-    headerView.backgroundColor = [UIColor redColor];
-    vc.headerView = headerView;
     
-//    vc.pageIndex = 1;
-//    设置拉伸View
-//    UIImageView *imageViewScale = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 200)];
-//    imageViewScale.image = [UIImage imageNamed:@"mine_header_bg"];
-//    vc.scaleBackgroundView = imageViewScale;
+    vc.headerView = autoScrollView;
+    
+//    vc.headerView = headerView;
+    /// 指定默认选择index 页面
+    /// vc.pageIndex = 0;
+    
+    vc.bgScrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            if (kOpenRefreshHeaderViewHeight) {
+                vc.headerView.yn_height = 300;
+                [vc.bgScrollView.mj_header endRefreshing];
+                [vc reloadSuspendHeaderViewFrame];
+            } else {
+                [vc.bgScrollView.mj_header endRefreshing];
+            }
+        });
+    }];
+    
     
     return vc;
 }
 
-
 + (NSArray *)getArrayVCs {
     
-    YNTestBaseVC *vc_1 = [[YNTestBaseVC alloc] init];
+    YNSuspendTopPauseBaseTableViewVC *vc_1 = [[YNSuspendTopPauseBaseTableViewVC alloc] init];
+    vc_1.cellTitle = @"鞋子";
     
-    YNTestBaseVC *vc_2 = [[YNTestBaseVC alloc] init];
+    YNSuspendTopPauseBaseTableViewVC *vc_2 = [[YNSuspendTopPauseBaseTableViewVC alloc] init];
+    vc_2.cellTitle = @"衣服";
     
-    return @[vc_1, vc_2];
+    YNSuspendTopPauseBaseTableViewVC *vc_3 = [[YNSuspendTopPauseBaseTableViewVC alloc] init];
+    vc_3.cellTitle = @"帽子";
+    return @[vc_1, vc_2, vc_3];
 }
 
 + (NSArray *)getArrayTitles {
-    return @[@"鞋子", @"衣服"];
+    return @[@"鞋子", @"衣服", @"帽子"];
 }
 
 #pragma mark - Private Function
@@ -126,15 +140,16 @@
 }
 #pragma mark - YNPageViewControllerDataSource
 - (UIScrollView *)pageViewController:(YNPageViewController *)pageViewController pageForIndex:(NSInteger)index {
-    YNTestBaseVC *baseVC = pageViewController.controllersM[index];
+    UIViewController *vc = pageViewController.controllersM[index];
     
-    return [baseVC tableView];
+    return [(YNSuspendTopPauseBaseTableViewVC *)vc tableView];
 }
 #pragma mark - YNPageViewControllerDelegate
-- (void)pageViewController:(YNPageViewController *)pageViewController contentOffsetY:(CGFloat)contentOffset progress:(CGFloat)progress {
-//    NSLog(@"--- contentOffset = %f,    progress = %f", contentOffset, progress);
+- (void)pageViewController:(YNPageViewController *)pageViewController
+            contentOffsetY:(CGFloat)contentOffset
+                  progress:(CGFloat)progress {
+    //        NSLog(@"--- contentOffset = %f,    progress = %f", contentOffset, progress);
 }
-
 
 #pragma mark - SDCycleScrollViewDelegate
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
@@ -142,3 +157,5 @@
 }
 
 @end
+
+

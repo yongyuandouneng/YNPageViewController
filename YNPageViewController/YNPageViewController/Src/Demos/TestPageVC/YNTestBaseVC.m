@@ -8,6 +8,7 @@
 
 #import "YNTestBaseVC.h"
 #import "MJRefresh.h"
+#import "YNPageTableView.h"
 
 @interface YNTestBaseVC () <UITableViewDataSource, UITableViewDelegate>
 
@@ -21,10 +22,10 @@
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 200)];
     headerView.backgroundColor = [UIColor greenColor];
     
-    self.tableView.tableHeaderView = headerView;
+//    self.tableView.tableHeaderView = headerView;
     [self.view addSubview:self.tableView];
     
-    [self addTableViewRefresh];
+//    [self addTableViewRefresh];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -94,7 +95,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return 10;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -127,7 +128,7 @@
 
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
+        _tableView = [[YNPageTableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
     }

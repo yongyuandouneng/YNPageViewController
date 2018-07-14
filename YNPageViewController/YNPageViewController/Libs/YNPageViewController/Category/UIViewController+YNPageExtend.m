@@ -19,4 +19,9 @@
     return v.config;
 }
 
+- (YNPageScrollView *)bgScrollView {
+    YNPageViewController *v = (YNPageViewController *)self.parentViewController;
+    return v.bgScrollView;
+}
+
 @end

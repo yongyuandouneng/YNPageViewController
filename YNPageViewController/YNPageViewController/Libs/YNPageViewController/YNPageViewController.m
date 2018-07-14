@@ -58,7 +58,6 @@
         [self setSelectedPageIndex:self.pageIndex];
     }
     
-    self.pageScrollView.backgroundColor = [UIColor clearColor];
 }
 
 #pragma mark - Initialize Method
@@ -114,11 +113,19 @@
                                                                                     delegate:self currentIndex:self.pageIndex];
     self.scrollMenuView = scrollMenuView;
     
-    if ([self isNavigationStyle]) {
-        self.navigationItem.titleView = self.scrollMenuView;
-        return;
+    switch (self.config.pageStyle) {
+        case YNPageStyleTop:
+        case YNPageStyleSuspensionTop:
+        case YNPageStyleSuspensionCenter:
+            [self.view addSubview:self.scrollMenuView];
+            break;
+        case YNPageStyleNavigation:
+            self.navigationItem.titleView = self.scrollMenuView;
+            break;
+        case YNPageStyleSuspensionTopPause:
+            [self.bgScrollView addSubview:self.scrollMenuView];
+            break;
     }
-    [self.view addSubview:self.scrollMenuView];
     
 }
 
@@ -204,6 +211,8 @@
 /// scrollView滚动结束
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     
+    if (scrollView == self.bgScrollView) return;
+    
     [self replaceHeaderViewFromView];
     [self removeViewController];
     [self.scrollMenuView adjustItemPositionWithCurrentIndex:self.pageIndex];
@@ -215,6 +224,11 @@
 }
 /// scrollView滚动ing
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    if (scrollView == self.bgScrollView) {
+        [self calcuSuspendTopPauseWithBgScrollView:scrollView];
+        return;
+    }
     
     CGFloat currentPostion = scrollView.contentOffset.x;
 
@@ -269,6 +283,8 @@
         [self invokeDelegateForScrollWithOffsetY:offsetY];
         
         [self headerScaleWithOffsetY:offsetY];
+    } else if ([self isSuspensionTopPauseStyle]) {
+        [self calcuSuspendTopPauseWithCurrentScrollView:scrollView];
     }
 }
 
@@ -387,6 +403,10 @@
         if (!self.pageScrollView.isDragging) {
             [self scrollViewDidEndDecelerating:self.pageScrollView];
         }
+    } else if ([self isSuspensionTopPauseStyle]) {
+        /// 重新初始化headerBgView
+        [self setupHeaderBgView];
+        [self setupPageScrollView];
     }
 }
 
@@ -411,22 +431,39 @@
     [self setupPageScrollView];
 
 }
-
 /// 初始化PageScrollView
 - (void)setupPageScrollView {
-    
-    [self.view addSubview:self.pageScrollView];
     
     CGFloat navHeight = self.config.showNavigation ? kYNPAGE_NAVHEIGHT : 0;
     CGFloat tabHeight = self.config.showTabbar ? kYNPAGE_TABBARHEIGHT : 0;
     
     CGFloat contentHeight = kYNPAGE_SCREEN_HEIGHT - navHeight - tabHeight;
-    
-    self.pageScrollView.frame = CGRectMake(0, [self isTopStyle] ? self.config.menuHeight : 0, kYNPAGE_SCREEN_WIDTH, ([self isTopStyle] ? contentHeight - self.config.menuHeight : contentHeight));
-    
-    self.pageScrollView.contentSize = CGSizeMake(kYNPAGE_SCREEN_WIDTH * self.controllersM.count, contentHeight - ([self isTopStyle] ? self.config.menuHeight : 0));
-    
-    self.config.contentHeight = self.pageScrollView.yn_height - self.config.menuHeight;
+    if ([self isSuspensionTopPauseStyle]) {
+        self.bgScrollView.frame = CGRectMake(0, 0, kYNPAGE_SCREEN_WIDTH, contentHeight);
+        self.bgScrollView.contentSize = CGSizeMake(kYNPAGE_SCREEN_WIDTH, contentHeight + self.headerBgView.yn_height);
+        
+        self.scrollMenuView.yn_y = self.headerBgView.yn_bottom;
+        
+        self.pageScrollView.frame = CGRectMake(0, self.scrollMenuView.yn_bottom, kYNPAGE_SCREEN_WIDTH, contentHeight - self.config.menuHeight);
+        
+        self.pageScrollView.contentSize = CGSizeMake(kYNPAGE_SCREEN_WIDTH * self.controllersM.count, self.pageScrollView.yn_height);
+        
+        self.config.contentHeight = self.pageScrollView.yn_height;
+        
+        [self.bgScrollView addSubview:self.pageScrollView];
+        
+        [self.view addSubview:self.bgScrollView];
+        
+    } else {
+        
+        self.pageScrollView.frame = CGRectMake(0, [self isTopStyle] ? self.config.menuHeight : 0, kYNPAGE_SCREEN_WIDTH, ([self isTopStyle] ? contentHeight - self.config.menuHeight : contentHeight));
+        
+        self.pageScrollView.contentSize = CGSizeMake(kYNPAGE_SCREEN_WIDTH * self.controllersM.count, contentHeight - ([self isTopStyle] ? self.config.menuHeight : 0));
+        
+        self.config.contentHeight = self.pageScrollView.yn_height - self.config.menuHeight;
+        
+        [self.view addSubview:self.pageScrollView];
+    }
 }
 
 /// 初始化ScrollView
@@ -436,9 +473,10 @@
 
 /// 初始化背景headerView
 - (void)setupHeaderBgView {
-    if ([self isSuspensionBottomStyle] || [self isSuspensionTopStyle]) {
+    if ([self isSuspensionBottomStyle] || [self isSuspensionTopStyle] || [self isSuspensionTopPauseStyle]) {
+#if DEBUG
         NSAssert(self.headerView, @"Please set headerView !");
-        
+#endif
         self.headerBgView = [[YNPageHeaderScrollView alloc] initWithFrame:self.headerView.bounds];
         self.headerBgView.contentSize = CGSizeMake(kYNPAGE_SCREEN_WIDTH * 2, self.headerView.yn_height);
         [self.headerBgView addSubview:self.headerView];
@@ -454,6 +492,11 @@
         _insetTop = self.headerBgView.yn_height + self.config.menuHeight;
         
         _scrollMenuViewOriginY = _headerView.yn_height;
+        
+        if ([self isSuspensionTopPauseStyle]) {
+            _insetTop = self.headerBgView.yn_height;
+            [self.bgScrollView addSubview:self.headerBgView];
+        }
     }
 }
 
@@ -501,6 +544,38 @@
         }
     }
 }
+/// 计算悬浮顶部偏移量 - BgScrollView
+- (void)calcuSuspendTopPauseWithBgScrollView:(UIScrollView *)scrollView {
+    if ([self isSuspensionTopPauseStyle] && scrollView == self.bgScrollView) {
+        CGFloat offsetY = scrollView.contentOffset.y;
+        if (offsetY >= _insetTop) {
+            scrollView.contentOffset = CGPointMake(0, _insetTop);
+        } else {
+            UIScrollView *targetScroll = self.currentScrollView;
+            if (targetScroll.contentOffset.y > 0) {
+                scrollView.contentOffset = CGPointMake(0, _insetTop);
+            }
+        }
+    }
+}
+/// 计算悬浮顶部偏移量 - CurrentScrollView
+- (void)calcuSuspendTopPauseWithCurrentScrollView:(UIScrollView *)scrollView {
+    if ([self isSuspensionTopPauseStyle]) {
+        if (scrollView.contentOffset.y < 0) {
+            scrollView.contentOffset = CGPointMake(0, 0);
+            for (NSString *title in self.cacheDictM.allKeys) {
+                UIScrollView *scrollView = [self getScrollViewWithPageIndex:[self getPageIndexWithTitle:title]];
+                if (scrollView.contentOffset.y != 0) {
+                    scrollView.contentOffset = CGPointMake(0, 0);;
+                }
+            }
+        } else {
+            if (self.bgScrollView.contentOffset.y < _insetTop) {
+                scrollView.contentOffset = CGPointMake(0, 0);
+            }
+        }
+    }
+}
 /// 移除缓存控制器
 - (void)removeViewController {
     for (int i = 0; i < self.controllersM.count; i ++) {
@@ -542,13 +617,13 @@
 
 /// 检查参数
 - (void)checkParams {
-    
+#if DEBUG
     NSAssert(self.controllersM.count != 0 || self.controllersM, @"ViewControllers`count is 0 or nil");
     
     NSAssert(self.titlesM.count != 0 || self.titlesM, @"TitleArray`count is 0 or nil,");
     
     NSAssert(self.controllersM.count == self.titlesM.count, @"ViewControllers`count is not equal titleArray!");
-    
+#endif
     BOOL isHasNotEqualTitle = YES;
     for (int i = 0; i < self.titlesM.count; i++) {
         for (int j = i + 1; j < self.titlesM.count; j++) {
@@ -558,8 +633,9 @@
             }
         }
     }
+#if DEBUG
     NSAssert(isHasNotEqualTitle, @"TitleArray Not allow equal title.");
-    
+#endif
 }
 #pragma mark - 样式取值
 - (BOOL)isTopStyle {
@@ -578,8 +654,15 @@
     return self.config.pageStyle == YNPageStyleSuspensionCenter;
 }
 
+- (BOOL)isSuspensionTopPauseStyle {
+    return self.config.pageStyle == YNPageStyleSuspensionTopPause;
+}
+
 - (NSString *)titleWithIndex:(NSInteger)index {
-    return  self.titlesM[index];
+    return self.titlesM[index];
+}
+- (NSInteger)getPageIndexWithTitle:(NSString *)title {
+    return [self.titlesM indexOfObject:title];
 }
 #pragma mark - Invoke Delegate Method
 /// 回调监听列表滚动代理
@@ -591,6 +674,21 @@
 }
 
 #pragma mark - Lazy Method
+
+- (YNPageScrollView *)bgScrollView {
+    if (!_bgScrollView) {
+        _bgScrollView = [[YNPageScrollView alloc] init];
+        _bgScrollView.showsVerticalScrollIndicator = NO;
+        _bgScrollView.showsHorizontalScrollIndicator = NO;
+        _bgScrollView.delegate = self;
+        _bgScrollView.backgroundColor = [UIColor whiteColor];
+        if (@available(iOS 11.0, *)) {
+            _bgScrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        }
+    }
+    return _bgScrollView;
+}
+
 - (YNPageScrollView *)pageScrollView {
     if (!_pageScrollView) {
         _pageScrollView = [[YNPageScrollView alloc] init];

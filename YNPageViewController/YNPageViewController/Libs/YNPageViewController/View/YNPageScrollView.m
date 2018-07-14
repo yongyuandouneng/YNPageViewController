@@ -8,6 +8,7 @@
 
 #import "YNPageScrollView.h"
 #import "UIView+YNPageExtend.h"
+#import <objc/runtime.h>
 
 @interface YNPageScrollView () <UIGestureRecognizerDelegate>
 

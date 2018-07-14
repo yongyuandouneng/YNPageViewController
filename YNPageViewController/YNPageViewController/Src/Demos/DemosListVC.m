@@ -14,14 +14,16 @@
 #import "YNSuspendTopPageVC.h"
 #import "YNScrollMenuStyleVC.h"
 #import "YNLoadPageVC.h"
+#import "YNSuspendTopPausePageVC.h"
 
 typedef NS_ENUM(NSInteger, YNVCType) {
     YNVCTypeSuspendCenterPageVC = 1,
     YNVCTypeSuspendTopPageVC = 2,
     YNVCTypeTopPageVC = 3,
-    YNVCTypeNavPageVC = 4,
-    YNVCTypeScrollMenuStyleVC = 5,
-    YNVCTypeLoadPageVC = 6,
+    YNVCTypeSuspendTopPausePageVC = 4,
+    YNVCTypeNavPageVC = 5,
+    YNVCTypeScrollMenuStyleVC = 6,
+    YNVCTypeLoadPageVC = 7,
     YNVCTypeYNTestPageVC = 100
 };
 
@@ -43,6 +45,7 @@ typedef NS_ENUM(NSInteger, YNVCType) {
 
     self.dataArrayM = @[@{@"title" : @"悬浮样式--下拉刷新在中间", @"type" : @(YNVCTypeSuspendCenterPageVC)},
                         @{@"title" : @"悬浮样式--下拉刷新在顶部", @"type" : @(YNVCTypeSuspendTopPageVC)},
+                        @{@"title" : @"悬浮样式--下拉刷新在顶部(QQ联系人样式)", @"type" : @(YNVCTypeSuspendTopPausePageVC)},
                         @{@"title" : @"顶部样式", @"type" : @(YNVCTypeTopPageVC)},
                         @{@"title" : @"导航条样式", @"type" : @(YNVCTypeNavPageVC)},
                         @{@"title" : @"菜单栏样式", @"type" : @(YNVCTypeScrollMenuStyleVC)},
@@ -98,6 +101,7 @@ typedef NS_ENUM(NSInteger, YNVCType) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:identifier];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.textLabel.font = [UIFont systemFontOfSize:16];
     }
     NSDictionary *dict = self.dataArrayM[indexPath.row];
     cell.textLabel.text = dict[@"title"];
@@ -121,6 +125,11 @@ typedef NS_ENUM(NSInteger, YNVCType) {
         case YNVCTypeSuspendCenterPageVC:
         {
             vc = [YNSuspendCenterPageVC suspendCenterPageVC];
+        }
+            break;
+        case YNVCTypeSuspendTopPausePageVC:
+        {
+            vc = [YNSuspendTopPausePageVC suspendTopPausePageVC];
         }
             break;
         case YNVCTypeTopPageVC:

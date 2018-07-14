@@ -11,7 +11,7 @@
 #import "BaseTableViewVC.h"
 #import "YNSuspendTopBaseTableViewVC.h"
 
-@interface YNSuspendTopPageVC () <YNPageViewControllerDataSource, YNPageViewControllerDelegate>
+@interface YNSuspendTopPageVC () <YNPageViewControllerDataSource, YNPageViewControllerDelegate, SDCycleScrollViewDelegate>
 
 @property (nonatomic, copy) NSArray *imagesURLs;
 
