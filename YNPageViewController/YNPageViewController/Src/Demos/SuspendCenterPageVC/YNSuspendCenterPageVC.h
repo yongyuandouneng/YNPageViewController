@@ -7,9 +7,12 @@
 //
 
 #import "YNPageViewController.h"
+#import "YNPageConfigration.h"
 
 @interface YNSuspendCenterPageVC : YNPageViewController
 
 + (instancetype)suspendCenterPageVC;
+
++ (instancetype)suspendCenterPageVCWithConfig:(YNPageConfigration *)config;
 
 @end

@@ -10,14 +10,32 @@
 #import "YNPageViewController.h"
 #import "YNSuspendCenterPageVC.h"
 #import "YNTopPageVC.h"
+#import "UIView+YNPageExtend.h"
 
-@interface YNLoadPageVC () <YNPageViewControllerDelegate, YNPageViewControllerDataSource>
+/// 是否隐藏导航条
+#define kHiddenNavigationBar 0
+
+@interface YNLoadPageVC ()
 
 @property (nonatomic, strong) UIActivityIndicatorView *indicatorView;
 
 @end
 
 @implementation YNLoadPageVC
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (kHiddenNavigationBar) {
+        [self.navigationController setNavigationBarHidden:YES animated:animated];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    if (kHiddenNavigationBar) {
+        [self.navigationController setNavigationBarHidden:NO animated:animated];
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,12 +60,28 @@
 
 - (void)setupPageVC {
     
-//    YNTopPageVC *pageVC = [YNTopPageVC topPageVC];
+    YNPageConfigration *configration = [YNPageConfigration defaultConfig];
+    configration.pageStyle = YNPageStyleSuspensionCenter;
+    configration.headerViewCouldScale = YES;
+    //    configration.headerViewScaleMode = YNPageHeaderViewScaleModeCenter;
+    configration.headerViewScaleMode = YNPageHeaderViewScaleModeTop;
+    /// 控制tabbar 和 nav
+    configration.showTabbar = NO;
+    configration.showNavigation = YES;
+    configration.scrollMenu = NO;
+    configration.aligmentModeCenter = NO;
+    configration.lineWidthEqualFontWidth = NO;
+    configration.showBottomLine = YES;
     
-    YNSuspendCenterPageVC *pageVC = [YNSuspendCenterPageVC suspendCenterPageVC];
+    YNSuspendCenterPageVC *pageVC = [YNSuspendCenterPageVC suspendCenterPageVCWithConfig:configration];
     
     /// 作为自控制器加入到当前控制器
     [pageVC addSelfToParentViewController:self];
+    
+    /// 如果隐藏了导航条可以 适当改y值
+    if (kHiddenNavigationBar) {
+        pageVC.view.yn_y = kYNPAGE_NAVHEIGHT;
+    }
     
 }
 

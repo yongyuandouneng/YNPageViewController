@@ -60,7 +60,6 @@
 #pragma mark - Public Function
 
 + (instancetype)suspendCenterPageVC {
-    
     YNPageConfigration *configration = [YNPageConfigration defaultConfig];
     configration.pageStyle = YNPageStyleSuspensionCenter;
     configration.headerViewCouldScale = YES;
@@ -73,9 +72,14 @@
     configration.lineWidthEqualFontWidth = NO;
     configration.showBottomLine = YES;
     
+    return [self suspendCenterPageVCWithConfig:configration];
+}
+
++ (instancetype)suspendCenterPageVCWithConfig:(YNPageConfigration *)config {
+    
     YNSuspendCenterPageVC *vc = [YNSuspendCenterPageVC pageViewControllerWithControllers:[self getArrayVCs]
-                                                                titles:[self getArrayTitles]
-                                                                config:configration];
+                                                                                  titles:[self getArrayTitles]
+                                                                                  config:config];
     vc.dataSource = vc;
     vc.delegate = vc;
     /// 轮播图

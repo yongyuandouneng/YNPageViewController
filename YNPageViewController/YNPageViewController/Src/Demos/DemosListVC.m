@@ -49,7 +49,7 @@ typedef NS_ENUM(NSInteger, YNVCType) {
                         @{@"title" : @"顶部样式", @"type" : @(YNVCTypeTopPageVC)},
                         @{@"title" : @"导航条样式", @"type" : @(YNVCTypeNavPageVC)},
                         @{@"title" : @"菜单栏样式", @"type" : @(YNVCTypeScrollMenuStyleVC)},
-                        @{@"title" : @"加载数据后显示页面", @"type" : @(YNVCTypeLoadPageVC)},
+                        @{@"title" : @"加载数据后显示页面(隐藏导航条)", @"type" : @(YNVCTypeLoadPageVC)},
                         @{@"title" : @"测试专用", @"type" : @(YNVCTypeYNTestPageVC)}
                         ].mutableCopy;
 }
