@@ -208,11 +208,20 @@
 }
 #pragma mark - UIScrollViewDelegate
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    if (scrollView == self.bgScrollView) return;
+    if ([self isSuspensionTopPauseStyle]) {
+        self.currentScrollView.scrollEnabled = NO;
+    }
+}
+
 /// scrollView滚动结束
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     
     if (scrollView == self.bgScrollView) return;
-    
+    if ([self isSuspensionTopPauseStyle]) {
+        self.currentScrollView.scrollEnabled = YES;
+    }
     [self replaceHeaderViewFromView];
     [self removeViewController];
     [self.scrollMenuView adjustItemPositionWithCurrentIndex:self.pageIndex];
