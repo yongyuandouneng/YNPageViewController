@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YNPageScrollView.h"
 
-@interface YNPageHeaderScrollView : UIScrollView
+@interface YNPageHeaderScrollView : YNPageScrollView
 
 @end
