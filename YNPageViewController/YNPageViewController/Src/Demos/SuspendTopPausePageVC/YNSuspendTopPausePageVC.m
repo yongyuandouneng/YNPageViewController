@@ -30,6 +30,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     NSLog(@"--%@--%@", [self class], NSStringFromSelector(_cmd));
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -40,6 +41,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     NSLog(@"--%@--%@", [self class], NSStringFromSelector(_cmd));
+     [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -68,12 +70,12 @@
     configration.pageStyle = YNPageStyleSuspensionTopPause;
     configration.headerViewCouldScale = YES;
     configration.showTabbar = NO;
-    configration.showNavigation = YES;
+    configration.showNavigation = NO;
     configration.scrollMenu = NO;
     configration.aligmentModeCenter = NO;
     configration.lineWidthEqualFontWidth = NO;
     configration.showBottomLine = YES;
-    
+    configration.suspenOffsetY = 64;
     YNSuspendTopPausePageVC *vc = [YNSuspendTopPausePageVC pageViewControllerWithControllers:[self getArrayVCs]
                                                                                       titles:[self getArrayTitles]
                                                                                       config:configration];

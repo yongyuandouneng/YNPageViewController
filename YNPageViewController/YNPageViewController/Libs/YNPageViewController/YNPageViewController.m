@@ -449,11 +449,11 @@
     CGFloat contentHeight = kYNPAGE_SCREEN_HEIGHT - navHeight - tabHeight;
     if ([self isSuspensionTopPauseStyle]) {
         self.bgScrollView.frame = CGRectMake(0, 0, kYNPAGE_SCREEN_WIDTH, contentHeight);
-        self.bgScrollView.contentSize = CGSizeMake(kYNPAGE_SCREEN_WIDTH, contentHeight + self.headerBgView.yn_height);
+        self.bgScrollView.contentSize = CGSizeMake(kYNPAGE_SCREEN_WIDTH, contentHeight + self.headerBgView.yn_height - self.config.suspenOffsetY);
         
         self.scrollMenuView.yn_y = self.headerBgView.yn_bottom;
         
-        self.pageScrollView.frame = CGRectMake(0, self.scrollMenuView.yn_bottom, kYNPAGE_SCREEN_WIDTH, contentHeight - self.config.menuHeight);
+        self.pageScrollView.frame = CGRectMake(0, self.scrollMenuView.yn_bottom, kYNPAGE_SCREEN_WIDTH, contentHeight - self.config.menuHeight  - self.config.suspenOffsetY);
         
         self.pageScrollView.contentSize = CGSizeMake(kYNPAGE_SCREEN_WIDTH * self.controllersM.count, self.pageScrollView.yn_height);
         
@@ -503,7 +503,7 @@
         _scrollMenuViewOriginY = _headerView.yn_height;
         
         if ([self isSuspensionTopPauseStyle]) {
-            _insetTop = self.headerBgView.yn_height;
+            _insetTop = self.headerBgView.yn_height - self.config.suspenOffsetY;
             [self.bgScrollView addSubview:self.headerBgView];
         }
     }
