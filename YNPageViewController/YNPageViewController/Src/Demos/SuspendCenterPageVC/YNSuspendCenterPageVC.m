@@ -71,7 +71,7 @@
     configration.aligmentModeCenter = NO;
     configration.lineWidthEqualFontWidth = NO;
     configration.showBottomLine = YES;
-    
+    configration.suspenOffsetY = 64;
     return [self suspendCenterPageVCWithConfig:configration];
 }
 

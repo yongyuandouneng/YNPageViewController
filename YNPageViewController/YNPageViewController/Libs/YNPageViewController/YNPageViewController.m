@@ -185,11 +185,11 @@
             if (self.supendStatus) {
                 /// 首次已经悬浮 设置初始化 偏移量
                 if (![self.cacheDictM objectForKey:title]) {
-                    [scrollView setContentOffset:CGPointMake(0, -self.config.menuHeight) animated:NO];
+                    [scrollView setContentOffset:CGPointMake(0, -self.config.menuHeight - self.config.suspenOffsetY) animated:NO];
                 } else {
                     /// 再次悬浮 已经加载过 设置偏移量
-                    if (scrollView.contentOffset.y < -self.config.menuHeight) {
-                        [scrollView setContentOffset:CGPointMake(0, -self.config.menuHeight) animated:NO];
+                    if (scrollView.contentOffset.y < -self.config.menuHeight - self.config.suspenOffsetY) {
+                        [scrollView setContentOffset:CGPointMake(0, -self.config.menuHeight - self.config.suspenOffsetY) animated:NO];
                     }
                 }
 
@@ -270,19 +270,21 @@
         if (scrollView != self.currentScrollView) return;
         
         CGFloat offsetY = scrollView.contentOffset.y;
-        
-        if (offsetY < -_insetTop) {
-            if ([self isSuspensionBottomStyle]) {
-                self.headerBgView.yn_y = offsetY;
-            }
-        } else {
-            self.headerBgView.yn_y = -_insetTop;
-        }
-        
+        /// 悬浮临界点
         if (offsetY > - self.scrollMenuView.yn_height - self.config.suspenOffsetY) {
+            self.headerBgView.yn_y = -self.headerBgView.yn_height + offsetY + self.config.suspenOffsetY;
             self.scrollMenuView.yn_y = offsetY + self.config.suspenOffsetY;
             self.supendStatus = YES;
         } else {
+            /// headerView往下拉置顶
+            if (offsetY >= -_insetTop) {
+                self.headerBgView.yn_y = -_insetTop;
+            } else {
+                if ([self isSuspensionBottomStyle]) {
+                    self.headerBgView.yn_y = offsetY;
+                }
+            }
+            
             self.scrollMenuView.yn_y = self.headerBgView.yn_bottom;
             self.supendStatus = NO;
         }

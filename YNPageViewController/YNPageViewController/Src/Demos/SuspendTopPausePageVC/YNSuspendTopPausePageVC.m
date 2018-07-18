@@ -67,6 +67,7 @@
 + (instancetype)suspendTopPausePageVC {
     
     YNPageConfigration *configration = [YNPageConfigration defaultConfig];
+    
     configration.pageStyle = YNPageStyleSuspensionTopPause;
     configration.headerViewCouldScale = YES;
     configration.showTabbar = NO;
