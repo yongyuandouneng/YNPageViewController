@@ -37,7 +37,7 @@
 /// 当前index
 @property (nonatomic, assign) NSInteger currentIndex;
 /// items
-@property (nonatomic, strong) NSMutableArray *itemsArrayM;
+@property (nonatomic, strong) NSMutableArray<UILabel *> *itemsArrayM;
 /// item宽度
 @property (nonatomic, strong) NSMutableArray *itemsWidthArraM;
 
