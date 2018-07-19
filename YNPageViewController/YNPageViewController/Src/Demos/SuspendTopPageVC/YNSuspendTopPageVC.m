@@ -69,7 +69,7 @@
     configration.aligmentModeCenter = NO;
     configration.lineWidthEqualFontWidth = NO;
     configration.showBottomLine = YES;
-    configration.suspenOffsetY = 64;
+    
     YNSuspendTopPageVC *vc = [YNSuspendTopPageVC pageViewControllerWithControllers:[self getArrayVCs]
                                                                             titles:[self getArrayTitles]
                                                                             config:configration];

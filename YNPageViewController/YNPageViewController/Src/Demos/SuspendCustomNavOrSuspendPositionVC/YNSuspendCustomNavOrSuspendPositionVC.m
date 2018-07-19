@@ -1,101 +1,104 @@
 //
-//  SuspendCenterPageVC.m
+//  YNSuspendCustomNavOrSuspendPositionVC.m
 //  YNPageViewController
 //
-//  Created by ZYN on 2018/6/22.
+//  Created by ZYN on 2018/7/19.
 //  Copyright © 2018年 yongneng. All rights reserved.
 //
 
-#import "YNSuspendCenterPageVC.h"
-#import "SDCycleScrollView.h"
+#import "YNSuspendCustomNavOrSuspendPositionVC.h"
+#import "YNPageViewController.h"
+#import "UIView+YNPageExtend.h"
 #import "BaseTableViewVC.h"
 #import "BaseCollectionViewVC.h"
+#import "SDCycleScrollView.h"
 
+@interface YNSuspendCustomNavOrSuspendPositionVC () <YNPageViewControllerDataSource, YNPageViewControllerDelegate, SDCycleScrollViewDelegate>
 
-@interface YNSuspendCenterPageVC () <YNPageViewControllerDataSource, YNPageViewControllerDelegate, SDCycleScrollViewDelegate>
+@property (nonatomic, strong) UIActivityIndicatorView *indicatorView;
 
 @property (nonatomic, copy) NSArray *imagesURLs;
 
+@property (nonatomic, strong) UIView *navView;
+
 @end
 
-@implementation YNSuspendCenterPageVC
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
+@implementation YNSuspendCustomNavOrSuspendPositionVC
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    NSLog(@"--%@--%@", [self class], NSStringFromSelector(_cmd));
-}
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    NSLog(@"--%@--%@", [self class], NSStringFromSelector(_cmd));
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    NSLog(@"--%@--%@", [self class], NSStringFromSelector(_cmd));
+    
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    NSLog(@"--%@--%@", [self class], NSStringFromSelector(_cmd));
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _indicatorView.frame = CGRectMake(0, 0, 80, 80);
+    _indicatorView.center = self.view.center;
+    [_indicatorView startAnimating];
+    
+    /// 模拟器请求
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [self setupPageVC];
+        
+        [_indicatorView stopAnimating];
+        [_indicatorView setHidden:YES];
+    });
+    
+    [self.view addSubview:_indicatorView];
 }
 
-
-#pragma mark - Event Response
-
-#pragma mark - --Notification Event Response
-
-#pragma mark - --Button Event Response
-
-#pragma mark - --Gesture Event Response
-
-#pragma mark - System Delegate
-
-#pragma mark - Custom Delegate
-
-#pragma mark - Public Function
-
-+ (instancetype)suspendCenterPageVC {
+- (void)setupPageVC {
+    
     YNPageConfigration *configration = [YNPageConfigration defaultConfig];
     configration.pageStyle = YNPageStyleSuspensionCenter;
     configration.headerViewCouldScale = YES;
-    //    configration.headerViewScaleMode = YNPageHeaderViewScaleModeCenter;
-    configration.headerViewScaleMode = YNPageHeaderViewScaleModeTop;
+    /// 控制tabbar 和 nav
     configration.showTabbar = NO;
-    configration.showNavigation = YES;
+    configration.showNavigation = NO;
     configration.scrollMenu = NO;
     configration.aligmentModeCenter = NO;
     configration.lineWidthEqualFontWidth = NO;
     configration.showBottomLine = YES;
+    /// 设置悬浮停顿偏移量
+    configration.suspenOffsetY = kYNPAGE_NAVHEIGHT;
     
-    return [self suspendCenterPageVCWithConfig:configration];
-}
-
-+ (instancetype)suspendCenterPageVCWithConfig:(YNPageConfigration *)config {
     
-    YNSuspendCenterPageVC *vc = [YNSuspendCenterPageVC pageViewControllerWithControllers:[self getArrayVCs]
-                                                                                  titles:[self getArrayTitles]
-                                                                                  config:config];
-    vc.dataSource = vc;
-    vc.delegate = vc;
+    YNPageViewController *vc = [YNPageViewController pageViewControllerWithControllers:self.getArrayVCs
+                                                                                titles:[self getArrayTitles]
+                                                                                config:configration];
+    vc.dataSource = self;
+    vc.delegate = self;
     /// 轮播图
-    SDCycleScrollView *autoScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 200) imageURLStringsGroup:vc.imagesURLs];
-    autoScrollView.delegate = vc;
+    SDCycleScrollView *autoScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 200) imageURLStringsGroup:self.imagesURLs];
+    autoScrollView.delegate = self;
     
     vc.headerView = autoScrollView;
     /// 指定默认选择index 页面
     vc.pageIndex = 2;
     
-   
-    return vc;
+    
+    /// 作为自控制器加入到当前控制器
+    [vc addSelfToParentViewController:self];
+    
+    /// 如果隐藏了导航条可以 适当改y值
+//    pageVC.view.yn_y = kYNPAGE_NAVHEIGHT;
+    
+    [self.view addSubview:self.navView];
+    
 }
 
-
-+ (NSArray *)getArrayVCs {
+- (NSArray *)getArrayVCs {
     
     BaseTableViewVC *vc_1 = [[BaseTableViewVC alloc] init];
     vc_1.cellTitle = @"鞋子";
@@ -108,8 +111,16 @@
     return @[vc_1, vc_2, vc_3];
 }
 
-+ (NSArray *)getArrayTitles {
+- (NSArray *)getArrayTitles {
     return @[@"鞋子", @"衣服", @"帽子"];
+}
+
+- (UIView *)navView {
+    if (!_navView) {
+        _navView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, kYNPAGE_NAVHEIGHT)];
+        _navView.backgroundColor = RGBA(246, 246, 246, 0);
+    }
+    return _navView;
 }
 
 #pragma mark - Private Function
@@ -137,7 +148,10 @@
 - (void)pageViewController:(YNPageViewController *)pageViewController
             contentOffsetY:(CGFloat)contentOffset
                   progress:(CGFloat)progress {
-//        NSLog(@"--- contentOffset = %f,    progress = %f", contentOffset, progress);
+    NSLog(@"--- contentOffset = %f, progress = %f", contentOffset, progress);
+    
+    self.navView.backgroundColor = RGBA(246, 246, 246, progress);
+    
 }
 
 
@@ -145,5 +159,6 @@
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
     NSLog(@"----click 轮播图 index %ld", index);
 }
+
 
 @end

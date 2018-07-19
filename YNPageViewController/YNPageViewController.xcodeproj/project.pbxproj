@@ -17,6 +17,7 @@
 		2E3F8DE720FA0C45009FDA84 /* YNPageCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3F8DE620FA0C45009FDA84 /* YNPageCollectionView.m */; };
 		2E3F8DEB20FA112D009FDA84 /* YNSuspendTopPausePageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3F8DEA20FA112D009FDA84 /* YNSuspendTopPausePageVC.m */; };
 		2E3F8DEE20FA1304009FDA84 /* YNSuspendTopPauseBaseTableViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3F8DED20FA1304009FDA84 /* YNSuspendTopPauseBaseTableViewVC.m */; };
+		2E3F8E8721002964009FDA84 /* YNSuspendCustomNavOrSuspendPositionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3F8E8621002963009FDA84 /* YNSuspendCustomNavOrSuspendPositionVC.m */; };
 		2E5F7D8020DCA5430069962B /* DemosListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5F7D7A20DCA5430069962B /* DemosListVC.m */; };
 		2E5F7D8120DCA5430069962B /* YNTestBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5F7D7D20DCA5430069962B /* YNTestBaseVC.m */; };
 		2E5F7D8220DCA5430069962B /* YNTestPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5F7D7F20DCA5430069962B /* YNTestPageVC.m */; };
@@ -102,6 +103,8 @@
 		2E3F8DEA20FA112D009FDA84 /* YNSuspendTopPausePageVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YNSuspendTopPausePageVC.m; sourceTree = "<group>"; };
 		2E3F8DEC20FA1304009FDA84 /* YNSuspendTopPauseBaseTableViewVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YNSuspendTopPauseBaseTableViewVC.h; sourceTree = "<group>"; };
 		2E3F8DED20FA1304009FDA84 /* YNSuspendTopPauseBaseTableViewVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YNSuspendTopPauseBaseTableViewVC.m; sourceTree = "<group>"; };
+		2E3F8E8521002963009FDA84 /* YNSuspendCustomNavOrSuspendPositionVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YNSuspendCustomNavOrSuspendPositionVC.h; sourceTree = "<group>"; };
+		2E3F8E8621002963009FDA84 /* YNSuspendCustomNavOrSuspendPositionVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YNSuspendCustomNavOrSuspendPositionVC.m; sourceTree = "<group>"; };
 		2E5F7D7920DCA5430069962B /* DemosListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemosListVC.h; sourceTree = "<group>"; };
 		2E5F7D7A20DCA5430069962B /* DemosListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemosListVC.m; sourceTree = "<group>"; };
 		2E5F7D7C20DCA5430069962B /* YNTestBaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YNTestBaseVC.h; sourceTree = "<group>"; };
@@ -280,6 +283,15 @@
 			path = SuspendTopPausePageVC;
 			sourceTree = "<group>";
 		};
+		2E3F8E8421002952009FDA84 /* SuspendCustomNavOrSuspendPositionVC */ = {
+			isa = PBXGroup;
+			children = (
+				2E3F8E8521002963009FDA84 /* YNSuspendCustomNavOrSuspendPositionVC.h */,
+				2E3F8E8621002963009FDA84 /* YNSuspendCustomNavOrSuspendPositionVC.m */,
+			);
+			path = SuspendCustomNavOrSuspendPositionVC;
+			sourceTree = "<group>";
+		};
 		2E5F7D7820DCA5430069962B /* Demos */ = {
 			isa = PBXGroup;
 			children = (
@@ -287,9 +299,10 @@
 				2E5F7E9C20DCABCC0069962B /* SuspendCenterPageVC */,
 				2E5F7E9D20DCABCC0069962B /* SuspendTopPageVC */,
 				2E3F8DE820FA10F1009FDA84 /* SuspendTopPausePageVC */,
+				2E3F8E8421002952009FDA84 /* SuspendCustomNavOrSuspendPositionVC */,
+				2EFDC1D620E213310018455F /* LoadPageVC */,
 				2E5F7E9920DCAA700069962B /* TopPageVC */,
 				2E5F7E9A20DCAA830069962B /* NavPageVC */,
-				2EFDC1D620E213310018455F /* LoadPageVC */,
 				2EFDC1D220E0E9980018455F /* ScrollMenuStyleVC */,
 				2E5F7D7B20DCA5430069962B /* TestPageVC */,
 				2E5F7D7920DCA5430069962B /* DemosListVC.h */,
@@ -755,6 +768,7 @@
 				2E5F7EA620DCEB2C0069962B /* BaseCollectionViewVC.m in Sources */,
 				2E5F7E9020DCA5860069962B /* UIImage+GIF.m in Sources */,
 				2E5F7D8020DCA5430069962B /* DemosListVC.m in Sources */,
+				2E3F8E8721002964009FDA84 /* YNSuspendCustomNavOrSuspendPositionVC.m in Sources */,
 				2EFDC1D520E0E9B10018455F /* YNScrollMenuStyleVC.m in Sources */,
 				2E5F7E9820DCA8AF0069962B /* BaseTableViewVC.m in Sources */,
 				2E5F7E8020DCA5860069962B /* TAAbstractDotView.m in Sources */,

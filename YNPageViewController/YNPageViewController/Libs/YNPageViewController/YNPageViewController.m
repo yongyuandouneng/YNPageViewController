@@ -679,7 +679,7 @@
 /// 回调监听列表滚动代理
 - (void)invokeDelegateForScrollWithOffsetY:(CGFloat)offsetY {
     if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:contentOffsetY:progress:)]) {
-        CGFloat progress = 1 + (offsetY + self.scrollMenuView.yn_height) / (self.headerBgView.yn_height);
+        CGFloat progress = 1 + (offsetY + self.scrollMenuView.yn_height + self.config.suspenOffsetY) / (self.headerBgView.yn_height -self.config.suspenOffsetY);
         [self.delegate pageViewController:self contentOffsetY:offsetY progress:progress > 1 ? 1 : progress];
     }
 }

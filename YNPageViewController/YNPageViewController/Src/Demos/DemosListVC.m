@@ -15,15 +15,17 @@
 #import "YNScrollMenuStyleVC.h"
 #import "YNLoadPageVC.h"
 #import "YNSuspendTopPausePageVC.h"
+#import "YNSuspendCustomNavOrSuspendPositionVC.h"
 
 typedef NS_ENUM(NSInteger, YNVCType) {
     YNVCTypeSuspendCenterPageVC = 1,
     YNVCTypeSuspendTopPageVC = 2,
     YNVCTypeTopPageVC = 3,
     YNVCTypeSuspendTopPausePageVC = 4,
-    YNVCTypeNavPageVC = 5,
-    YNVCTypeScrollMenuStyleVC = 6,
-    YNVCTypeLoadPageVC = 7,
+    YNVCTypeSuspendCustomNavOrSuspendPosition = 5,
+    YNVCTypeNavPageVC = 6,
+    YNVCTypeScrollMenuStyleVC = 7,
+    YNVCTypeLoadPageVC = 8,
     YNVCTypeYNTestPageVC = 100
 };
 
@@ -46,10 +48,11 @@ typedef NS_ENUM(NSInteger, YNVCType) {
     self.dataArrayM = @[@{@"title" : @"悬浮样式--下拉刷新在中间", @"type" : @(YNVCTypeSuspendCenterPageVC)},
                         @{@"title" : @"悬浮样式--下拉刷新在顶部", @"type" : @(YNVCTypeSuspendTopPageVC)},
                         @{@"title" : @"悬浮样式--下拉刷新在顶部(QQ联系人样式)", @"type" : @(YNVCTypeSuspendTopPausePageVC)},
+                        @{@"title" : @"悬浮样式--自定义导航条或自定义悬浮位置", @"type" : @(YNVCTypeSuspendCustomNavOrSuspendPosition)},
+                        @{@"title" : @"加载数据后显示页面(隐藏导航条)", @"type" : @(YNVCTypeLoadPageVC)},
                         @{@"title" : @"顶部样式", @"type" : @(YNVCTypeTopPageVC)},
                         @{@"title" : @"导航条样式", @"type" : @(YNVCTypeNavPageVC)},
                         @{@"title" : @"菜单栏样式", @"type" : @(YNVCTypeScrollMenuStyleVC)},
-                        @{@"title" : @"加载数据后显示页面(隐藏导航条)", @"type" : @(YNVCTypeLoadPageVC)},
                         @{@"title" : @"测试专用", @"type" : @(YNVCTypeYNTestPageVC)}
                         ].mutableCopy;
 }
@@ -130,6 +133,11 @@ typedef NS_ENUM(NSInteger, YNVCType) {
         case YNVCTypeSuspendTopPausePageVC:
         {
             vc = [YNSuspendTopPausePageVC suspendTopPausePageVC];
+        }
+            break;
+        case YNVCTypeSuspendCustomNavOrSuspendPosition:
+        {
+            vc = [YNSuspendCustomNavOrSuspendPositionVC new];
         }
             break;
         case YNVCTypeTopPageVC:

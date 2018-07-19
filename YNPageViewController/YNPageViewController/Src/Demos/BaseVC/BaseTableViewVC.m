@@ -34,7 +34,7 @@
     _dataArray = @[].mutableCopy;
     /// 加载数据
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 40; i++) {
             [_dataArray addObject:@""];
         }
         [self.tableView reloadData];
@@ -166,7 +166,9 @@
         
         cell.textLabel.text = [NSString stringWithFormat:@"%@ section: %zd row:%zd", self.cellTitle ?: @"测试", indexPath.section, indexPath.row];
         return cell;
-    } 
+    } else {
+        cell.textLabel.text = @"";
+    }
     
     return cell;
     
