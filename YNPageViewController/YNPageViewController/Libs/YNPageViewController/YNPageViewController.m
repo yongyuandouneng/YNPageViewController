@@ -462,7 +462,9 @@
         self.config.contentHeight = self.pageScrollView.yn_height;
         
         [self.bgScrollView addSubview:self.pageScrollView];
-        
+        if (kLESS_THAN_iOS11) {
+            [self.view addSubview:[UIView new]];
+        }
         [self.view addSubview:self.bgScrollView];
         
     } else {
@@ -472,7 +474,9 @@
         self.pageScrollView.contentSize = CGSizeMake(kYNPAGE_SCREEN_WIDTH * self.controllersM.count, contentHeight - ([self isTopStyle] ? self.config.menuHeight : 0));
         
         self.config.contentHeight = self.pageScrollView.yn_height - self.config.menuHeight;
-        
+        if (kLESS_THAN_iOS11) {
+            [self.view addSubview:[UIView new]];            
+        }
         [self.view addSubview:self.pageScrollView];
     }
 }
@@ -734,6 +738,7 @@
             if (scrollView) {
                 scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
             }
+        } else {
         }
     }
     NSAssert(scrollView != nil, @"请设置pageViewController 的数据源！");
