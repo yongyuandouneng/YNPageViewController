@@ -63,6 +63,8 @@
 ## CocoaPods更新日志
 
 ```
+• 2018-07-23 (tag 0.1.2): 新增可以添加 ScrollMenu ButtonItem image
+
 • 2018-07-14 (tag 0.1.0): 修复头部视图可侧滑返回
 
 • 2018-07-14 (tag 0.0.9): 新增SuspensionTopPause样式和示例 (QQ联系人Tab布局)
