@@ -214,7 +214,15 @@
         self.currentScrollView.scrollEnabled = NO;
     }
 }
-
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (scrollView == self.bgScrollView) return;
+    if ([self isSuspensionBottomStyle] || [self isSuspensionTopStyle]) {
+        if (!decelerate) {
+            [self scrollViewDidScroll:scrollView];
+            [self scrollViewDidEndDecelerating:scrollView];
+        }
+    }
+}
 /// scrollView滚动结束
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     
@@ -238,11 +246,11 @@
         [self calcuSuspendTopPauseWithBgScrollView:scrollView];
         return;
     }
-    
     CGFloat currentPostion = scrollView.contentOffset.x;
 
     CGFloat offsetX = currentPostion / kYNPAGE_SCREEN_WIDTH;
 
+    
     CGFloat offX = currentPostion > self.lastPositionX ? ceilf(offsetX) : offsetX;
 
     [self replaceHeaderViewFromTableView];
@@ -252,8 +260,12 @@
     CGFloat progress = offsetX - (NSInteger)offsetX;
 
     self.lastPositionX = currentPostion;
-
+    
     [self.scrollMenuView adjustItemWithProgress:progress lastIndex:floor(offsetX) currentIndex:ceilf(offsetX)];
+    
+    if (floor(offsetX) == ceilf(offsetX)) {
+        [self.scrollMenuView adjustItemAnimate:YES];
+    }
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:didScroll:progress:formIndex:toIndex:)]) {
         [self.delegate pageViewController:self didScroll:scrollView progress:progress formIndex:floor(offsetX) toIndex:ceilf(offsetX)];
@@ -307,7 +319,7 @@
 }
 
 #pragma mark - YNPageScrollMenuViewDelegate
-- (void)pagescrollMenuViewItemOnClick:(UILabel *)label index:(NSInteger)index {
+- (void)pagescrollMenuViewItemOnClick:(UIButton *)label index:(NSInteger)index {
     
     [self setSelectedPageIndex:index];
 }

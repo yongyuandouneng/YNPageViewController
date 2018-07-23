@@ -15,7 +15,7 @@
 @optional
 
 /// 点击item
-- (void)pagescrollMenuViewItemOnClick:(UILabel *)label index:(NSInteger)index;
+- (void)pagescrollMenuViewItemOnClick:(UIButton *)label index:(NSInteger)index;
 
 /// 点击Add按钮
 - (void)pagescrollMenuViewAddButtonAction:(UIButton *)button;
@@ -54,5 +54,6 @@
 
 - (void)adjustItemWithAnimated:(BOOL)animated;
 
+- (void)adjustItemAnimate:(BOOL)animated;
 
 @end

@@ -79,7 +79,8 @@ typedef NS_ENUM(NSInteger, YNPageHeaderViewScaleMode) {
 @property (nonatomic, assign) BOOL aligmentModeCenter;
 /** 当aligmentModeCenter 变为平分时 是否需要线条宽度等于字体宽度 默认 NO */
 @property (nonatomic, assign) BOOL lineWidthEqualFontWidth;
-
+/** 自定义Item 加图片 图片间隙 ... */
+@property (nonatomic, copy) NSArray<UIButton *> *buttonArray;
 /** 按钮N图片 */
 @property (nonatomic, copy) NSString *addButtonNormalImageName;
 /** 按钮H图片 */

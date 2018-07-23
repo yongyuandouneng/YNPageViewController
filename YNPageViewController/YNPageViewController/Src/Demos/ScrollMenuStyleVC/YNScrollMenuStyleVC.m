@@ -80,12 +80,31 @@
     
     YNPageScrollMenuView *style_6 = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, style_5.yn_bottom + 20, kSCREEN_WIDTH, 44) titles:@[@"JAVA", @"Object-C", @"JS"] configration:style_config_6 delegate:nil currentIndex:1];
     
+    /// style 7
+    YNPageConfigration *style_config_7 = [YNPageConfigration defaultConfig];
+    style_config_7.scrollMenu = NO;
+    style_config_7.aligmentModeCenter = NO;
+    NSMutableArray *buttonArrayM = @[].mutableCopy;
+    for (int i = 0; i < 3; i++) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setImage:[UIImage imageNamed:@"small_icon"] forState:UIControlStateNormal];
+        
+        /// seTitle -> sizeToFit -> 自行调整位置
+        /// button.imageEdgeInsets = UIEdgeInsetsMake(0, 100, 0, 0);
+        [buttonArrayM addObject:button];
+    }
+    style_config_7.buttonArray = buttonArrayM;
+    
+    
+    YNPageScrollMenuView *style_7 = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, style_6.yn_bottom + 20, kSCREEN_WIDTH, 44) titles:@[@"带iCON", @"小图标", @"位置"] configration:style_config_7 delegate:nil currentIndex:1];
+    
     [_scrollView addSubview:style_1];
     [_scrollView addSubview:style_2];
     [_scrollView addSubview:style_3];
     [_scrollView addSubview:style_4];
     [_scrollView addSubview:style_5];
     [_scrollView addSubview:style_6];
+    [_scrollView addSubview:style_7];
     
     [self.view addSubview:_scrollView];
     
