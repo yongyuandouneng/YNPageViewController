@@ -59,14 +59,6 @@
 }
 
 #pragma mark - Initialize Method
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        _displayDictM = @{}.mutableCopy;
-        _cacheDictM = @{}.mutableCopy;
-    }
-    return self;
-}
 
 /**
  初始化方法
@@ -90,7 +82,8 @@
     self.controllersM = controllers.mutableCopy;
     self.titlesM = titles.mutableCopy;
     self.config = config ?: [YNPageConfigration defaultConfig];
-    
+    self.displayDictM = @{}.mutableCopy;
+    self.cacheDictM = @{}.mutableCopy;
     return self;
 }
 

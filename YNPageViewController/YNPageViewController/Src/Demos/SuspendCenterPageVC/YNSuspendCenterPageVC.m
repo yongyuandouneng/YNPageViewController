@@ -94,7 +94,6 @@
     return vc;
 }
 
-
 + (NSArray *)getArrayVCs {
     
     BaseTableViewVC *vc_1 = [[BaseTableViewVC alloc] init];
