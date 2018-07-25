@@ -14,8 +14,7 @@
 #import "YNPageHeaderScrollView.h"
 
 @interface YNPageViewController () <UIScrollViewDelegate, YNPageScrollMenuViewDelegate>
-/// 标题数组
-@property (nonatomic, strong) NSMutableArray *titlesM;
+
 /// 一个HeaderView的背景View
 @property (nonatomic, strong) YNPageHeaderScrollView *headerBgView;
 /// 页面ScrollView
@@ -57,11 +56,9 @@
     } else {
         [self setSelectedPageIndex:self.pageIndex];
     }
-    
 }
 
 #pragma mark - Initialize Method
-
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -80,12 +77,21 @@
 + (instancetype)pageViewControllerWithControllers:(NSArray *)controllers
                                            titles:(NSArray *)titles
                                            config:(YNPageConfigration *)config {
-    YNPageViewController *vc = [[self alloc] init];
-    vc.controllersM = controllers.mutableCopy;
-    vc.titlesM = titles.mutableCopy;
-    vc.config = config ?: [YNPageConfigration defaultConfig];
     
-    return vc;
+    return [[self alloc] initPageViewControllerWithControllers:controllers
+                                                        titles:titles
+                                                        config:config];
+}
+
+- (instancetype)initPageViewControllerWithControllers:(NSArray *)controllers
+                                               titles:(NSArray *)titles
+                                               config:(YNPageConfigration *)config {
+    self = [super init];
+    self.controllersM = controllers.mutableCopy;
+    self.titlesM = titles.mutableCopy;
+    self.config = config ?: [YNPageConfigration defaultConfig];
+    
+    return self;
 }
 
 /**
@@ -126,7 +132,7 @@
             [self.bgScrollView addSubview:self.scrollMenuView];
             break;
     }
-    
+
 }
 
 #pragma mark - 初始化子控制器
@@ -142,6 +148,7 @@
     [self addViewControllerToParent:cacheViewController ?: self.controllersM[index] index:index];
 
 }
+
 /// 添加到父类控制器中
 - (void)addViewControllerToParent:(UIViewController *)viewController index:(NSInteger)index {
     
@@ -214,6 +221,7 @@
         self.currentScrollView.scrollEnabled = NO;
     }
 }
+
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     if (scrollView == self.bgScrollView) return;
     if ([self isSuspensionBottomStyle] || [self isSuspensionTopStyle]) {
@@ -223,6 +231,7 @@
         }
     }
 }
+
 /// scrollView滚动结束
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     
@@ -237,8 +246,8 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:didEndDecelerating:)]) {
         [self.delegate pageViewController:self didEndDecelerating:scrollView];
     }
-    
 }
+
 /// scrollView滚动ing
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
@@ -270,7 +279,6 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:didScroll:progress:formIndex:toIndex:)]) {
         [self.delegate pageViewController:self didScroll:scrollView progress:progress formIndex:floor(offsetX) toIndex:ceilf(offsetX)];
     }
-    
 }
 
 #pragma mark - Yn_pageScrollViewDidScrollView
@@ -306,11 +314,15 @@
         [self invokeDelegateForScrollWithOffsetY:offsetY];
         
         [self headerScaleWithOffsetY:offsetY];
+        
     } else if ([self isSuspensionTopPauseStyle]) {
+        
         [self calcuSuspendTopPauseWithCurrentScrollView:scrollView];
+        
     }
 }
 
+/// 调整scrollMenuView层级，防止TableView Section Header 挡住
 - (void)adjustSectionHeader:(UIScrollView *)scrollview {
     
     if (scrollview.subviews.lastObject != self.scrollMenuView) {
@@ -571,6 +583,7 @@
         }
     }
 }
+
 /// 计算悬浮顶部偏移量 - BgScrollView
 - (void)calcuSuspendTopPauseWithBgScrollView:(UIScrollView *)scrollView {
     if ([self isSuspensionTopPauseStyle] && scrollView == self.bgScrollView) {
@@ -585,6 +598,7 @@
         }
     }
 }
+
 /// 计算悬浮顶部偏移量 - CurrentScrollView
 - (void)calcuSuspendTopPauseWithCurrentScrollView:(UIScrollView *)scrollView {
     if ([self isSuspensionTopPauseStyle]) {
@@ -603,6 +617,7 @@
         }
     }
 }
+
 /// 移除缓存控制器
 - (void)removeViewController {
     for (int i = 0; i < self.controllersM.count; i ++) {
@@ -614,6 +629,7 @@
         }
     }
 }
+
 /// 从父类控制器移除控制器
 - (void)removeViewControllerWithChildVC:(UIViewController *)childVC index:(NSInteger)index {
     
@@ -664,6 +680,7 @@
     NSAssert(isHasNotEqualTitle, @"TitleArray Not allow equal title.");
 #endif
 }
+
 #pragma mark - 样式取值
 - (BOOL)isTopStyle {
     return self.config.pageStyle == YNPageStyleTop ? YES : NO;
@@ -674,23 +691,25 @@
 }
 
 - (BOOL)isSuspensionTopStyle {
-    return self.config.pageStyle == YNPageStyleSuspensionTop;
+    return self.config.pageStyle == YNPageStyleSuspensionTop ? YES : NO;
 }
 
 - (BOOL)isSuspensionBottomStyle {
-    return self.config.pageStyle == YNPageStyleSuspensionCenter;
+    return self.config.pageStyle == YNPageStyleSuspensionCenter ? YES : NO;
 }
 
 - (BOOL)isSuspensionTopPauseStyle {
-    return self.config.pageStyle == YNPageStyleSuspensionTopPause;
+    return self.config.pageStyle == YNPageStyleSuspensionTopPause ? YES : NO;
 }
 
 - (NSString *)titleWithIndex:(NSInteger)index {
     return self.titlesM[index];
 }
+
 - (NSInteger)getPageIndexWithTitle:(NSString *)title {
     return [self.titlesM indexOfObject:title];
 }
+
 #pragma mark - Invoke Delegate Method
 /// 回调监听列表滚动代理
 - (void)invokeDelegateForScrollWithOffsetY:(CGFloat)offsetY {
@@ -732,10 +751,12 @@
     return _pageScrollView;
 }
 
+/// 当前滚动的ScrollView
 - (UIScrollView *)currentScrollView {
     return [self getScrollViewWithPageIndex:self.pageIndex];
 }
 
+/// 根据pageIndex 取 数据源 ScrollView
 - (UIScrollView *)getScrollViewWithPageIndex:(NSInteger)pageIndex {
     
     UIScrollView *scrollView = nil;
@@ -750,14 +771,13 @@
             if (scrollView) {
                 scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
             }
-        } else {
         }
     }
     NSAssert(scrollView != nil, @"请设置pageViewController 的数据源！");
     return scrollView;
 }
 
-/// 出来头部伸缩
+/// 处理头部伸缩
 - (void)headerScaleWithOffsetY:(CGFloat)offsetY {
     
     if (self.config.headerViewCouldScale && self.scaleBackgroundView) {
@@ -787,7 +807,6 @@
         self.headerBgView.frame = headerBgViewFrame;
         self.scaleBackgroundView.frame = scaleBgViewFrame;
     }
-    
 }
 
 - (void)dealloc {

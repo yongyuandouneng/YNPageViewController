@@ -22,8 +22,6 @@
 @property (nonatomic, strong) UIView *converView;
 /// ScrollView
 @property (nonatomic, strong) YNPageScrollView *scrollView;
-/// Add按钮
-@property (nonatomic, strong) UIButton *addButton;
 /// 底部线条
 @property (nonatomic, strong) UIView *bottomLine;
 /// 标题数组

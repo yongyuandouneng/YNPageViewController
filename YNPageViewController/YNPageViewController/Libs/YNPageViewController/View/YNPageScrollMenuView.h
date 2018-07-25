@@ -23,6 +23,8 @@
 @end
 
 @interface YNPageScrollMenuView : UIView
+/// + 按钮
+@property (nonatomic, strong) UIButton *addButton;
 
 + (instancetype)new UNAVAILABLE_ATTRIBUTE;
 

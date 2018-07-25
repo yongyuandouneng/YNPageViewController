@@ -18,7 +18,7 @@
 
 /**
  滚动列表内容时回调
-
+ 
  @param pageViewController PageVC
  @param contentOffsetY 内容偏移量
  @param progress 进度
@@ -29,7 +29,7 @@
 
 /**
  UIScrollView拖动停止时回调, 可用来自定义 ScrollMenuView
-
+ 
  @param pageViewController PageVC
  @param scrollView UIScrollView
  */
@@ -38,7 +38,7 @@
 
 /**
  UIScrollView滚动时回调, 可用来自定义 ScrollMenuView
-
+ 
  @param pageViewController PageVC
  @param scrollView UIScrollView
  @param progress 进度
@@ -53,19 +53,25 @@
 
 /**
  点击UIScrollMenuView AddAction
-
+ 
  @param pageViewController PageVC
  @param button Add按钮
  */
 - (void)pageViewController:(YNPageViewController *)pageViewController
         didAddButtonAction:(UIButton *)button;
 
-
 @end
 
 @protocol YNPageViewControllerDataSource <NSObject>
 @required
 
+/**
+ 根据 index 取 数据源 ScrollView
+ 
+ @param pageViewController 当前控制器
+ @param index pageIndex
+ @return 数据源
+ */
 - (UIScrollView *)pageViewController:(YNPageViewController *)pageViewController
                         pageForIndex:(NSInteger )index;
 
@@ -76,6 +82,8 @@
 @property (nonatomic, strong) YNPageConfigration *config;
 /// 控制器数组
 @property (nonatomic, strong) NSMutableArray *controllersM;
+/// 标题数组
+@property (nonatomic, strong) NSMutableArray *titlesM;
 /// 菜单栏
 @property (nonatomic, strong) YNPageScrollMenuView *scrollMenuView;
 /// 背景ScrollView
@@ -107,6 +115,15 @@
                                            titles:(NSArray *)titles
                                            config:(YNPageConfigration *)config;
 /**
+ 初始化方法
+ @param controllers 子控制器
+ @param titles 标题
+ @param config 配置信息
+ */
+- (instancetype)initPageViewControllerWithControllers:(NSArray *)controllers
+                                               titles:(NSArray *)titles
+                                               config:(YNPageConfigration *)config;
+/**
  *  当前PageScrollViewVC作为子控制器
  *
  *  @param parentViewControler 父类控制器
@@ -124,10 +141,9 @@
  */
 - (void)setSelectedPageIndex:(NSInteger)pageIndex;
 
-
 /**
  批量添加控制器
-
+ 
  @param titles 标题数组
  @param controllers 控制器数组
  @param index 插入的下标
@@ -151,7 +167,6 @@
  *  @param titleArray 标题数组
  */
 - (void)replaceTitleArray:(NSMutableArray *)titleArray;
-
 
 /**
  * 刷新悬浮HeaderViewFrame

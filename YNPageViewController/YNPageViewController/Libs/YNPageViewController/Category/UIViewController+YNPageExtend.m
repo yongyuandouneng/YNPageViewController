@@ -15,13 +15,28 @@
 }
 
 - (YNPageConfigration *)config {
-    YNPageViewController *v = (YNPageViewController *)self.parentViewController;
-    return v.config;
+    YNPageViewController *vc = (YNPageViewController *)self.parentViewController;
+    return vc.config;
 }
 
 - (YNPageScrollView *)bgScrollView {
-    YNPageViewController *v = (YNPageViewController *)self.parentViewController;
-    return v.bgScrollView;
+    YNPageViewController *vc = (YNPageViewController *)self.parentViewController;
+    return vc.bgScrollView;
+}
+
+- (YNPageScrollMenuView *)scrollMenuView {
+    YNPageViewController *vc = (YNPageViewController *)self.parentViewController;
+    return vc.scrollMenuView;
+}
+
+- (NSMutableArray *)controllersM {
+    YNPageViewController *vc = (YNPageViewController *)self.parentViewController;
+    return vc.controllersM;
+}
+
+- (NSMutableArray *)titlesM {
+    YNPageViewController *vc = (YNPageViewController *)self.parentViewController;
+    return vc.titlesM;
 }
 
 @end
