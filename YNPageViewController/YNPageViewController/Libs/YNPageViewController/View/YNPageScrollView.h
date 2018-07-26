@@ -10,5 +10,4 @@
 
 @interface YNPageScrollView : UIScrollView
 
-
 @end

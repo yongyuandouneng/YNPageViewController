@@ -33,9 +33,17 @@
         UIGestureRecognizerState state = gestureRecognizer.state;
         if (UIGestureRecognizerStateBegan == state || UIGestureRecognizerStatePossible == state) {
             CGPoint location = [gestureRecognizer locationInView:self];
+            int temp1 = location.x;
+            int temp2 = kYNPAGE_SCREEN_WIDTH;
+            NSInteger XX = temp1 % temp2;
+            if (point.x >0 && XX < location_X) {
+                return YES;
+            }
+            /*
             if (point.x > 0 && location.x < location_X && self.contentOffset.x <= 0) {
                 return YES;
             }
+             */
         }
     }
     return NO;
