@@ -53,7 +53,7 @@
 ```
 ## 使用悬浮样式需要注意:
 ```
-• SuspensionTop || SuspensionCenter 需要填充cell占位高度
+• SuspensionTop || SuspensionCenter 需要填充cell占位高度，不支持 [mj_header beginRefresing]
 
 • headerView高度较小建议使用 SuspensionTop，高度比较大建议使用 SuspensionCenter
 
@@ -63,6 +63,8 @@
 ## CocoaPods更新日志
 
 ```
+• 2018-07-27 (tag 0.1.3): 新增置顶API, 插入、删除、调整顺序控制器的API。
+
 • 2018-07-23 (tag 0.1.2): 新增可以添加 ScrollMenu ButtonItem image
 
 • 2018-07-14 (tag 0.1.0): 修复头部视图可侧滑返回
