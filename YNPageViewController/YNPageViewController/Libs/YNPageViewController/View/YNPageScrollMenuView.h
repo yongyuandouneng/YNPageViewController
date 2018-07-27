@@ -26,6 +26,9 @@
 /// + 按钮
 @property (nonatomic, strong) UIButton *addButton;
 
+/// 标题数组
+@property (nonatomic, strong) NSMutableArray *titles;
+
 + (instancetype)new UNAVAILABLE_ATTRIBUTE;
 
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
@@ -40,10 +43,15 @@
  @param currentIndex 当前选中下标
  */
 + (instancetype)pagescrollMenuViewWithFrame:(CGRect)frame
-                                     titles:(NSArray *)titles
+                                     titles:(NSMutableArray *)titles
                                configration:(YNPageConfigration *)configration
                                    delegate:(id<YNPageScrollMenuViewDelegate>)delegate
                                currentIndex:(NSInteger)currentIndex;
+
+
+- (void)updateTitle:(NSString *)title index:(NSInteger)index;
+
+- (void)updateTitles:(NSArray *)titles;
 
 - (void)adjustItemPositionWithCurrentIndex:(NSInteger)index;
 
@@ -57,5 +65,8 @@
 - (void)adjustItemWithAnimated:(BOOL)animated;
 
 - (void)adjustItemAnimate:(BOOL)animated;
+
+/// 重新刷新(创建)
+- (void)reloadView;
 
 @end

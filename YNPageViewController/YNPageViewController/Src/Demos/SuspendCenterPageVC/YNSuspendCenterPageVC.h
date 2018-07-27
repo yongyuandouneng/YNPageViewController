@@ -6,10 +6,10 @@
 //  Copyright © 2018年 yongneng. All rights reserved.
 //
 
-#import "YNPageViewController.h"
+#import "BasePageViewController.h"
 #import "YNPageConfigration.h"
 
-@interface YNSuspendCenterPageVC : YNPageViewController
+@interface YNSuspendCenterPageVC : BasePageViewController
 
 + (instancetype)suspendCenterPageVC;
 

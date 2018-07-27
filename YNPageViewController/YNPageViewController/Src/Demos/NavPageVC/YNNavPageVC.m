@@ -33,7 +33,7 @@
     configration.lineWidthEqualFontWidth = NO;
     configration.showBottomLine = YES;
     /// 设置菜单栏宽度
-    configration.menuWidth = 300;
+    configration.menuWidth = 150;
     
     YNNavPageVC *vc = [YNNavPageVC pageViewControllerWithControllers:[self getArrayVCs]
                                                               titles:[self getArrayTitles]

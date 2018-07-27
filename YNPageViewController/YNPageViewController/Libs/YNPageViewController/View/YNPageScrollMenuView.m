@@ -24,8 +24,6 @@
 @property (nonatomic, strong) YNPageScrollView *scrollView;
 /// 底部线条
 @property (nonatomic, strong) UIView *bottomLine;
-/// 标题数组
-@property (nonatomic, copy) NSArray *titles;
 /// 配置信息
 @property (nonatomic, strong) YNPageConfigration *configration;
 /// 代理
@@ -46,7 +44,7 @@
 #pragma mark - Init Method
 
 + (instancetype)pagescrollMenuViewWithFrame:(CGRect)frame
-                                     titles:(NSArray *)titles
+                                     titles:(NSMutableArray *)titles
                                configration:(YNPageConfigration *)configration
                                    delegate:(id<YNPageScrollMenuViewDelegate>)delegate
                                currentIndex:(NSInteger)currentIndex {
@@ -321,6 +319,18 @@
     
 }
 #pragma mark - Public Method
+
+- (void)updateTitle:(NSString *)title index:(NSInteger)index {
+    if (index < 0 || index > self.titles.count - 1) return;
+    if (title.length == 0) return;
+    [self reloadView];
+}
+
+- (void)updateTitles:(NSArray *)titles {
+    if (titles.count != self.titles.count) return;
+    [self reloadView];
+}
+
 - (void)adjustItemPositionWithCurrentIndex:(NSInteger)index {
     
     if (self.scrollView.contentSize.width != self.scrollView.yn_width + 20) {
@@ -502,6 +512,21 @@
     
 }
 
+- (void)reloadView {
+    
+    for (UIView *view in self.subviews) {
+        [view removeFromSuperview];
+    }
+    
+    for (UIView *view in self.scrollView.subviews) {
+        [view removeFromSuperview];
+    }
+    
+    [self.itemsArrayM removeAllObjects];
+    [self.itemsWidthArraM removeAllObjects];
+    [self setupSubViews];
+    
+}
 #pragma mark -  addButtonAction
 
 - (void)addButtonAction:(UIButton *)button {

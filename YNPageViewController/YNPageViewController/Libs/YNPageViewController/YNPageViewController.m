@@ -350,20 +350,84 @@
     
 }
 
-- (void)addPageChildControllersWithTitles:(NSArray *)titles
-                              controllers:(NSArray *)controllers
-                                    index:(NSInteger)index {
-    index = index < 0 ? 0 : index;
-    index = index > self.controllersM.count - 1 ? self.controllersM.count - 1 : index;
-    
-    if (titles.count == controllers.count && controllers.count > 0) {
-        [self.controllersM addObjectsFromArray:controllers];
-        [self.titlesM addObjectsFromArray:titles];
+- (void)updateMenuItemTitle:(NSString *)title index:(NSInteger)index {
+    if (index < 0 || index > self.titlesM.count - 1 ) return;
+    if (title.length == 0) return;
+    NSString *oldTitle = [self titleWithIndex:index];
+    UIViewController *cacheVC = self.cacheDictM[oldTitle];
+    if (cacheVC) {
+        [self.cacheDictM setValue:cacheVC forKey:title];
+        [self.cacheDictM setValue:nil forKey:oldTitle];
     }
+    [self.titlesM replaceObjectAtIndex:index withObject:title];
+    [self.scrollMenuView reloadView];
     
 }
 
-- (void)removePageControllerWithTtitle:(NSString *)title {
+- (void)updateMenuItemTitles:(NSArray *)titles {
+    if (titles.count != self.titlesM.count) return;
+    for (int i = 0; i < titles.count; i++) {
+        NSInteger index = i;
+        NSString *title = titles[i];
+        if (![title isKindOfClass:[NSString class]] || title.length == 0) return;
+        NSString *oldTitle = [self titleWithIndex:index];
+        UIViewController *cacheVC = self.cacheDictM[oldTitle];
+        if (cacheVC) {
+            [self.cacheDictM setValue:cacheVC forKey:title];
+            [self.cacheDictM setValue:nil forKey:oldTitle];
+        }
+    }
+    [self.titlesM replaceObjectsInRange:NSMakeRange(0, titles.count) withObjectsFromArray:titles];
+    [self.scrollMenuView reloadView];
+}
+
+- (void)insertPageChildControllersWithTitles:(NSArray *)titles
+                                 controllers:(NSArray *)controllers
+                                       index:(NSInteger)index {
+    index = index < 0 ? 0 : index;
+    index = index > self.controllersM.count - 1 ? self.controllersM.count - 1 : index;
+    NSInteger tarIndex = index;
+    BOOL insertSuccess = NO;
+    if (titles.count == controllers.count && controllers.count > 0) {
+        for (int i = 0; i < titles.count; i++) {
+            NSString *title = titles[i];
+            if (title.length == 0 || [self.titlesM containsObject:title]) {
+                continue;
+            }
+            insertSuccess = YES;
+            [self.titlesM insertObject:title atIndex:tarIndex];
+            [self.controllersM insertObject:controllers[i] atIndex:tarIndex];
+            tarIndex ++;
+        }
+    }
+    if (!insertSuccess) return;
+    NSInteger pageIndex = index > self.pageIndex ? self.pageIndex : self.pageIndex + controllers.count;
+    
+    [self updateViewWithIndex:pageIndex];
+    
+}
+
+- (void)updateViewWithIndex:(NSInteger)pageIndex {
+    
+    self.pageScrollView.contentSize = CGSizeMake(kYNPAGE_SCREEN_WIDTH * self.controllersM.count, self.pageScrollView.yn_height);
+    
+    UIViewController *vc = self.controllersM[pageIndex];
+    
+    vc.view.yn_x = kYNPAGE_SCREEN_WIDTH * pageIndex;
+    
+    [self.scrollMenuView reloadView];
+    [self.scrollMenuView selectedItemIndex:pageIndex animated:NO];
+    
+    CGRect frame = CGRectMake(self.pageScrollView.yn_width * pageIndex, 0, self.pageScrollView.yn_width, self.pageScrollView.yn_height);
+    
+    [self.pageScrollView scrollRectToVisible:frame animated:NO];
+    
+    [self scrollViewDidEndDecelerating:self.pageScrollView];
+    
+    self.pageIndex = pageIndex;
+}
+
+- (void)removePageControllerWithTitle:(NSString *)title {
     
     NSInteger index = -1;
     for (NSInteger i = 0; i < self.titlesM.count; i++) {
@@ -380,32 +444,58 @@
 - (void)removePageControllerWithIndex:(NSInteger)index {
     
     if (index < 0 || index >= self.titlesM.count || self.titlesM.count == 1) return;
+    NSInteger pageIndex = 0;
     if (self.pageIndex >= index) {
-        self.pageIndex--;
-        if (self.pageIndex < 0) {
-            self.pageIndex = 0 ;
+        pageIndex = self.pageIndex - 1;
+        if (pageIndex < 0) {
+            pageIndex = 0;
         }
     }
+    /// 等于 0 先选中 + 1个才能移除
+    if (pageIndex == 0) {
+        [self setSelectedPageIndex:1];
+    }
+    
+    NSString *title = self.titlesM[index];
     [self.titlesM removeObject:self.titlesM[index]];
     [self.controllersM removeObject:self.controllersM[index]];
-    [self setSelectedPageIndex:self.pageIndex];
+    
+    [self.cacheDictM removeObjectForKey:title];
+    
+    [self updateViewWithIndex:pageIndex];
 }
 
-- (void)replaceTitleArray:(NSMutableArray *)titleArray {
+- (void)replaceTitlesArrayForSort:(NSArray *)titleArray {
     
-    NSMutableArray *resultViewControllerArray = @[].mutableCopy;
-    for (NSInteger i = 0; i < titleArray.count; i++) {
-        NSString * titleI = titleArray[i];
-        for (NSInteger j = 0; j < self.titlesM.count; j++) {
-            NSString *titleJ = self.titlesM[j];
-            if ([titleI isEqualToString:titleJ]) {
-                [resultViewControllerArray addObject:self.controllersM[j]];
-                break;
-            }
+    BOOL condition = YES;
+    for (NSString *str in titleArray) {
+        if (![self.titlesM containsObject:str]) {
+            condition = NO;
+            break;
         }
     }
-    self.titlesM = titleArray;
-    self.controllersM = resultViewControllerArray;
+    if (!condition || titleArray.count != self.titlesM.count) return;
+    
+    NSMutableArray *resultArrayM = @[].mutableCopy;
+    NSInteger currentPage = self.pageIndex;
+    for (int i = 0; i < titleArray.count; i++) {
+        NSString *title = titleArray[i];
+        NSInteger oldIndex = [self.titlesM indexOfObject:title];
+        /// 等于上次选择的页面 更换之后的页面
+        if (currentPage == oldIndex) {
+            self.pageIndex = i;
+        }
+        [resultArrayM addObject:self.controllersM[oldIndex]];
+    }
+    
+    [self.titlesM removeAllObjects];
+    [self.titlesM addObjectsFromArray:titleArray];
+    
+    [self.controllersM removeAllObjects];
+    [self.controllersM addObjectsFromArray:resultArrayM];
+    
+    [self updateViewWithIndex:self.pageIndex];
+    
 }
 
 - (void)reloadSuspendHeaderViewFrame {
@@ -438,6 +528,17 @@
     }
 }
 
+- (void)scrollToTop:(BOOL)animated {
+    
+    if ([self isSuspensionTopStyle] || [self isSuspensionBottomStyle]) {
+        [self.currentScrollView setContentOffset:CGPointMake(0, -self.config.tempTopHeight) animated:animated];
+    } else if ([self isSuspensionTopPauseStyle]) {
+        [self.currentScrollView setContentOffset:CGPointMake(0, 0) animated:NO];
+        [self.bgScrollView setContentOffset:CGPointMake(0, 0) animated:animated];
+    } else {
+        [self.currentScrollView setContentOffset:CGPointMake(0, 0) animated:animated];
+    }
+}
 
 #pragma mark - Private Method
 

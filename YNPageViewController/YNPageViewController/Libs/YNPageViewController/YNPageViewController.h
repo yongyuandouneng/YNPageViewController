@@ -123,9 +123,9 @@
 - (instancetype)initPageViewControllerWithControllers:(NSArray *)controllers
                                                titles:(NSArray *)titles
                                                config:(YNPageConfigration *)config;
+
 /**
  *  当前PageScrollViewVC作为子控制器
- *
  *  @param parentViewControler 父类控制器
  */
 - (void)addSelfToParentViewController:(UIViewController *)parentViewControler;
@@ -141,32 +141,47 @@
  */
 - (void)setSelectedPageIndex:(NSInteger)pageIndex;
 
+
 /**
- 批量添加控制器
- 
+ 更新菜单栏标题
+ @param title 标题
+ @param index index
+ */
+- (void)updateMenuItemTitle:(NSString *)title index:(NSInteger)index;
+
+/**
+ 更新全部菜单栏标题
+ @param titles 标题数组
+ */
+- (void)updateMenuItemTitles:(NSArray *)titles;
+
+/**
+ 批量插入控制器
  @param titles 标题数组
  @param controllers 控制器数组
  @param index 插入的下标
  */
-- (void)addPageChildControllersWithTitles:(NSArray *)titles
-                              controllers:(NSArray *)controllers
-                                    index:(NSInteger)index;
+- (void)insertPageChildControllersWithTitles:(NSArray *)titles
+                                 controllers:(NSArray *)controllers
+                                       index:(NSInteger)index;
 /**
  根据标题移除控制器
+ @param title 标题
  */
-- (void)removePageControllerWithTtitle:(NSString *)title;
+- (void)removePageControllerWithTitle:(NSString *)title;
 
 /**
  根据下标移除控制器
+ @param index 下标
  */
 - (void)removePageControllerWithIndex:(NSInteger)index;
 
 /**
- *  整个标题替换,相应的控制器也会作出调整。可用作排序功能。
+ *  调整标题数组顺序 - 控制器也会跟着调整
  *
- *  @param titleArray 标题数组
+ *  @param titleArray 标题数组 需要与原来的titles数组相同
  */
-- (void)replaceTitleArray:(NSMutableArray *)titleArray;
+- (void)replaceTitlesArrayForSort:(NSArray *)titleArray;
 
 /**
  * 刷新悬浮HeaderViewFrame
@@ -174,5 +189,11 @@
  * YNPageStyleSuspensionCenter 样式 1.需要在下拉刷新完成时调用该方法
  */
 - (void)reloadSuspendHeaderViewFrame;
+
+/**
+ 滚动到顶部(置顶)
+ @param animated 是否动画
+ */
+- (void)scrollToTop:(BOOL)animated;
 
 @end

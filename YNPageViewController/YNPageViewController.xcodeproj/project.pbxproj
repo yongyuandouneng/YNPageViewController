@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E389BFD210AC64D007EE28C /* FTPopOverMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E389BFC210AC64C007EE28C /* FTPopOverMenu.m */; };
+		2E389C00210AC9A0007EE28C /* BasePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E389BFF210AC9A0007EE28C /* BasePageViewController.m */; };
 		2E3F8DDC20F9FA6A009FDA84 /* YNPageHeaderScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3F8DD020F9FA6A009FDA84 /* YNPageHeaderScrollView.m */; };
 		2E3F8DDD20F9FA6A009FDA84 /* YNPageScrollMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3F8DD220F9FA6A009FDA84 /* YNPageScrollMenuView.m */; };
 		2E3F8DDE20F9FA6A009FDA84 /* YNPageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3F8DD420F9FA6A009FDA84 /* YNPageScrollView.m */; };
@@ -83,6 +85,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2E389BFB210AC64C007EE28C /* FTPopOverMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTPopOverMenu.h; sourceTree = "<group>"; };
+		2E389BFC210AC64C007EE28C /* FTPopOverMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTPopOverMenu.m; sourceTree = "<group>"; };
+		2E389BFE210AC9A0007EE28C /* BasePageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BasePageViewController.h; sourceTree = "<group>"; };
+		2E389BFF210AC9A0007EE28C /* BasePageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BasePageViewController.m; sourceTree = "<group>"; };
 		2E3F8DCF20F9FA6A009FDA84 /* YNPageHeaderScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YNPageHeaderScrollView.h; sourceTree = "<group>"; };
 		2E3F8DD020F9FA6A009FDA84 /* YNPageHeaderScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YNPageHeaderScrollView.m; sourceTree = "<group>"; };
 		2E3F8DD120F9FA6A009FDA84 /* YNPageScrollMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YNPageScrollMenuView.h; sourceTree = "<group>"; };
@@ -242,6 +248,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E389BFA210AC64C007EE28C /* FTPopOverMenu */ = {
+			isa = PBXGroup;
+			children = (
+				2E389BFB210AC64C007EE28C /* FTPopOverMenu.h */,
+				2E389BFC210AC64C007EE28C /* FTPopOverMenu.m */,
+			);
+			path = FTPopOverMenu;
+			sourceTree = "<group>";
+		};
 		2E3F8DCE20F9FA6A009FDA84 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -326,6 +341,7 @@
 		2E5F7E0C20DCA5860069962B /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				2E389BFA210AC64C007EE28C /* FTPopOverMenu */,
 				2E5F7E0D20DCA5860069962B /* MJRefresh */,
 				2E5F7E3C20DCA5860069962B /* SDCycleScrollView */,
 				2E5F7E4E20DCA5860069962B /* SDWebImage */,
@@ -518,6 +534,8 @@
 				2E5F7EA520DCEB2C0069962B /* BaseCollectionViewVC.m */,
 				2EFDC1DA20E2156E0018455F /* BaseViewController.h */,
 				2EFDC1DB20E2156E0018455F /* BaseViewController.m */,
+				2E389BFE210AC9A0007EE28C /* BasePageViewController.h */,
+				2E389BFF210AC9A0007EE28C /* BasePageViewController.m */,
 			);
 			path = BaseVC;
 			sourceTree = "<group>";
@@ -729,6 +747,7 @@
 				2E5F7E7220DCA5860069962B /* MJRefreshAutoNormalFooter.m in Sources */,
 				2E5F7E6F20DCA5860069962B /* MJRefreshFooter.m in Sources */,
 				2E5F7E8420DCA5860069962B /* SDCollectionViewCell.m in Sources */,
+				2E389BFD210AC64D007EE28C /* FTPopOverMenu.m in Sources */,
 				2E3F8DE120F9FA6A009FDA84 /* UIViewController+YNPageExtend.m in Sources */,
 				2E5F7E8920DCA5860069962B /* SDWebImageCompat.m in Sources */,
 				2E5F7E8D20DCA5860069962B /* SDWebImageManager.m in Sources */,
@@ -748,6 +767,7 @@
 				2E5F7E7120DCA5860069962B /* MJRefreshAutoGifFooter.m in Sources */,
 				2E89D01B208C569700D038D6 /* main.m in Sources */,
 				2EFDC1D920E213440018455F /* YNLoadPageVC.m in Sources */,
+				2E389C00210AC9A0007EE28C /* BasePageViewController.m in Sources */,
 				2E5F7E7E20DCA5860069962B /* UIScrollView+MJRefresh.m in Sources */,
 				2E5F7E9120DCA5860069962B /* UIImage+MultiFormat.m in Sources */,
 				2E5F7E6D20DCA5860069962B /* MJRefreshBackFooter.m in Sources */,
