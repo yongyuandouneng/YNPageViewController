@@ -122,7 +122,12 @@
             break;
         case YNPageStyleNavigation:
         {
-            UIViewController *vc = self.parentViewController ?: self;
+            UIViewController *vc;
+            if ([self.parentViewController isKindOfClass:[UINavigationController class]]) {
+                vc = self;
+            } else {
+                vc = self.parentViewController;
+            }
             vc.navigationItem.titleView = self.scrollMenuView;
         }
             break;
