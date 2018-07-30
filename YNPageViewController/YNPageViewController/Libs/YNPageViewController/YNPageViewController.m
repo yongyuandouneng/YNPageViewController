@@ -23,6 +23,8 @@
 @property (nonatomic, strong) NSMutableDictionary *displayDictM;
 /// 字典控制器的字典
 @property (nonatomic, strong) NSMutableDictionary *cacheDictM;
+/// 缓存观察者对象
+@property (nonatomic, strong) NSMutableDictionary *observeCacheDictM;
 /// 当前显示的页面
 @property (nonatomic, strong) UIScrollView *currentScrollView;
 /// 当前控制器
@@ -84,6 +86,7 @@
     self.config = config ?: [YNPageConfigration defaultConfig];
     self.displayDictM = @{}.mutableCopy;
     self.cacheDictM = @{}.mutableCopy;
+    self.observeCacheDictM = @{}.mutableCopy;
     return self;
 }
 
@@ -153,6 +156,18 @@
     [self addViewControllerToParent:cacheViewController ?: self.controllersM[index] index:index];
 
 }
+/// 控制器销毁时
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+    if (!parent) {
+        if ([self isSuspensionBottomStyle] || [self isSuspensionTopStyle]) {
+            for (int i = 0; i < self.cacheDictM.allKeys.count; i++) {
+                NSString *title = self.cacheDictM.allKeys[i];
+                NSInteger index = [self getPageIndexWithTitle:title];
+                [self removeObservePathWithIndex:index];
+            }
+        }
+    }
+}
 
 /// 添加到父类控制器中
 - (void)addViewControllerToParent:(UIViewController *)viewController index:(NSInteger)index {
@@ -176,7 +191,10 @@
         
         if (![self.cacheDictM objectForKey:title]) {
             /// 设置TableView内容偏移
-            scrollView.contentInset = UIEdgeInsetsMake(_insetTop, 0, 0, 0);
+            scrollView.contentInset = UIEdgeInsetsMake(_insetTop, 0, 2 * _insetTop, 0);
+            /// 添加观察者contentSize
+            [scrollView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:(__bridge void * _Nullable)(scrollView)];
+            [self.observeCacheDictM setValue:scrollView forKey:title];
         }
         if ([self isSuspensionBottomStyle]) {
             scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(_insetTop, 0, 0, 0);
@@ -204,12 +222,11 @@
                         [scrollView setContentOffset:CGPointMake(0, -self.config.menuHeight - self.config.suspenOffsetY) animated:NO];
                     }
                 }
-
             } else {
                 CGFloat scrollMenuViewDeltaY = _scrollMenuViewOriginY - scrollMenuViewY;
                     scrollMenuViewDeltaY = -_insetTop +  scrollMenuViewDeltaY;
                     /// 求出偏移了多少 未悬浮 (多个ScrollView偏移量联动)
-                    [scrollView setContentOffset:CGPointMake(0, scrollMenuViewDeltaY) animated:NO];
+                scrollView.contentOffset = CGPointMake(0, scrollMenuViewDeltaY);
             }
         }
     }
@@ -218,8 +235,21 @@
         [self.cacheDictM setObject:viewController forKey:title];
     }
 }
-#pragma mark - UIScrollViewDelegate
 
+#pragma mark - Observe ContentSize
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    UIScrollView *scrollView = (__bridge id)context;
+    if (self.currentScrollView != scrollView)return;
+    CGFloat newValue = [[change objectForKey:NSKeyValueChangeNewKey] CGSizeValue].height;
+
+    
+//    CGFloat placeHeight = self.pageScrollView.yn_height - newValue;
+//    scrollView.contentInset = UIEdgeInsetsMake(_insetTop, 0, MAX(0, placeHeight), 0);
+//    NSLog(@"=== height = %f",placeHeight);
+    
+}
+
+#pragma mark - UIScrollViewDelegate
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     if (scrollView == self.bgScrollView) return;
     if ([self isSuspensionTopPauseStyle]) {
@@ -294,6 +324,10 @@
         
         if (scrollView != self.currentScrollView) return;
         
+        if (scrollView.contentInset.bottom == 2 * _insetTop) {
+            scrollView.contentInset = UIEdgeInsetsMake(scrollView.contentInset.top, 0, 0, 0);
+        }
+        
         CGFloat offsetY = scrollView.contentOffset.y;
         /// 悬浮临界点
         if (offsetY > - self.scrollMenuView.yn_height - self.config.suspenOffsetY) {
@@ -323,7 +357,9 @@
     } else if ([self isSuspensionTopPauseStyle]) {
         
         [self calcuSuspendTopPauseWithCurrentScrollView:scrollView];
-        
+        [self invokeDelegateForScrollWithOffsetY:self.bgScrollView.contentOffset.y];
+    } else {
+         [self invokeDelegateForScrollWithOffsetY:scrollView.contentOffset.y];
     }
 }
 
@@ -472,6 +508,7 @@
     [self.titlesM removeObject:self.titlesM[index]];
     [self.controllersM removeObject:self.controllersM[index]];
     
+    [self removeObservePathWithIndex:index];
     [self.cacheDictM removeObjectForKey:title];
     
     [self updateViewWithIndex:pageIndex];
@@ -721,8 +758,6 @@
                 scrollView.contentOffset = CGPointMake(0, 0);
             }
         }
-        
-        [self invokeDelegateForScrollWithOffsetY:scrollView.contentOffset.y];
     }
 }
 
@@ -822,9 +857,32 @@
 /// 回调监听列表滚动代理
 - (void)invokeDelegateForScrollWithOffsetY:(CGFloat)offsetY {
     if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:contentOffsetY:progress:)]) {
-        CGFloat progress = 1 + (offsetY + self.scrollMenuView.yn_height + self.config.suspenOffsetY) / (self.headerBgView.yn_height -self.config.suspenOffsetY);
-        [self.delegate pageViewController:self contentOffsetY:offsetY progress:progress > 1 ? 1 : progress];
+        switch (self.config.pageStyle) {
+            case YNPageStyleSuspensionTop:
+            case YNPageStyleSuspensionCenter:
+            {
+                CGFloat progress = 1 + (offsetY + self.scrollMenuView.yn_height + self.config.suspenOffsetY) / (self.headerBgView.yn_height -self.config.suspenOffsetY);
+                progress = progress > 1 ? 1 : progress;
+                progress = progress < 0 ? 0 : progress;
+                [self.delegate pageViewController:self contentOffsetY:offsetY progress:progress];
+            }
+                break;
+            case YNPageStyleSuspensionTopPause:
+            {
+                CGFloat progress = offsetY / (self.headerBgView.yn_height - self.config.suspenOffsetY);
+                progress = progress > 1 ? 1 : progress;
+                progress = progress < 0 ? 0 : progress;
+                [self.delegate pageViewController:self contentOffsetY:offsetY progress:progress];
+            }
+                break;
+            default:
+            {
+                [self.delegate pageViewController:self contentOffsetY:offsetY progress:1];
+            }
+                break;
+        }
     }
+    
 }
 
 #pragma mark - Lazy Method
@@ -881,10 +939,21 @@
             }
         }
     }
+#if DEBUG
     NSAssert(scrollView != nil, @"请设置pageViewController 的数据源！");
+#endif
     return scrollView;
 }
 
+/// 移除观察者
+- (void)removeObservePathWithIndex:(NSInteger)index {
+    NSString *title = [self titleWithIndex:index];
+    UIScrollView *scrollView = self.observeCacheDictM[title];
+    if (scrollView) {
+        [scrollView removeObserver:self forKeyPath:@"contentSize"];
+        [self.observeCacheDictM removeObjectForKey:title];
+    }
+}
 /// 处理头部伸缩
 - (void)headerScaleWithOffsetY:(CGFloat)offsetY {
     
@@ -918,6 +987,7 @@
 }
 
 - (void)dealloc {
+    
 #if DEBUG
     NSLog(@"----%@----dealloc", [self class]);
 #endif

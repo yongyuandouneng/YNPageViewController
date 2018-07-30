@@ -33,13 +33,14 @@
     
     _dataArray = @[].mutableCopy;
     /// 加载数据
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        for (int i = 0; i < 40; i++) {
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        for (int i = 0; i < 1; i++) {
             [_dataArray addObject:@""];
         }
         [self.tableView reloadData];
-    });
+//    });
     [self addTableViewRefresh];
+    
     
 }
 
@@ -120,6 +121,7 @@
 }
 #pragma mark - 求出占位cell高度
 - (CGFloat)placeHolderCellHeight {
+//    return 0;
     CGFloat height = self.config.contentHeight - kCellHeight * self.dataArray.count;
     height = height < 0 ? 0 : height;
     return height;
