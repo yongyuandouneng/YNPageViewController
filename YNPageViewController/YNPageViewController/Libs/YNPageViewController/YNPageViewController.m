@@ -721,6 +721,8 @@
                 scrollView.contentOffset = CGPointMake(0, 0);
             }
         }
+        
+        [self invokeDelegateForScrollWithOffsetY:scrollView.contentOffset.y];
     }
 }
 
