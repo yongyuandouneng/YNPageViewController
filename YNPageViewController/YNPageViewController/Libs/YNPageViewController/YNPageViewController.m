@@ -116,13 +116,20 @@
         case YNPageStyleTop:
         case YNPageStyleSuspensionTop:
         case YNPageStyleSuspensionCenter:
+        {
             [self.view addSubview:self.scrollMenuView];
+        }
             break;
         case YNPageStyleNavigation:
-            self.navigationItem.titleView = self.scrollMenuView;
+        {
+            UIViewController *vc = self.parentViewController ?: self;
+            vc.navigationItem.titleView = self.scrollMenuView;
+        }
             break;
         case YNPageStyleSuspensionTopPause:
+        {
             [self.bgScrollView addSubview:self.scrollMenuView];
+        }
             break;
     }
 

@@ -43,6 +43,20 @@
 }
 
 
+//- (void)viewDidLayoutSubviews {
+//    [super viewDidLayoutSubviews];
+//    
+//    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+//    if (statusBarHeight == 40.0f) {
+//        self.pageVC.view.yn_y = -20;
+//        self.pageVC.config.suspenOffsetY = 20;
+//    } else {
+//        self.pageVC.view.yn_y = 0;
+//        self.pageVC.config.suspenOffsetY = 0;
+//    }
+//    
+//}
+
 
 #pragma mark - Event Response
 
