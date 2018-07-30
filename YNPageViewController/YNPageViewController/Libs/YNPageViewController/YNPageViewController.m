@@ -191,7 +191,7 @@
         
         if (![self.cacheDictM objectForKey:title]) {
             /// 设置TableView内容偏移
-            scrollView.contentInset = UIEdgeInsetsMake(_insetTop, 0, 2 * _insetTop, 0);
+            scrollView.contentInset = UIEdgeInsetsMake(_insetTop, 0, 3 * _insetTop, 0);
             /// 添加观察者contentSize
             [scrollView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:(__bridge void * _Nullable)(scrollView)];
             [self.observeCacheDictM setValue:scrollView forKey:title];
@@ -324,7 +324,7 @@
         
         if (scrollView != self.currentScrollView) return;
         
-        if (scrollView.contentInset.bottom == 2 * _insetTop) {
+        if (scrollView.contentInset.bottom == 3 * _insetTop) {
             scrollView.contentInset = UIEdgeInsetsMake(scrollView.contentInset.top, 0, 0, 0);
         }
         

@@ -13,7 +13,7 @@
 #import "UIView+YNPageExtend.h"
 
 /// 是否隐藏导航条
-#define kHiddenNavigationBar 0
+#define kHiddenNavigationBar 1
 
 @interface YNLoadPageVC ()
 
@@ -67,12 +67,12 @@
     configration.headerViewScaleMode = YNPageHeaderViewScaleModeTop;
     /// 控制tabbar 和 nav
     configration.showTabbar = NO;
-    configration.showNavigation = YES;
+    configration.showNavigation = NO;
     configration.scrollMenu = NO;
     configration.aligmentModeCenter = NO;
     configration.lineWidthEqualFontWidth = NO;
     configration.showBottomLine = YES;
-    
+    configration.suspenOffsetY = 64;
     YNSuspendCenterPageVC *pageVC = [YNSuspendCenterPageVC suspendCenterPageVCWithConfig:configration];
     
     /// 作为自控制器加入到当前控制器
@@ -80,8 +80,9 @@
     
     /// 如果隐藏了导航条可以 适当改y值
     if (kHiddenNavigationBar) {
-        pageVC.view.yn_y = kYNPAGE_NAVHEIGHT;
+//        pageVC.view.yn_y = kYNPAGE_NAVHEIGHT;
     }
+    
     
 }
 
