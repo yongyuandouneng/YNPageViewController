@@ -13,6 +13,8 @@
 #import "UIScrollView+YNPageExtend.h"
 #import "YNPageHeaderScrollView.h"
 
+#define kDEFAULT_INSET_BOTTOM 400
+
 @interface YNPageViewController () <UIScrollViewDelegate, YNPageScrollMenuViewDelegate>
 
 /// 一个HeaderView的背景View
@@ -21,6 +23,8 @@
 @property (nonatomic, strong) YNPageScrollView *pageScrollView;
 /// 展示控制器的字典
 @property (nonatomic, strong) NSMutableDictionary *displayDictM;
+/// 原始InsetBottom
+@property (nonatomic, strong) NSMutableDictionary *originInsetBottomDictM;
 /// 字典控制器的字典
 @property (nonatomic, strong) NSMutableDictionary *cacheDictM;
 /// 当前显示的页面
@@ -84,6 +88,7 @@
     self.config = config ?: [YNPageConfigration defaultConfig];
     self.displayDictM = @{}.mutableCopy;
     self.cacheDictM = @{}.mutableCopy;
+    self.originInsetBottomDictM = @{}.mutableCopy;
     return self;
 }
 
@@ -174,8 +179,11 @@
     if ([self isSuspensionBottomStyle] || [self isSuspensionTopStyle]) {
         
         if (![self.cacheDictM objectForKey:title]) {
+            
+            [self.originInsetBottomDictM setValue:@(scrollView.contentInset.bottom) forKey:title];
+            
             /// 设置TableView内容偏移
-            scrollView.contentInset = UIEdgeInsetsMake(_insetTop, 0, 3 * _insetTop, 0);
+            scrollView.contentInset = UIEdgeInsetsMake(_insetTop, 0, scrollView.contentInset.bottom + 3 * kDEFAULT_INSET_BOTTOM, 0);
         }
         if ([self isSuspensionBottomStyle]) {
             scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(_insetTop, 0, 0, 0);
@@ -215,19 +223,6 @@
     if (![self.cacheDictM objectForKey:title]) {
         [self.cacheDictM setObject:viewController forKey:title];
     }
-}
-
-#pragma mark - Observe ContentSize
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-    UIScrollView *scrollView = (__bridge id)context;
-    if (self.currentScrollView != scrollView)return;
-    CGFloat newValue = [[change objectForKey:NSKeyValueChangeNewKey] CGSizeValue].height;
-
-    
-//    CGFloat placeHeight = self.pageScrollView.yn_height - newValue;
-//    scrollView.contentInset = UIEdgeInsetsMake(_insetTop, 0, MAX(0, placeHeight), 0);
-//    NSLog(@"=== height = %f",placeHeight);
-    
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -305,8 +300,10 @@
         
         if (scrollView != self.currentScrollView) return;
         
-        if (scrollView.contentInset.bottom == 3 * _insetTop) {
-            scrollView.contentInset = UIEdgeInsetsMake(scrollView.contentInset.top, 0, 0, 0);
+        CGFloat originInsetBottom = [self.originInsetBottomDictM[[self titleWithIndex:self.pageIndex]] floatValue];
+        
+        if ((scrollView.contentInset.bottom - originInsetBottom) > kDEFAULT_INSET_BOTTOM) {
+            scrollView.contentInset = UIEdgeInsetsMake(scrollView.contentInset.top, 0, originInsetBottom, 0);
         }
         
         CGFloat offsetY = scrollView.contentOffset.y;
@@ -489,6 +486,7 @@
     [self.titlesM removeObject:self.titlesM[index]];
     [self.controllersM removeObject:self.controllersM[index]];
     
+    [self.originInsetBottomDictM removeObjectForKey:title];
     [self.cacheDictM removeObjectForKey:title];
     
     [self updateViewWithIndex:pageIndex];

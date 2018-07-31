@@ -34,7 +34,7 @@
     _dataArray = @[].mutableCopy;
     /// 加载数据
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 30; i++) {
             [_dataArray addObject:@""];
         }
         [self.tableView reloadData];
