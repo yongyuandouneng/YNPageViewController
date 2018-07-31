@@ -23,8 +23,6 @@
 @property (nonatomic, strong) NSMutableDictionary *displayDictM;
 /// 字典控制器的字典
 @property (nonatomic, strong) NSMutableDictionary *cacheDictM;
-/// 缓存观察者对象
-@property (nonatomic, strong) NSMutableDictionary *observeCacheDictM;
 /// 当前显示的页面
 @property (nonatomic, strong) UIScrollView *currentScrollView;
 /// 当前控制器
@@ -86,7 +84,6 @@
     self.config = config ?: [YNPageConfigration defaultConfig];
     self.displayDictM = @{}.mutableCopy;
     self.cacheDictM = @{}.mutableCopy;
-    self.observeCacheDictM = @{}.mutableCopy;
     return self;
 }
 
@@ -156,19 +153,6 @@
     [self addViewControllerToParent:cacheViewController ?: self.controllersM[index] index:index];
 
 }
-/// 控制器销毁时
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-    if (!parent) {
-        if ([self isSuspensionBottomStyle] || [self isSuspensionTopStyle]) {
-            for (int i = 0; i < self.cacheDictM.allKeys.count; i++) {
-                NSString *title = self.cacheDictM.allKeys[i];
-                NSInteger index = [self getPageIndexWithTitle:title];
-                [self removeObservePathWithIndex:index];
-            }
-        }
-    }
-}
-
 /// 添加到父类控制器中
 - (void)addViewControllerToParent:(UIViewController *)viewController index:(NSInteger)index {
     
@@ -192,9 +176,6 @@
         if (![self.cacheDictM objectForKey:title]) {
             /// 设置TableView内容偏移
             scrollView.contentInset = UIEdgeInsetsMake(_insetTop, 0, 3 * _insetTop, 0);
-            /// 添加观察者contentSize
-            [scrollView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:(__bridge void * _Nullable)(scrollView)];
-            [self.observeCacheDictM setValue:scrollView forKey:title];
         }
         if ([self isSuspensionBottomStyle]) {
             scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(_insetTop, 0, 0, 0);
@@ -508,7 +489,6 @@
     [self.titlesM removeObject:self.titlesM[index]];
     [self.controllersM removeObject:self.controllersM[index]];
     
-    [self removeObservePathWithIndex:index];
     [self.cacheDictM removeObjectForKey:title];
     
     [self updateViewWithIndex:pageIndex];
@@ -945,15 +925,6 @@
     return scrollView;
 }
 
-/// 移除观察者
-- (void)removeObservePathWithIndex:(NSInteger)index {
-    NSString *title = [self titleWithIndex:index];
-    UIScrollView *scrollView = self.observeCacheDictM[title];
-    if (scrollView) {
-        [scrollView removeObserver:self forKeyPath:@"contentSize"];
-        [self.observeCacheDictM removeObjectForKey:title];
-    }
-}
 /// 处理头部伸缩
 - (void)headerScaleWithOffsetY:(CGFloat)offsetY {
     
