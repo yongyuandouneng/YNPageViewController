@@ -17,6 +17,7 @@
 @implementation YNPageScrollView
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    
     if ([self panBack:gestureRecognizer]) {
         return YES;
     }
@@ -56,5 +57,6 @@
     }
     return YES;
 }
+
 
 @end

@@ -44,6 +44,11 @@
 /// 是否是悬浮状态
 @property (nonatomic, assign) BOOL supendStatus;
 
+
+@property (nonatomic, assign) CGFloat beginBgScrollOffsetY;
+@property (nonatomic, assign) CGFloat beginCurrentScrollOffsetY;
+
+
 @end
 
 @implementation YNPageViewController
@@ -227,9 +232,9 @@
 
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    if (scrollView == self.bgScrollView) return;
-    if ([self isSuspensionTopPauseStyle]) {
-        self.currentScrollView.scrollEnabled = NO;
+    if (scrollView == self.bgScrollView) {
+        _beginBgScrollOffsetY = scrollView.contentOffset.y;
+        _beginCurrentScrollOffsetY = self.currentScrollView.contentOffset.y;
     }
 }
 
@@ -266,11 +271,15 @@
         [self calcuSuspendTopPauseWithBgScrollView:scrollView];
         return;
     }
+    
+    if ([self isSuspensionTopPauseStyle] && self.currentScrollView.scrollEnabled) {
+        self.currentScrollView.scrollEnabled = NO;
+    }
+    
     CGFloat currentPostion = scrollView.contentOffset.x;
 
     CGFloat offsetX = currentPostion / kYNPAGE_SCREEN_WIDTH;
 
-    
     CGFloat offX = currentPostion > self.lastPositionX ? ceilf(offsetX) : offsetX;
 
     [self replaceHeaderViewFromTableView];
@@ -321,7 +330,6 @@
                     self.headerBgView.yn_y = offsetY;
                 }
             }
-            
             self.scrollMenuView.yn_y = self.headerBgView.yn_bottom;
             self.supendStatus = NO;
         }
@@ -336,6 +344,7 @@
         
         [self calcuSuspendTopPauseWithCurrentScrollView:scrollView];
         [self invokeDelegateForScrollWithOffsetY:self.bgScrollView.contentOffset.y];
+        
     } else {
          [self invokeDelegateForScrollWithOffsetY:scrollView.contentOffset.y];
     }
@@ -343,7 +352,6 @@
 
 /// 调整scrollMenuView层级，防止TableView Section Header 挡住
 - (void)adjustSectionHeader:(UIScrollView *)scrollview {
-    
     if (scrollview.subviews.lastObject != self.scrollMenuView) {
         [scrollview bringSubviewToFront:self.scrollMenuView];
     }
@@ -686,6 +694,7 @@
 
 /// 将headerView 从 tableview 上 放置 view 上
 - (void)replaceHeaderViewFromTableView {
+    
     if ([self isSuspensionBottomStyle] || [self isSuspensionTopStyle]) {
         if (_headerViewInTableView) {
             
@@ -704,37 +713,63 @@
         }
     }
 }
-
+/// - 最终效果 current 拖到指定时 bg 才能下拉 ， bg 悬浮时 current 才能上拉
 /// 计算悬浮顶部偏移量 - BgScrollView
 - (void)calcuSuspendTopPauseWithBgScrollView:(UIScrollView *)scrollView {
+    
     if ([self isSuspensionTopPauseStyle] && scrollView == self.bgScrollView) {
-        CGFloat offsetY = scrollView.contentOffset.y;
-        if (offsetY >= _insetTop) {
+        
+        CGFloat bg_OffsetY = scrollView.contentOffset.y;
+        CGFloat cu_OffsetY = self.currentScrollView.contentOffset.y;
+        /// 求出拖拽方向
+        BOOL dragBottom = _beginBgScrollOffsetY - bg_OffsetY > 0 ? YES : NO;
+        /// cu 大于 0 时
+        if (dragBottom && cu_OffsetY > 0) {
+            /// 设置原来的 出生偏移量
+            scrollView.contentOffset = CGPointMake(0, _beginBgScrollOffsetY);
+            /// 设置实时滚动的 cu 偏移量
+            _beginCurrentScrollOffsetY = cu_OffsetY;
+        }
+        /// 初始 begin 时超过了 实时 设置
+        if (_beginBgScrollOffsetY == _insetTop && _beginCurrentScrollOffsetY != 0) {
+            scrollView.contentOffset = CGPointMake(0, _beginBgScrollOffsetY);
+            _beginCurrentScrollOffsetY = cu_OffsetY;
+        }
+        /// 设置边界
+        if (bg_OffsetY >= _insetTop) {
             scrollView.contentOffset = CGPointMake(0, _insetTop);
-        } else {
-            UIScrollView *targetScroll = self.currentScrollView;
-            if (targetScroll.contentOffset.y > 0) {
-                scrollView.contentOffset = CGPointMake(0, _insetTop);
-            }
+            _beginCurrentScrollOffsetY = cu_OffsetY;
+        }
+         /// 设置边界
+        if (bg_OffsetY <= 0 && cu_OffsetY > 0) {
+            scrollView.contentOffset = CGPointMake(0, 0);
         }
     }
 }
 
 /// 计算悬浮顶部偏移量 - CurrentScrollView
 - (void)calcuSuspendTopPauseWithCurrentScrollView:(UIScrollView *)scrollView {
+
     if ([self isSuspensionTopPauseStyle]) {
-        if (scrollView.contentOffset.y < 0) {
+        if (!scrollView.isDragging) return;
+        CGFloat bg_OffsetY = self.bgScrollView.contentOffset.y;
+        CGFloat cu_offsetY = scrollView.contentOffset.y;
+        /// 求出拖拽方向
+        BOOL dragBottom = _beginCurrentScrollOffsetY - cu_offsetY < 0 ? YES : NO;
+        /// cu 是大于 0 的 且 bg 要小于 _insetTop
+        if (dragBottom && cu_offsetY > 0 && bg_OffsetY < _insetTop) {
+            /// 设置之前的拖动位置
+            scrollView.contentOffset = CGPointMake(0, _beginCurrentScrollOffsetY);
+            /// 修改 bg 原先偏移量
+            _beginBgScrollOffsetY = bg_OffsetY;
+        }
+        /// cu 拖到 小于 0 就设成0
+        if (cu_offsetY < 0) {
             scrollView.contentOffset = CGPointMake(0, 0);
-            for (NSString *title in self.cacheDictM.allKeys) {
-                UIScrollView *scrollView = [self getScrollViewWithPageIndex:[self getPageIndexWithTitle:title]];
-                if (scrollView.contentOffset.y != 0) {
-                    scrollView.contentOffset = CGPointMake(0, 0);;
-                }
-            }
-        } else {
-            if (self.bgScrollView.contentOffset.y < _insetTop) {
-                scrollView.contentOffset = CGPointMake(0, 0);
-            }
+        }
+        /// bg 超过了 insetTop 就设置初始化为 _insetTop
+        if (bg_OffsetY >= _insetTop) {
+            _beginBgScrollOffsetY = _insetTop;
         }
     }
 }
@@ -860,7 +895,6 @@
                 break;
         }
     }
-    
 }
 
 #pragma mark - Lazy Method
