@@ -10,10 +10,14 @@
 
 typedef void(^YNPageScrollViewDidScrollView)(UIScrollView *scrollView);
 
+typedef void(^YNPageScrollViewBeginDragginScrollView)(UIScrollView *scrollView);
+
 @interface UIScrollView (YNPageExtend)
 
 @property (nonatomic, assign) BOOL yn_observerDidScrollView;
 
 @property (nonatomic, copy) YNPageScrollViewDidScrollView yn_pageScrollViewDidScrollView;
+
+@property (nonatomic, copy) YNPageScrollViewBeginDragginScrollView yn_pageScrollViewBeginDragginScrollView;
 
 @end

@@ -301,7 +301,13 @@
     }
 }
 
-#pragma mark - Yn_pageScrollViewDidScrollView
+#pragma mark - yn_pageScrollViewBeginDragginScrollView
+- (void)yn_pageScrollViewBeginDragginScrollView:(UIScrollView *)scrollView {
+    _beginBgScrollOffsetY = self.bgScrollView.contentOffset.y;
+    _beginCurrentScrollOffsetY = scrollView.contentOffset.y;
+}
+
+#pragma mark - yn_pageScrollViewDidScrollView
 - (void)yn_pageScrollViewDidScrollView:(UIScrollView *)scrollView {
     
     if ([self isSuspensionBottomStyle] || [self isSuspensionTopStyle]) {
@@ -395,7 +401,6 @@
     }
     [self.titlesM replaceObjectAtIndex:index withObject:title];
     [self.scrollMenuView reloadView];
-    
 }
 
 - (void)updateMenuItemTitles:(NSArray *)titles {
@@ -754,6 +759,7 @@
         if (!scrollView.isDragging) return;
         CGFloat bg_OffsetY = self.bgScrollView.contentOffset.y;
         CGFloat cu_offsetY = scrollView.contentOffset.y;
+        
         /// 求出拖拽方向
         BOOL dragBottom = _beginCurrentScrollOffsetY - cu_offsetY < 0 ? YES : NO;
         /// cu 是大于 0 的 且 bg 要小于 _insetTop
@@ -945,6 +951,11 @@
         scrollView.yn_pageScrollViewDidScrollView = ^(UIScrollView *scrollView) {
             [weakSelf yn_pageScrollViewDidScrollView:scrollView];
         };
+        if (self.config.pageStyle == YNPageStyleSuspensionTopPause) {
+            scrollView.yn_pageScrollViewBeginDragginScrollView = ^(UIScrollView *scrollView) {
+                [weakSelf yn_pageScrollViewBeginDragginScrollView:scrollView];
+            };
+        }
         if (@available(iOS 11.0, *)) {
             if (scrollView) {
                 scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;

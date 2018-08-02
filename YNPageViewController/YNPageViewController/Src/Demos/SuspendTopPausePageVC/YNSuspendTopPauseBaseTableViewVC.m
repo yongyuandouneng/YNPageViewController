@@ -37,9 +37,9 @@
     });
     [self addTableViewRefresh];
     
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        [self.tableView setContentOffset:CGPointMake(0, 240)];
-//    });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.tableView setContentOffset:CGPointMake(0, 240)];
+    });
 }
 
 - (void)viewWillAppear:(BOOL)animated {

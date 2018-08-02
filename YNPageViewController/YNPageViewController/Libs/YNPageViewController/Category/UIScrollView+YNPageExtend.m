@@ -15,6 +15,12 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         [self swizzleInstanceMethod:NSSelectorFromString(@"_notifyDidScroll") withMethod:@selector(yn_scrollViewDidScrollView)];
+        
+        
+        [self swizzleInstanceMethod:NSSelectorFromString(@"_scrollViewWillBeginDragging") withMethod:@selector(yn_scrollViewWillBeginDragging)];
+        
+        
+        
     });
 }
 
@@ -23,6 +29,15 @@
     if (self.yn_observerDidScrollView && self.yn_pageScrollViewDidScrollView) {
         self.yn_pageScrollViewDidScrollView(self);
     }
+}
+
+- (void)yn_scrollViewWillBeginDragging {
+    
+    [self yn_scrollViewWillBeginDragging];
+    if (self.yn_observerDidScrollView && self.yn_pageScrollViewBeginDragginScrollView) {
+        self.yn_pageScrollViewBeginDragginScrollView(self);
+    }
+    
 }
 
 #pragma mark - Getter - Setter
@@ -41,6 +56,14 @@
 
 - (void)setYn_pageScrollViewDidScrollView:(YNPageScrollViewDidScrollView)yn_pageScrollViewDidScrollView {
     objc_setAssociatedObject(self, @selector(yn_pageScrollViewDidScrollView), yn_pageScrollViewDidScrollView, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+- (YNPageScrollViewBeginDragginScrollView)yn_pageScrollViewBeginDragginScrollView {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setYn_pageScrollViewBeginDragginScrollView:(YNPageScrollViewBeginDragginScrollView)yn_pageScrollViewBeginDragginScrollView {
+    objc_setAssociatedObject(self, @selector(yn_pageScrollViewBeginDragginScrollView), yn_pageScrollViewBeginDragginScrollView, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 #pragma amrk - Swizzle
