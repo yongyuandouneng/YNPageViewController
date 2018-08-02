@@ -38,7 +38,6 @@
             [weakSelf.collectionView.mj_footer endRefreshing];
         });
     }];
-    
 }
 
 #pragma mark - UICollectionViewDelegate, UICollectionViewDataSource
@@ -56,12 +55,10 @@
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"id" forIndexPath:indexPath];
     cell.backgroundColor = randomColor;
     return cell;
-    
 }
 
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
-        
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
         layout.itemSize = CGSizeMake(100, 100);
         

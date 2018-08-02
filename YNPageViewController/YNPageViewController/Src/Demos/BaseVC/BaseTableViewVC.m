@@ -40,8 +40,6 @@
         [self.tableView reloadData];
     });
     [self addTableViewRefresh];
-    
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -66,8 +64,6 @@
     [super viewDidDisappear:animated];
     NSLog(@"--%@--%@", [self class], NSStringFromSelector(_cmd));
 }
-
-
 
 /// 添加下拉刷新
 - (void)addTableViewRefresh {
@@ -99,12 +95,10 @@
             [weakSelf.tableView.mj_footer endRefreshing];
         });
     }];
-    
 }
 
 #pragma mark - 悬浮Center刷新高度方法
 - (void)suspendTopReloadHeaderViewHeight {
-    
     /// 布局高度
     CGFloat netWorkHeight = 300;
     __weak typeof (self) weakSelf = self;
@@ -117,11 +111,9 @@
             [VC reloadSuspendHeaderViewFrame];
         }
     }];
-    
 }
 #pragma mark - 求出占位cell高度
 - (CGFloat)placeHolderCellHeight {
-//    return 0;
     CGFloat height = self.config.contentHeight - kCellHeight * self.dataArray.count;
     height = height < 0 ? 0 : height;
     return height;
@@ -170,17 +162,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"id"];
-    
     if (indexPath.row < self.dataArray.count) {
-        
         cell.textLabel.text = [NSString stringWithFormat:@"%@ section: %zd row:%zd", self.cellTitle ?: @"测试", indexPath.section, indexPath.row];
         return cell;
     } else {
         cell.textLabel.text = @"";
     }
-    
     return cell;
-    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -197,4 +185,5 @@
     }
     return _tableView;
 }
+
 @end

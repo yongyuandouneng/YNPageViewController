@@ -11,6 +11,7 @@
 #import "YNPageScrollMenuView.h"
 #import "YNPageScrollView.h"
 
+
 @class YNPageViewController;
 
 @protocol YNPageViewControllerDelegate <NSObject>
@@ -79,15 +80,15 @@
 
 @interface YNPageViewController : UIViewController
 /// 配置信息
-@property (nonatomic, strong) YNPageConfigration *config;
+@property (nonatomic, strong, readonly) YNPageConfigration *config;
 /// 控制器数组
-@property (nonatomic, strong) NSMutableArray *controllersM;
+@property (nonatomic, strong, readonly) NSMutableArray<__kindof UIViewController *> *controllersM;
 /// 标题数组
-@property (nonatomic, strong) NSMutableArray *titlesM;
+@property (nonatomic, strong, readonly) NSMutableArray<NSString *> *titlesM;
 /// 菜单栏
 @property (nonatomic, strong) YNPageScrollMenuView *scrollMenuView;
 /// 背景ScrollView
-@property (nonatomic, strong) YNPageScrollView *bgScrollView;
+@property (nonatomic, strong, readonly) YNPageScrollView *bgScrollView;
 /// 头部headerView
 @property (nonatomic, strong) UIView *headerView;
 /// 数据源

@@ -21,6 +21,14 @@
 @property (nonatomic, strong) YNPageHeaderScrollView *headerBgView;
 /// 页面ScrollView
 @property (nonatomic, strong) YNPageScrollView *pageScrollView;
+/// 配置信息
+@property (nonatomic, strong, readwrite) YNPageConfigration *config;
+/// 控制器数组
+@property (nonatomic, strong, readwrite) NSMutableArray<__kindof UIViewController *> *controllersM;
+/// 标题数组
+@property (nonatomic, strong, readwrite) NSMutableArray<NSString *> *titlesM;
+/// 背景ScrollView
+@property (nonatomic, strong, readwrite) YNPageScrollView *bgScrollView;
 /// 展示控制器的字典
 @property (nonatomic, strong) NSMutableDictionary *displayDictM;
 /// 原始InsetBottom
@@ -43,11 +51,10 @@
 @property (nonatomic, assign) CGFloat headerViewOriginHeight;
 /// 是否是悬浮状态
 @property (nonatomic, assign) BOOL supendStatus;
-
-
+/// 记录bgScrollView Y 偏移量
 @property (nonatomic, assign) CGFloat beginBgScrollOffsetY;
+/// 记录currentScrollView Y 偏移量
 @property (nonatomic, assign) CGFloat beginCurrentScrollOffsetY;
-
 
 @end
 
@@ -1004,7 +1011,6 @@
 }
 
 - (void)dealloc {
-    
 #if DEBUG
     NSLog(@"----%@----dealloc", [self class]);
 #endif

@@ -23,7 +23,7 @@
     [super viewWillAppear:animated];
     
     if (kOpenRefreshHeaderViewHeight) {
-        if (self.tableView.mj_header.ignoredScrollViewContentInsetTop != self.self.yn_pageViewController.config.tempTopHeight) {
+        if (self.tableView.mj_header.ignoredScrollViewContentInsetTop != self.yn_pageViewController.config.tempTopHeight) {
             [self addTableViewRefresh];
         }
     }
@@ -31,7 +31,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
 }
 
 /// 重写父类方法 添加 刷新方法
@@ -57,7 +56,6 @@
     
     /// 需要设置下拉刷新控件UI的偏移位置
     self.tableView.mj_header.ignoredScrollViewContentInsetTop = self.yn_pageViewController.config.tempTopHeight;
-    
 }
 
 #pragma mark - 悬浮Top刷新高度方法

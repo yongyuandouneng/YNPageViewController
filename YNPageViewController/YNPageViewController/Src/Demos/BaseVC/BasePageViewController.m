@@ -19,8 +19,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"功能操作" style:UIBarButtonItemStylePlain target:self action:@selector(rightButtonOnClick:event:)];
-    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
+                                              initWithTitle:@"功能操作"
+                                              style:UIBarButtonItemStylePlain
+                                              target:self                 action:@selector(rightButtonOnClick:event:)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -84,9 +86,6 @@
             {
                 [self replaceTitlesArrayForSort:@[@"帽子", @"衣服", @"鞋子"]];
             }
-                break;
-                
-            default:
                 break;
         }
     } dismissBlock:nil];

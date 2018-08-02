@@ -11,7 +11,6 @@
 #import "BaseTableViewVC.h"
 #import "BaseCollectionViewVC.h"
 
-
 @interface YNSuspendCenterPageVC () <YNPageViewControllerDataSource, YNPageViewControllerDelegate, SDCycleScrollViewDelegate>
 
 @property (nonatomic, copy) NSArray *imagesURLs;
@@ -22,7 +21,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
 }
 #pragma mark - Event Response
 
@@ -68,7 +66,6 @@
     vc.headerView = autoScrollView;
     /// 指定默认选择index 页面
     vc.pageIndex = 2;
-    
     
     return vc;
 }
@@ -117,7 +114,6 @@
                   progress:(CGFloat)progress {
 //        NSLog(@"--- contentOffset = %f,    progress = %f", contentOffset, progress);
 }
-
 
 #pragma mark - SDCycleScrollViewDelegate
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {

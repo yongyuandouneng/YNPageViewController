@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "YNPageViewController.h"
-#import "YNPageScrollMenuView.h"
 
 @interface UIViewController (YNPageExtend)
 
@@ -20,8 +19,8 @@
 
 - (YNPageScrollMenuView *)scrollMenuView;
 
-- (NSMutableArray *)controllersM;
+- (NSMutableArray<__kindof UIViewController *> *)controllersM;
 
-- (NSMutableArray *)titlesM;
+- (NSMutableArray<NSString *> *)titlesM;
 
 @end

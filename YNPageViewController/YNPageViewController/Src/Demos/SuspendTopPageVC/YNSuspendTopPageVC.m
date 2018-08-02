@@ -21,7 +21,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
 }
 
 #pragma mark - Event Response
@@ -65,9 +64,8 @@
 //    vc.headerView = autoScrollView;
     
     vc.headerView = headerView;
-    /// 指定默认选择index 页面
-    /// vc.pageIndex = 0;
-    
+    // 指定默认选择index 页面
+//    vc.pageIndex = 0;
     return vc;
 }
 
@@ -103,9 +101,9 @@
 }
 #pragma mark - YNPageViewControllerDataSource
 - (UIScrollView *)pageViewController:(YNPageViewController *)pageViewController pageForIndex:(NSInteger)index {
-    UIViewController *vc = pageViewController.controllersM[index];
+    YNSuspendTopBaseTableViewVC *vc = pageViewController.controllersM[index];
     
-    return [(YNSuspendTopBaseTableViewVC *)vc tableView];
+    return [vc tableView];
 }
 #pragma mark - YNPageViewControllerDelegate
 - (void)pageViewController:(YNPageViewController *)pageViewController
