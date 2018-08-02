@@ -272,10 +272,6 @@
         return;
     }
     
-    if ([self isSuspensionTopPauseStyle] && self.currentScrollView.scrollEnabled) {
-        self.currentScrollView.scrollEnabled = NO;
-    }
-    
     CGFloat currentPostion = scrollView.contentOffset.x;
 
     CGFloat offsetX = currentPostion / kYNPAGE_SCREEN_WIDTH;
@@ -291,6 +287,10 @@
     self.lastPositionX = currentPostion;
     
     [self.scrollMenuView adjustItemWithProgress:progress lastIndex:floor(offsetX) currentIndex:ceilf(offsetX)];
+    
+    if ([self isSuspensionTopPauseStyle] && self.currentScrollView.scrollEnabled) {
+        self.currentScrollView.scrollEnabled = NO;
+    }
     
     if (floor(offsetX) == ceilf(offsetX)) {
         [self.scrollMenuView adjustItemAnimate:YES];

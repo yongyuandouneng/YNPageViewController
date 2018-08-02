@@ -81,7 +81,7 @@
     
 //    vc.headerView = headerView;
     /// 指定默认选择index 页面
-    /// vc.pageIndex = 0;
+    vc.pageIndex = 1;
     
     vc.bgScrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
