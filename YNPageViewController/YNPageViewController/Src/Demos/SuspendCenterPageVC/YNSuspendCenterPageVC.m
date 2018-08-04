@@ -15,6 +15,8 @@
 
 @property (nonatomic, copy) NSArray *imagesURLs;
 
+@property (nonatomic, copy) NSArray *cacheKeyArray;
+
 @end
 
 @implementation YNSuspendCenterPageVC
@@ -84,7 +86,7 @@
 }
 
 + (NSArray *)getArrayTitles {
-    return @[@"鞋子", @"衣服", @"帽子"];
+    return @[@"鞋子", @"衣服", @"衣服"];
 }
 
 #pragma mark - Private Function
@@ -99,6 +101,14 @@
     }
     return _imagesURLs;
 }
+
+- (NSArray *)cacheKeyArray {
+    if (!_cacheKeyArray) {
+        _cacheKeyArray = @[@"1", @"2", @"3"];
+    }
+    return _cacheKeyArray;
+}
+
 #pragma mark - YNPageViewControllerDataSource
 - (UIScrollView *)pageViewController:(YNPageViewController *)pageViewController pageForIndex:(NSInteger)index {
     UIViewController *vc = pageViewController.controllersM[index];
@@ -119,5 +129,9 @@
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
     NSLog(@"----click 轮播图 index %ld", index);
 }
+
+//- (NSString *)pageViewController:(YNPageViewController *)pageViewController customCacheKeyForIndex:(NSInteger)index {
+//    return self.cacheKeyArray[index];
+//}
 
 @end

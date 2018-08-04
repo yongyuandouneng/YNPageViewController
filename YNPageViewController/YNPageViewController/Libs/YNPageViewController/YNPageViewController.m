@@ -164,9 +164,9 @@
 
     self.pageIndex = index;
     NSString *title = [self titleWithIndex:index];
-    if ([self.displayDictM objectForKey:title]) return;
+    if ([self.displayDictM objectForKey:[self getKeyWithTitle:title]]) return;
     
-    UIViewController *cacheViewController = [self.cacheDictM objectForKey:title];
+    UIViewController *cacheViewController = [self.cacheDictM objectForKey:[self getKeyWithTitle:title]];
     [self addViewControllerToParent:cacheViewController ?: self.controllersM[index] index:index];
 
 }
@@ -181,7 +181,7 @@
     
     NSString *title = [self titleWithIndex:index];
     
-    [self.displayDictM setObject:viewController forKey:title];
+    [self.displayDictM setObject:viewController forKey:[self getKeyWithTitle:title]];
     
     UIScrollView *scrollView = self.currentScrollView;
     scrollView.frame = viewController.view.bounds;
@@ -190,9 +190,9 @@
     
     if ([self isSuspensionBottomStyle] || [self isSuspensionTopStyle]) {
         
-        if (![self.cacheDictM objectForKey:title]) {
+        if (![self.cacheDictM objectForKey:[self getKeyWithTitle:title]]) {
             
-            [self.originInsetBottomDictM setValue:@(scrollView.contentInset.bottom) forKey:title];
+            [self.originInsetBottomDictM setValue:@(scrollView.contentInset.bottom) forKey:[self getKeyWithTitle:title]];
             
             /// 设置TableView内容偏移
             scrollView.contentInset = UIEdgeInsetsMake(_insetTop, 0, scrollView.contentInset.bottom + 3 * kDEFAULT_INSET_BOTTOM, 0);
@@ -215,7 +215,7 @@
             
             if (self.supendStatus) {
                 /// 首次已经悬浮 设置初始化 偏移量
-                if (![self.cacheDictM objectForKey:title]) {
+                if (![self.cacheDictM objectForKey:[self getKeyWithTitle:title]]) {
                     [scrollView setContentOffset:CGPointMake(0, -self.config.menuHeight - self.config.suspenOffsetY) animated:NO];
                 } else {
                     /// 再次悬浮 已经加载过 设置偏移量
@@ -232,8 +232,8 @@
         }
     }
     /// 缓存控制器
-    if (![self.cacheDictM objectForKey:title]) {
-        [self.cacheDictM setObject:viewController forKey:title];
+    if (![self.cacheDictM objectForKey:[self getKeyWithTitle:title]]) {
+        [self.cacheDictM setObject:viewController forKey:[self getKeyWithTitle:title]];
     }
 }
 
@@ -324,8 +324,8 @@
         if (!_headerViewInTableView) return;
         
         if (scrollView != self.currentScrollView) return;
-        
-        CGFloat originInsetBottom = [self.originInsetBottomDictM[[self titleWithIndex:self.pageIndex]] floatValue];
+        NSString *title = [self titleWithIndex:self.pageIndex];
+        CGFloat originInsetBottom = [self.originInsetBottomDictM[[self getKeyWithTitle:title]] floatValue];
         
         if ((scrollView.contentInset.bottom - originInsetBottom) > kDEFAULT_INSET_BOTTOM) {
             scrollView.contentInset = UIEdgeInsetsMake(scrollView.contentInset.top, 0, originInsetBottom, 0);
@@ -404,10 +404,14 @@
     if (index < 0 || index > self.titlesM.count - 1 ) return;
     if (title.length == 0) return;
     NSString *oldTitle = [self titleWithIndex:index];
-    UIViewController *cacheVC = self.cacheDictM[oldTitle];
+    UIViewController *cacheVC = self.cacheDictM[[self getKeyWithTitle:oldTitle]];
     if (cacheVC) {
-        [self.cacheDictM setValue:cacheVC forKey:title];
-        [self.cacheDictM setValue:nil forKey:oldTitle];
+        NSString *newKey = [self getKeyWithTitle:title];
+        NSString *oldKey = [self getKeyWithTitle:oldTitle];
+        [self.cacheDictM setValue:cacheVC forKey:newKey];
+        if (![newKey isEqualToString:oldKey]) {
+            [self.cacheDictM setValue:nil forKey:oldKey];
+        }
     }
     [self.titlesM replaceObjectAtIndex:index withObject:title];
     [self.scrollMenuView reloadView];
@@ -420,10 +424,14 @@
         NSString *title = titles[i];
         if (![title isKindOfClass:[NSString class]] || title.length == 0) return;
         NSString *oldTitle = [self titleWithIndex:index];
-        UIViewController *cacheVC = self.cacheDictM[oldTitle];
+        UIViewController *cacheVC = self.cacheDictM[[self getKeyWithTitle:oldTitle]];
         if (cacheVC) {
-            [self.cacheDictM setValue:cacheVC forKey:title];
-            [self.cacheDictM setValue:nil forKey:oldTitle];
+            NSString *newKey = [self getKeyWithTitle:title];
+            NSString *oldKey = [self getKeyWithTitle:oldTitle];
+            [self.cacheDictM setValue:cacheVC forKey:newKey];
+            if (![newKey isEqualToString:oldKey]) {
+                [self.cacheDictM setValue:nil forKey:oldKey];
+            }
         }
     }
     [self.titlesM replaceObjectsInRange:NSMakeRange(0, titles.count) withObjectsFromArray:titles];
@@ -440,7 +448,7 @@
     if (titles.count == controllers.count && controllers.count > 0) {
         for (int i = 0; i < titles.count; i++) {
             NSString *title = titles[i];
-            if (title.length == 0 || [self.titlesM containsObject:title]) {
+            if (title.length == 0 || ([self.titlesM containsObject:title] && ![self respondsToCustomCachekey])) {
                 continue;
             }
             insertSuccess = YES;
@@ -477,7 +485,7 @@
 }
 
 - (void)removePageControllerWithTitle:(NSString *)title {
-    
+    if ([self respondsToCustomCachekey]) return;
     NSInteger index = -1;
     for (NSInteger i = 0; i < self.titlesM.count; i++) {
         if ([self.titlesM[i] isEqualToString:title]) {
@@ -487,7 +495,6 @@
     }
     if (index == -1) return;
     [self removePageControllerWithIndex:index];
-    
 }
 
 - (void)removePageControllerWithIndex:(NSInteger)index {
@@ -509,8 +516,8 @@
     [self.titlesM removeObject:self.titlesM[index]];
     [self.controllersM removeObject:self.controllersM[index]];
     
-    [self.originInsetBottomDictM removeObjectForKey:title];
-    [self.cacheDictM removeObjectForKey:title];
+    [self.originInsetBottomDictM removeObjectForKey:[self getKeyWithTitle:title]];
+    [self.cacheDictM removeObjectForKey:[self getKeyWithTitle:title]];
     
     [self updateViewWithIndex:pageIndex];
 }
@@ -554,7 +561,7 @@
         [self setupHeaderBgView];
         for (int i = 0; i < self.titlesM.count; i++) {
             NSString *title = self.titlesM[i];
-            if(self.cacheDictM[title]) {
+            if(self.cacheDictM[[self getKeyWithTitle:title]]) {
                 UIScrollView *scrollView = [self getScrollViewWithPageIndex:i];
                 scrollView.contentInset = UIEdgeInsetsMake(_insetTop, 0, 0, 0);
                 if ([self isSuspensionBottomStyle]) {
@@ -792,27 +799,24 @@
 
 /// 移除缓存控制器
 - (void)removeViewController {
-    for (int i = 0; i < self.controllersM.count; i ++) {
-        if (i != self.pageIndex) {
-            NSString *title = [self titleWithIndex:i];
-            if(self.displayDictM[title]){
-                [self removeViewControllerWithChildVC:self.displayDictM[title] index:i];
-            }
+    NSString *title = [self titleWithIndex:self.pageIndex];
+    NSString *displayKey = [self getKeyWithTitle:title];
+    for (NSString *key in self.displayDictM.allKeys) {
+        if (![key isEqualToString:displayKey]) {
+            [self removeViewControllerWithChildVC:self.displayDictM[key] key:key];
         }
     }
 }
 
 /// 从父类控制器移除控制器
-- (void)removeViewControllerWithChildVC:(UIViewController *)childVC index:(NSInteger)index {
+- (void)removeViewControllerWithChildVC:(UIViewController *)childVC key:(NSString *)key {
     
     [self removeViewControllerWithChildVC:childVC];
     
-    NSString *title = [self titleWithIndex:index];
+    [self.displayDictM removeObjectForKey:key];
     
-    [self.displayDictM removeObjectForKey:title];
-    
-    if (![self.cacheDictM objectForKey:title]) {
-        [self.cacheDictM setObject:childVC forKey:title];
+    if (![self.cacheDictM objectForKey:key]) {
+        [self.cacheDictM setObject:childVC forKey:key];
     }
 }
 
@@ -839,18 +843,27 @@
     
     NSAssert(self.controllersM.count == self.titlesM.count, @"ViewControllers`count is not equal titleArray!");
 #endif
-    BOOL isHasNotEqualTitle = YES;
-    for (int i = 0; i < self.titlesM.count; i++) {
-        for (int j = i + 1; j < self.titlesM.count; j++) {
-            if (i != j && [self.titlesM[i] isEqualToString:self.titlesM[j]]) {
-                isHasNotEqualTitle = NO;
-                break;
+    if (![self respondsToCustomCachekey]) {
+        BOOL isHasNotEqualTitle = YES;
+        for (int i = 0; i < self.titlesM.count; i++) {
+            for (int j = i + 1; j < self.titlesM.count; j++) {
+                if (i != j && [self.titlesM[i] isEqualToString:self.titlesM[j]]) {
+                    isHasNotEqualTitle = NO;
+                    break;
+                }
             }
         }
-    }
 #if DEBUG
-    NSAssert(isHasNotEqualTitle, @"TitleArray Not allow equal title.");
+        NSAssert(isHasNotEqualTitle, @"TitleArray Not allow equal title.");
 #endif
+    }
+}
+
+- (BOOL)respondsToCustomCachekey {
+    if (self.dataSource && [self.dataSource respondsToSelector:@selector(pageViewController:customCacheKeyForIndex:)]) {
+        return YES;
+    }
+    return NO;
 }
 
 #pragma mark - 样式取值
@@ -881,6 +894,14 @@
 - (NSInteger)getPageIndexWithTitle:(NSString *)title {
     return [self.titlesM indexOfObject:title];
 }
+
+- (NSString *)getKeyWithTitle:(NSString *)title {
+    if ([self respondsToCustomCachekey]) {
+        NSString *ID = [self.dataSource pageViewController:self customCacheKeyForIndex:self.pageIndex];
+        return ID;
+    }
+    return title;
+};
 
 #pragma mark - Invoke Delegate Method
 /// 回调监听列表滚动代理

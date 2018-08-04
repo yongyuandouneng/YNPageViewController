@@ -61,6 +61,7 @@
 - (void)pageViewController:(YNPageViewController *)pageViewController
         didAddButtonAction:(UIButton *)button;
 
+
 @end
 
 @protocol YNPageViewControllerDataSource <NSObject>
@@ -69,12 +70,24 @@
 /**
  根据 index 取 数据源 ScrollView
  
- @param pageViewController 当前控制器
+ @param pageViewController PageVC
  @param index pageIndex
  @return 数据源
  */
-- (UIScrollView *)pageViewController:(YNPageViewController *)pageViewController
-                        pageForIndex:(NSInteger )index;
+- (__kindof UIScrollView *)pageViewController:(YNPageViewController *)pageViewController
+                                 pageForIndex:(NSInteger )index;
+
+
+@optional
+/**
+ 自定义缓存Key 如果不实现，则不允许相同的菜单栏title
+ 如果对页面进行了添加、删除、调整顺序、请一起调整传递进来的数据源，防止缓存Key取错
+ @param pageViewController pageVC
+ @param index pageIndex
+ @return 唯一标识 (一般是后台ID)
+ */
+- (NSString *)pageViewController:(YNPageViewController *)pageViewController
+          customCacheKeyForIndex:(NSInteger )index;
 
 @end
 
