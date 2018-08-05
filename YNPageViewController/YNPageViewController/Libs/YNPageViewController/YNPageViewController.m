@@ -21,12 +21,6 @@
 @property (nonatomic, strong) YNPageHeaderScrollView *headerBgView;
 /// 页面ScrollView
 @property (nonatomic, strong) YNPageScrollView *pageScrollView;
-/// 配置信息
-@property (nonatomic, strong, readwrite) YNPageConfigration *config;
-/// 控制器数组
-@property (nonatomic, strong, readwrite) NSMutableArray<__kindof UIViewController *> *controllersM;
-/// 标题数组
-@property (nonatomic, strong, readwrite) NSMutableArray<NSString *> *titlesM;
 /// 背景ScrollView
 @property (nonatomic, strong, readwrite) YNPageScrollView *bgScrollView;
 /// 展示控制器的字典
@@ -66,12 +60,7 @@
     [super viewDidLoad];
     [self initData];
     [self setupSubViews];
-    
-    if (self.pageIndex == 0) {
-        [self initViewControllerWithIndex:self.pageIndex];
-    } else {
-        [self setSelectedPageIndex:self.pageIndex];
-    }
+    [self setSelectedPageIndex:self.pageIndex];
 }
 
 #pragma mark - Initialize Method
@@ -393,10 +382,41 @@
     if (pageIndex > self.controllersM.count - 1) return;
     
     CGRect frame = CGRectMake(self.pageScrollView.yn_width * pageIndex, 0, self.pageScrollView.yn_width, self.pageScrollView.yn_height);
+    if (frame.origin.x == self.pageScrollView.contentOffset.x) {
+        [self scrollViewDidScroll:self.pageScrollView];
+    } else {
+        [self.pageScrollView scrollRectToVisible:frame animated:NO];
+    }
     
-    [self.pageScrollView scrollRectToVisible:frame animated:NO];
-
     [self scrollViewDidEndDecelerating:self.pageScrollView];
+    
+}
+
+- (void)reloadData {
+    
+    [self checkParams];
+    
+    self.pageIndex = self.pageIndex < 0 ? 0 : self.pageIndex;
+    self.pageIndex = self.pageIndex >= self.controllersM.count ? self.controllersM.count - 1 : self.pageIndex;
+    
+    for (UIViewController *vc in self.displayDictM.allValues) {
+        [self removeViewControllerWithChildVC:vc];
+    }
+    [self.displayDictM removeAllObjects];
+    
+    [self.cacheDictM removeAllObjects];
+    
+    [self.headerBgView removeFromSuperview];
+    [self.bgScrollView removeFromSuperview];
+    [self.pageScrollView removeFromSuperview];
+
+    [self.scrollMenuView removeFromSuperview];
+    
+    [self.originInsetBottomDictM removeAllObjects];
+    
+    [self setupSubViews];
+    
+    [self setSelectedPageIndex:self.pageIndex];
     
 }
 

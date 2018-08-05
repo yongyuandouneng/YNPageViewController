@@ -87,12 +87,12 @@
     
     vc.bgScrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
-        NSInteger refreshPage = vc.pageIndex;
+        NSInteger refreshPage = weakVC.pageIndex;
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             
             /// 取到之前的页面进行刷新 pageIndex 是当前页面
-            YNSuspendTopPauseBaseTableViewVC *vc2 = vc.controllersM[refreshPage];
+            YNSuspendTopPauseBaseTableViewVC *vc2 = weakVC.controllersM[refreshPage];
             [vc2.tableView reloadData];
             
             if (kOpenRefreshHeaderViewHeight) {

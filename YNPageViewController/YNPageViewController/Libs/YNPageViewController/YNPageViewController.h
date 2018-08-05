@@ -93,11 +93,11 @@
 
 @interface YNPageViewController : UIViewController
 /// 配置信息
-@property (nonatomic, strong, readonly) YNPageConfigration *config;
+@property (nonatomic, strong) YNPageConfigration *config;
 /// 控制器数组
-@property (nonatomic, strong, readonly) NSMutableArray<__kindof UIViewController *> *controllersM;
-/// 标题数组
-@property (nonatomic, strong, readonly) NSMutableArray<NSString *> *titlesM;
+@property (nonatomic, strong) NSMutableArray<__kindof UIViewController *> *controllersM;
+/// 标题数组 默认 缓存 key 为 title 可通过数据源代理 进行替换
+@property (nonatomic, strong) NSMutableArray<NSString *> *titlesM;
 /// 菜单栏
 @property (nonatomic, strong) YNPageScrollMenuView *scrollMenuView;
 /// 背景ScrollView
@@ -150,11 +150,22 @@
 - (void)removeSelfViewController;
 
 /**
+ 刷新数据页面、所有View、菜单栏、headerView - 默认移除缓存控制器
+ 刷新菜单栏配置 标题数组
+ e.g: vc.config = ...
+ vc.titlesM = [self getArrayTitles].mutableCopy;
+ 
+ 如果需要重新走控制器的ViewDidLoad方法则需要重新赋值 controllers
+ e.g:
+ vc.controllersM = [self getArrayVCs].mutableCopy;
+ */
+- (void)reloadData;
+
+/**
  选中页码
  @param pageIndex 页面下标
  */
 - (void)setSelectedPageIndex:(NSInteger)pageIndex;
-
 
 /**
  更新菜单栏标题
@@ -209,5 +220,7 @@
  @param animated 是否动画
  */
 - (void)scrollToTop:(BOOL)animated;
+
+
 
 @end

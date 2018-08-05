@@ -86,7 +86,7 @@
 }
 
 + (NSArray *)getArrayTitles {
-    return @[@"鞋子", @"衣服", @"衣服"];
+    return @[@"鞋子", @"衣服", @"帽子"];
 }
 
 #pragma mark - Private Function

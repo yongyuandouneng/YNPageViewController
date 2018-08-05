@@ -56,7 +56,8 @@
                                                        @"更新菜单栏标题",
                                                        @"添加页面",
                                                        @"删除页面",
-                                                       @"调整标题顺序"] doneBlock:^(NSInteger selectedIndex) {
+                                                       @"调整标题顺序",
+                                                       @"reload"] doneBlock:^(NSInteger selectedIndex) {
         switch (selectedIndex) {
             case 0:
             {
@@ -85,6 +86,14 @@
             case 4:
             {
                 [self replaceTitlesArrayForSort:@[@"帽子", @"衣服", @"鞋子"]];
+            }
+                break;
+            case 5:
+            {
+                self.titlesM = @[@"刷新页面", @"棒球", @"篮球"].mutableCopy;
+                self.config.menuHeight = 100;
+                self.pageIndex = 0;
+                [self reloadData];
             }
                 break;
         }
