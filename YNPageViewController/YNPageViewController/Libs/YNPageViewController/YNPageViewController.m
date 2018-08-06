@@ -234,6 +234,8 @@
     if (scrollView == self.bgScrollView) {
         _beginBgScrollOffsetY = scrollView.contentOffset.y;
         _beginCurrentScrollOffsetY = self.currentScrollView.contentOffset.y;
+    } else {
+        self.currentScrollView.scrollEnabled = NO;
     }
 }
 
@@ -244,6 +246,8 @@
             [self scrollViewDidScroll:scrollView];
             [self scrollViewDidEndDecelerating:scrollView];
         }
+    } else if ([self isSuspensionTopPauseStyle]) {
+        self.currentScrollView.scrollEnabled = YES;
     }
 }
 
@@ -251,9 +255,6 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     
     if (scrollView == self.bgScrollView) return;
-    if ([self isSuspensionTopPauseStyle]) {
-        self.currentScrollView.scrollEnabled = YES;
-    }
     [self replaceHeaderViewFromView];
     [self removeViewController];
     [self.scrollMenuView adjustItemPositionWithCurrentIndex:self.pageIndex];
@@ -287,15 +288,8 @@
     
     [self.scrollMenuView adjustItemWithProgress:progress lastIndex:floor(offsetX) currentIndex:ceilf(offsetX)];
     
-    if ([self isSuspensionTopPauseStyle] && self.currentScrollView.scrollEnabled) {
-        self.currentScrollView.scrollEnabled = NO;
-    }
-    
     if (floor(offsetX) == ceilf(offsetX)) {
         [self.scrollMenuView adjustItemAnimate:YES];
-        if ([self isSuspensionTopPauseStyle]) {
-            self.currentScrollView.scrollEnabled = YES;
-        }
     }
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:didScroll:progress:formIndex:toIndex:)]) {
@@ -767,7 +761,6 @@
     
     if ([self isSuspensionTopPauseStyle] && scrollView == self.bgScrollView) {
         
-       
         CGFloat bg_OffsetY = scrollView.contentOffset.y;
         CGFloat cu_OffsetY = self.currentScrollView.contentOffset.y;
         
@@ -790,7 +783,7 @@
             [scrollView yn_setContentOffsetY:_insetTop];
             _beginCurrentScrollOffsetY = cu_OffsetY;
         }
-         /// 设置边界
+        /// 设置边界
         else if (bg_OffsetY <= 0 && cu_OffsetY > 0) {
             [scrollView yn_setContentOffsetY:0];
         }
