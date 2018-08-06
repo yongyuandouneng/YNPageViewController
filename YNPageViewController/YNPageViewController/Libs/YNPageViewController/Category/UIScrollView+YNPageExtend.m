@@ -91,5 +91,10 @@
     }
 }
 
+- (void)yn_setContentOffsetY:(CGFloat)offsetY {
+    if (self.contentOffset.y != offsetY) {
+        self.contentOffset = CGPointMake(0, offsetY);
+    }
+}
 
 @end

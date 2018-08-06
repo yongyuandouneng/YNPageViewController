@@ -27,8 +27,10 @@
 @property (nonatomic, strong) NSMutableDictionary *displayDictM;
 /// 原始InsetBottom
 @property (nonatomic, strong) NSMutableDictionary *originInsetBottomDictM;
-/// 字典控制器的字典
+/// 字典控制器的缓存
 @property (nonatomic, strong) NSMutableDictionary *cacheDictM;
+/// 字典ScrollView的缓存
+@property (nonatomic, strong) NSMutableDictionary *scrollViewCacheDictionryM;
 /// 当前显示的页面
 @property (nonatomic, strong) UIScrollView *currentScrollView;
 /// 当前控制器
@@ -90,6 +92,7 @@
     self.displayDictM = @{}.mutableCopy;
     self.cacheDictM = @{}.mutableCopy;
     self.originInsetBottomDictM = @{}.mutableCopy;
+    self.scrollViewCacheDictionryM = @{}.mutableCopy;
     return self;
 }
 
@@ -405,7 +408,7 @@
     [self.displayDictM removeAllObjects];
     
     [self.cacheDictM removeAllObjects];
-    
+    [self.scrollViewCacheDictionryM removeAllObjects];
     [self.headerBgView removeFromSuperview];
     [self.bgScrollView removeFromSuperview];
     [self.pageScrollView removeFromSuperview];
@@ -536,8 +539,11 @@
     [self.titlesM removeObject:self.titlesM[index]];
     [self.controllersM removeObject:self.controllersM[index]];
     
-    [self.originInsetBottomDictM removeObjectForKey:[self getKeyWithTitle:title]];
-    [self.cacheDictM removeObjectForKey:[self getKeyWithTitle:title]];
+    NSString *key = [self getKeyWithTitle:title];
+    
+    [self.originInsetBottomDictM removeObjectForKey:key];
+    [self.scrollViewCacheDictionryM removeObjectForKey:key];
+    [self.cacheDictM removeObjectForKey:key];
     
     [self updateViewWithIndex:pageIndex];
 }
@@ -761,32 +767,35 @@
     
     if ([self isSuspensionTopPauseStyle] && scrollView == self.bgScrollView) {
         
+       
         CGFloat bg_OffsetY = scrollView.contentOffset.y;
         CGFloat cu_OffsetY = self.currentScrollView.contentOffset.y;
+        
         /// 求出拖拽方向
         BOOL dragBottom = _beginBgScrollOffsetY - bg_OffsetY > 0 ? YES : NO;
         /// cu 大于 0 时
         if (dragBottom && cu_OffsetY > 0) {
             /// 设置原来的 出生偏移量
-            scrollView.contentOffset = CGPointMake(0, _beginBgScrollOffsetY);
+            [scrollView yn_setContentOffsetY:_beginBgScrollOffsetY];
             /// 设置实时滚动的 cu 偏移量
             _beginCurrentScrollOffsetY = cu_OffsetY;
         }
         /// 初始 begin 时超过了 实时 设置
-        if (_beginBgScrollOffsetY == _insetTop && _beginCurrentScrollOffsetY != 0) {
-            scrollView.contentOffset = CGPointMake(0, _beginBgScrollOffsetY);
+        else if (_beginBgScrollOffsetY == _insetTop && _beginCurrentScrollOffsetY != 0) {
+            [scrollView yn_setContentOffsetY:_beginBgScrollOffsetY];
             _beginCurrentScrollOffsetY = cu_OffsetY;
         }
         /// 设置边界
-        if (bg_OffsetY >= _insetTop) {
-            scrollView.contentOffset = CGPointMake(0, _insetTop);
+        else if (bg_OffsetY >= _insetTop) {
+            [scrollView yn_setContentOffsetY:_insetTop];
             _beginCurrentScrollOffsetY = cu_OffsetY;
         }
          /// 设置边界
-        if (bg_OffsetY <= 0 && cu_OffsetY > 0) {
-            scrollView.contentOffset = CGPointMake(0, 0);
+        else if (bg_OffsetY <= 0 && cu_OffsetY > 0) {
+            [scrollView yn_setContentOffsetY:0];
         }
     }
+
 }
 
 /// 计算悬浮顶部偏移量 - CurrentScrollView
@@ -796,22 +805,21 @@
         if (!scrollView.isDragging) return;
         CGFloat bg_OffsetY = self.bgScrollView.contentOffset.y;
         CGFloat cu_offsetY = scrollView.contentOffset.y;
-        
         /// 求出拖拽方向
         BOOL dragBottom = _beginCurrentScrollOffsetY - cu_offsetY < 0 ? YES : NO;
         /// cu 是大于 0 的 且 bg 要小于 _insetTop
         if (dragBottom && cu_offsetY > 0 && bg_OffsetY < _insetTop) {
             /// 设置之前的拖动位置
-            scrollView.contentOffset = CGPointMake(0, _beginCurrentScrollOffsetY);
+            [scrollView yn_setContentOffsetY:_beginCurrentScrollOffsetY];
             /// 修改 bg 原先偏移量
             _beginBgScrollOffsetY = bg_OffsetY;
         }
         /// cu 拖到 小于 0 就设成0
-        if (cu_offsetY < 0) {
-            scrollView.contentOffset = CGPointMake(0, 0);
+        else if (cu_offsetY < 0) {
+            [scrollView yn_setContentOffsetY:0];
         }
         /// bg 超过了 insetTop 就设置初始化为 _insetTop
-        if (bg_OffsetY >= _insetTop) {
+        else if (bg_OffsetY >= _insetTop) {
             _beginBgScrollOffsetY = _insetTop;
         }
     }
@@ -994,28 +1002,37 @@
 /// 根据pageIndex 取 数据源 ScrollView
 - (UIScrollView *)getScrollViewWithPageIndex:(NSInteger)pageIndex {
     
+    NSString *title = [self titleWithIndex:self.pageIndex];
+    NSString *key = [self getKeyWithTitle:title];
     UIScrollView *scrollView = nil;
-    if (self.dataSource && [self.dataSource respondsToSelector:@selector(pageViewController:pageForIndex:)]) {
-        scrollView = [self.dataSource pageViewController:self pageForIndex:pageIndex];
-        scrollView.yn_observerDidScrollView = YES;
-        __weak typeof(self) weakSelf = self;
-        scrollView.yn_pageScrollViewDidScrollView = ^(UIScrollView *scrollView) {
-            [weakSelf yn_pageScrollViewDidScrollView:scrollView];
-        };
-        if (self.config.pageStyle == YNPageStyleSuspensionTopPause) {
-            scrollView.yn_pageScrollViewBeginDragginScrollView = ^(UIScrollView *scrollView) {
-                [weakSelf yn_pageScrollViewBeginDragginScrollView:scrollView];
+    
+    if (![self.scrollViewCacheDictionryM objectForKey:key]) {
+        
+        if (self.dataSource && [self.dataSource respondsToSelector:@selector(pageViewController:pageForIndex:)]) {
+            scrollView = [self.dataSource pageViewController:self pageForIndex:pageIndex];
+            scrollView.yn_observerDidScrollView = YES;
+            __weak typeof(self) weakSelf = self;
+            scrollView.yn_pageScrollViewDidScrollView = ^(UIScrollView *scrollView) {
+                [weakSelf yn_pageScrollViewDidScrollView:scrollView];
             };
-        }
-        if (@available(iOS 11.0, *)) {
-            if (scrollView) {
-                scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+            if (self.config.pageStyle == YNPageStyleSuspensionTopPause) {
+                scrollView.yn_pageScrollViewBeginDragginScrollView = ^(UIScrollView *scrollView) {
+                    [weakSelf yn_pageScrollViewBeginDragginScrollView:scrollView];
+                };
+            }
+            if (@available(iOS 11.0, *)) {
+                if (scrollView) {
+                    scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+                }
             }
         }
+    } else {
+        return [self.scrollViewCacheDictionryM objectForKey:key];
     }
 #if DEBUG
     NSAssert(scrollView != nil, @"请设置pageViewController 的数据源！");
 #endif
+    [self.scrollViewCacheDictionryM setObject:scrollView forKey:key];
     return scrollView;
 }
 

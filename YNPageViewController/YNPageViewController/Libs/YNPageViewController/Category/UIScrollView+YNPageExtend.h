@@ -20,4 +20,6 @@ typedef void(^YNPageScrollViewBeginDragginScrollView)(UIScrollView *scrollView);
 
 @property (nonatomic, copy) YNPageScrollViewBeginDragginScrollView yn_pageScrollViewBeginDragginScrollView;
 
+- (void)yn_setContentOffsetY:(CGFloat)offsetY;
+
 @end

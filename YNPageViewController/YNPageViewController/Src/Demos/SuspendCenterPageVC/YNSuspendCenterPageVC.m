@@ -67,7 +67,7 @@
     
     vc.headerView = autoScrollView;
     /// 指定默认选择index 页面
-    vc.pageIndex = 2;
+//    vc.pageIndex = 2;
     
     return vc;
 }
