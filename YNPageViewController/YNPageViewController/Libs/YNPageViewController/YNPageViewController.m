@@ -231,15 +231,18 @@
 
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    if (scrollView == self.bgScrollView) {
-        _beginBgScrollOffsetY = scrollView.contentOffset.y;
-        _beginCurrentScrollOffsetY = self.currentScrollView.contentOffset.y;
-    } else {
-        self.currentScrollView.scrollEnabled = NO;
+    if ([self isSuspensionTopPauseStyle]) {
+        if (scrollView == self.bgScrollView) {
+            _beginBgScrollOffsetY = scrollView.contentOffset.y;
+            _beginCurrentScrollOffsetY = self.currentScrollView.contentOffset.y;
+        } else {
+            self.currentScrollView.scrollEnabled = NO;
+        }
     }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    
     if (scrollView == self.bgScrollView) return;
     if ([self isSuspensionBottomStyle] || [self isSuspensionTopStyle]) {
         if (!decelerate) {
@@ -255,6 +258,9 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     
     if (scrollView == self.bgScrollView) return;
+    if ([self isSuspensionTopPauseStyle]) {
+        self.currentScrollView.scrollEnabled = YES;
+    }
     [self replaceHeaderViewFromView];
     [self removeViewController];
     [self.scrollMenuView adjustItemPositionWithCurrentIndex:self.pageIndex];
