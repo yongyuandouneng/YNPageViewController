@@ -8,6 +8,7 @@
 
 #import "BasePageViewController.h"
 #import "BaseTableViewVC.h"
+#import "UIView+YNPageExtend.h"
 
 @interface BasePageViewController ()
 
@@ -57,7 +58,8 @@
                                                        @"添加页面",
                                                        @"删除页面",
                                                        @"调整标题顺序",
-                                                       @"reload"] doneBlock:^(NSInteger selectedIndex) {
+                                                       @"reload",
+                                                       @"刷新头部高度"] doneBlock:^(NSInteger selectedIndex) {
         switch (selectedIndex) {
             case 0:
             {
@@ -93,6 +95,12 @@
                 self.titlesM = @[@"刷新页面", @"棒球", @"篮球"].mutableCopy;
                 self.config.menuHeight = 100;
                 self.pageIndex = 0;
+                [self reloadData];
+            }
+                break;
+            case 6:
+            {
+                self.headerView.yn_height = 300;
                 [self reloadData];
             }
                 break;

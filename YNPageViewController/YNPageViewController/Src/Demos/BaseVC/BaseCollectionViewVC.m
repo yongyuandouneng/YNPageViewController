@@ -19,6 +19,8 @@
     [super viewDidLoad];
     
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"id"];
+    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:HeaderID];
+    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:FooterID];
     [self.view addSubview:self.collectionView];
     [self addCollectionViewRefresh];
 }
@@ -26,7 +28,7 @@
 - (void)addCollectionViewRefresh {
     
     __weak typeof (self) weakSelf = self;
-
+    
     self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [weakSelf.collectionView.mj_header endRefreshing];
@@ -41,6 +43,36 @@
 }
 
 #pragma mark - UICollectionViewDelegate, UICollectionViewDataSource
+
+static NSString *HeaderID = @"header";
+
+static NSString *FooterID = @"footer";
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    if (kind == UICollectionElementKindSectionHeader) {
+        UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:HeaderID forIndexPath:indexPath];
+        headerView.backgroundColor = randomColor;
+        return headerView;
+    } else { // 返回每一组的尾部视图
+        UICollectionReusableView *footerView =  [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:FooterID forIndexPath:indexPath];
+        
+        footerView.backgroundColor = randomColor;
+        return footerView;
+    }
+}
+
+/// collectinView section header 在高版本存在系统BUG，需要设置zPosition = 0.0
+- (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
+    view.layer.zPosition = 0.0;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    return (CGSize){kSCREEN_WIDTH * 0.5, 22};
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+    return (CGSize){kSCREEN_WIDTH, 22};
+}
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 3;
