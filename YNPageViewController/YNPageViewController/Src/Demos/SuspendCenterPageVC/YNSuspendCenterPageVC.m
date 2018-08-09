@@ -48,7 +48,7 @@
     configration.showNavigation = YES;
     configration.scrollMenu = NO;
     configration.aligmentModeCenter = NO;
-    configration.lineWidthEqualFontWidth = NO;
+    configration.lineWidthEqualFontWidth = true;
     configration.showBottomLine = YES;
     
     return [self suspendCenterPageVCWithConfig:configration];
@@ -82,11 +82,13 @@
     
     BaseCollectionViewVC *vc_3 = [[BaseCollectionViewVC alloc] init];
     
-    return @[vc_1, vc_2, vc_3];
+    BaseCollectionViewVC *vc_4 = [[BaseCollectionViewVC alloc] init];
+    
+    return @[vc_1, vc_2, vc_3, vc_4];
 }
 
 + (NSArray *)getArrayTitles {
-    return @[@"鞋子", @"衣服", @"帽子"];
+    return @[@"全部", @"已申请转让", @"转让中", @"一部分转让"];
 }
 
 #pragma mark - Private Function

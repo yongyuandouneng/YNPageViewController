@@ -403,22 +403,33 @@
         lastButton.titleLabel.font = self.configration.selectedItemFont;
         currentButton.titleLabel.font = self.configration.itemFont;
     }
-    
-    CGFloat xD = currentButton.yn_x - lastButton.yn_x;
-    CGFloat wD = currentButton.yn_width - lastButton.yn_width;
+    CGFloat xD = 0;
+    CGFloat wD = 0;
+    if (!self.configration.scrollMenu &&
+        !self.configration.aligmentModeCenter &&
+        self.configration.lineWidthEqualFontWidth) {
+        xD = currentButton.titleLabel.yn_x + currentButton.yn_x -( lastButton.titleLabel.yn_x + lastButton.yn_x );
+        
+        wD = currentButton.titleLabel.yn_width - lastButton.titleLabel.yn_width;
+    } else {
+        xD = currentButton.yn_x - lastButton.yn_x;
+        wD = currentButton.yn_width - lastButton.yn_width;
+    }
     
     /// 线条
     if (self.configration.showScrollLine) {
-        self.lineView.yn_x = lastButton.yn_x + xD *progress - self.configration.lineLeftAndRightAddWidth + self.configration.lineLeftAndRightMargin;
-        self.lineView.yn_width = lastButton.yn_width + wD *progress + self.configration.lineLeftAndRightAddWidth *2 - 2 * self.configration.lineLeftAndRightMargin;
         
         if (!self.configration.scrollMenu &&
             !self.configration.aligmentModeCenter &&
             self.configration.lineWidthEqualFontWidth) { /// 处理Line宽度等于字体宽度
             self.lineView.yn_x = lastButton.yn_x + ([lastButton yn_width]  - ([self.itemsWidthArraM[lastButton.tag] floatValue])) / 2 - self.configration.lineLeftAndRightAddWidth + xD *progress;
+            
             self.lineView.yn_width = [self.itemsWidthArraM[lastButton.tag] floatValue] + self.configration.lineLeftAndRightAddWidth *2 + wD *progress;
+            
+        } else {
+            self.lineView.yn_x = lastButton.yn_x + xD *progress - self.configration.lineLeftAndRightAddWidth + self.configration.lineLeftAndRightMargin;
+            self.lineView.yn_width = lastButton.yn_width + wD *progress + self.configration.lineLeftAndRightAddWidth *2 - 2 * self.configration.lineLeftAndRightMargin;
         }
-        
     }
     /// 遮盖
     if (self.configration.showConver) {
