@@ -754,13 +754,14 @@
             self.headerBgView.yn_y = headerViewY;
             self.scrollMenuView.yn_y = scrollMenuViewY;
             
-            [self.view addSubview:self.headerBgView];
-            [self.view addSubview:self.scrollMenuView];
+            [self.view insertSubview:self.headerBgView aboveSubview:self.pageScrollView];
+            [self.view insertSubview:self.scrollMenuView aboveSubview:self.headerBgView];
             
             _headerViewInTableView = NO;
         }
     }
 }
+
 /// - 最终效果 current 拖到指定时 bg 才能下拉 ， bg 悬浮时 current 才能上拉
 /// 计算悬浮顶部偏移量 - BgScrollView
 - (void)calcuSuspendTopPauseWithBgScrollView:(UIScrollView *)scrollView {
