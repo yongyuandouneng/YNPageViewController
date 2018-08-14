@@ -48,7 +48,8 @@ typedef NS_ENUM(NSInteger, YNPageHeaderViewScaleMode) {
 @property (nonatomic, assign) YNPageStyle pageStyle;
 /** 悬浮ScrollMenu偏移量 默认 0 */
 @property (nonatomic, assign) CGFloat suspenOffsetY;
-
+/** 页面是否可以滚动 默认 YES */
+@property (nonatomic, assign) BOOL pageScrollEnabled;
 /** 头部是否能伸缩效果   要伸缩效果最好不要有下拉刷新控件 NO */
 @property (nonatomic, assign) BOOL headerViewCouldScale;
 /** 头部伸缩效果 */

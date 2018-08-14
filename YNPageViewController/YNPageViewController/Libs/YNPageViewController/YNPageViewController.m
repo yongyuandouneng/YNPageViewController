@@ -983,6 +983,7 @@
         _pageScrollView = [[YNPageScrollView alloc] init];
         _pageScrollView.showsVerticalScrollIndicator = NO;
         _pageScrollView.showsHorizontalScrollIndicator = NO;
+        _pageScrollView.scrollEnabled = self.config.pageScrollEnabled;
         _pageScrollView.pagingEnabled = YES;
         _pageScrollView.bounces = NO;
         _pageScrollView.delegate = self;

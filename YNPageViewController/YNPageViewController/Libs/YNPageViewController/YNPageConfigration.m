@@ -38,6 +38,8 @@
         _aligmentModeCenter = YES;
         _lineWidthEqualFontWidth = NO;
         
+        _pageScrollEnabled = YES;
+        
         _headerViewCouldScale = NO;
         
         _lineColor = [UIColor redColor];
