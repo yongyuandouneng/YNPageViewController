@@ -92,6 +92,7 @@
 - (void)setupButton:(UIButton *)itemButton title:(NSString *)title idx:(NSInteger)idx {
     itemButton.titleLabel.font = self.configration.selectedItemFont;
     [itemButton setTitleColor:self.configration.normalItemColor forState:UIControlStateNormal];
+    [itemButton setTitleColor:self.configration.selectedItemColor forState:UIControlStateSelected];
     [itemButton setTitle:title forState:UIControlStateNormal];
     itemButton.tag = idx;
     
@@ -229,7 +230,8 @@
     }
     
     /// 颜色
-    [currentButton setTitleColor:self.configration.selectedItemColor forState:UIControlStateNormal];
+  currentButton.selected = YES;
+//     [currentButton setTitleColor:self.configration.selectedItemColor forState:UIControlStateNormal];
     currentButton.titleLabel.font = self.configration.selectedItemFont;
     /// 线条
     if (self.configration.showScrollLine) {
@@ -274,11 +276,13 @@
         }
         /// 颜色
         [self.itemsArrayM enumerateObjectsUsingBlock:^(UIButton  * obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [obj setTitleColor:self.configration.normalItemColor forState:UIControlStateNormal];
+           // [obj setTitleColor:self.configration.normalItemColor forState:UIControlStateNormal];
+           obj.selected = NO;
             obj.titleLabel.font = self.configration.itemFont;
             if (idx == self.itemsArrayM.count - 1) {
                 
-                [currentButton setTitleColor:self.configration.selectedItemColor forState:UIControlStateNormal];
+               // [currentButton setTitleColor:self.configration.selectedItemColor forState:UIControlStateNormal];
+               currentButton.selected = YES;
                 currentButton.titleLabel.font = self.configration.selectedItemFont;
             }
         }];
@@ -381,16 +385,19 @@
         [currentButton setTitleColor:selColor forState:UIControlStateNormal];
     } else{
         if (progress > 0.5) {
-            [lastButton setTitleColor:self.configration.normalItemColor forState:UIControlStateNormal];
-            [currentButton setTitleColor:self.configration.selectedItemColor forState:UIControlStateNormal];
+           lastButton.selected = NO;
+           currentButton.selected = YES;
+//             [lastButton setTitleColor:self.configration.normalItemColor forState:UIControlStateNormal];
+//             [currentButton setTitleColor:self.configration.selectedItemColor forState:UIControlStateNormal];
             currentButton.titleLabel.font = self.configration.selectedItemFont;
             
         } else if (progress < 0.5 && progress > 0){
-            [lastButton setTitleColor:self.configration.selectedItemColor forState:UIControlStateNormal];
+          //  [lastButton setTitleColor:self.configration.selectedItemColor forState:UIControlStateNormal];
+            lastButton.selected = YES;
             lastButton.titleLabel.font = self.configration.selectedItemFont;
             
-            
-            [currentButton setTitleColor:self.configration.normalItemColor forState:UIControlStateNormal];
+            currentButton.selected = NO;
+           // [currentButton setTitleColor:self.configration.normalItemColor forState:UIControlStateNormal];
             currentButton.titleLabel.font = self.configration.itemFont;
             
         }
