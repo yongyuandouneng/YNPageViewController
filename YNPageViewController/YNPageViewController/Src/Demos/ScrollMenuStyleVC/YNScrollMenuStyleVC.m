@@ -88,6 +88,7 @@
     for (int i = 0; i < 3; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setImage:[UIImage imageNamed:@"small_icon"] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:@"icon_back_small_black"] forState:UIControlStateSelected];
         
         /// seTitle -> sizeToFit -> 自行调整位置
         /// button.imageEdgeInsets = UIEdgeInsetsMake(0, 100, 0, 0);
