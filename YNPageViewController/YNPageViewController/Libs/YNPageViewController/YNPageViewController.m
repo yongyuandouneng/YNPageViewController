@@ -275,6 +275,7 @@
     
     if (scrollView == self.bgScrollView) {
         [self calcuSuspendTopPauseWithBgScrollView:scrollView];
+        [self invokeDelegateForScrollWithOffsetY:scrollView.contentOffset.y];
         return;
     }
     
@@ -351,7 +352,6 @@
     } else if ([self isSuspensionTopPauseStyle]) {
         
         [self calcuSuspendTopPauseWithCurrentScrollView:scrollView];
-        [self invokeDelegateForScrollWithOffsetY:self.bgScrollView.contentOffset.y];
         
     } else {
          [self invokeDelegateForScrollWithOffsetY:scrollView.contentOffset.y];

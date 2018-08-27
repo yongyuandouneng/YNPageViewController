@@ -938,14 +938,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3ZUHH2H7M8;
+				DEVELOPMENT_TEAM = AR9K7MKV3Z;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ./YNPageViewController/YNPreHeader.h;
 				INFOPLIST_FILE = YNPageViewController/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yn.YNPageViewController;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yn.YNPageViewController2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -956,14 +956,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3ZUHH2H7M8;
+				DEVELOPMENT_TEAM = AR9K7MKV3Z;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ./YNPageViewController/YNPreHeader.h;
 				INFOPLIST_FILE = YNPageViewController/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yn.YNPageViewController;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yn.YNPageViewController2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
