@@ -102,4 +102,8 @@ static NSString *FooterID = @"footer";
     return _collectionView;
 }
 
+- (void)dealloc {
+    NSLog(@"----- %@ delloc", self.class);
+}
+
 @end

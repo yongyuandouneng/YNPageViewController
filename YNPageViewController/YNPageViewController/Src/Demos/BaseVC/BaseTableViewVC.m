@@ -77,9 +77,9 @@
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             
             for (int i = 0; i < 3; i++) {
-                [self.dataArray addObject:@""];
+                [weakSelf.dataArray addObject:@""];
             }
-            [self.tableView reloadData];
+            [weakSelf.tableView reloadData];
             if (kOpenRefreshHeaderViewHeight) {
                 [weakSelf suspendTopReloadHeaderViewHeight];
             } else {
@@ -92,9 +92,9 @@
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             for (int i = 0; i < 3; i++) {
-                [self.dataArray addObject:@""];
+                [weakSelf.dataArray addObject:@""];
             }
-            [self.tableView reloadData];
+            [weakSelf.tableView reloadData];
             [weakSelf.tableView.mj_footer endRefreshing];
         });
     }];
@@ -189,6 +189,8 @@
     return _tableView;
 }
 
-
+- (void)dealloc {
+    NSLog(@"----- %@ delloc", self.class);
+}
 
 @end
