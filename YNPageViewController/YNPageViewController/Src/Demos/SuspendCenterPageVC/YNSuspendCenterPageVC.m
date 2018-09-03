@@ -82,13 +82,11 @@
     
     BaseCollectionViewVC *vc_3 = [[BaseCollectionViewVC alloc] init];
     
-    BaseCollectionViewVC *vc_4 = [[BaseCollectionViewVC alloc] init];
-    
-    return @[vc_1, vc_2, vc_3, vc_4];
+    return @[vc_1, vc_2, vc_3];
 }
 
 + (NSArray *)getArrayTitles {
-    return @[@"鞋子", @"衣服", @"帽子", @"手表"];
+    return @[@"鞋子", @"衣服", @"帽子"];
 }
 
 #pragma mark - Private Function

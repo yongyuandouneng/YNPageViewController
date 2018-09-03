@@ -52,7 +52,7 @@
 
 #pragma mark - --Button Event Response
 - (void)rightButtonOnClick:(UIBarButtonItem *)item event:(UIEvent *)event {
-    
+    __weak typeof(self) weakSelf = self;
     [FTPopOverMenu showFromEvent:event withMenuArray:@[@"滚动到顶部",
                                                        @"更新菜单栏标题",
                                                        @"添加页面",
@@ -63,45 +63,45 @@
         switch (selectedIndex) {
             case 0:
             {
-                [self scrollToTop:YES];
+                [weakSelf scrollToTop:YES];
             }
                 break;
             case 1:
             {
 //                [self updateMenuItemTitle:@"更新的标题" index:0];
-                [self updateMenuItemTitles:@[@"足球", @"棒球", @"篮球"]];
+                [weakSelf updateMenuItemTitles:@[@"足球", @"棒球", @"篮球"]];
             }
                 break;
             case 2:
             {
                 BaseTableViewVC *vc_1 = [[BaseTableViewVC alloc] init];
                 vc_1.cellTitle = @"插入页新面";
-                [self insertPageChildControllersWithTitles:@[@"插入页面"] controllers:@[vc_1] index:1];
+                [weakSelf insertPageChildControllersWithTitles:@[@"插入页面"] controllers:@[vc_1] index:1];
             }
                 break;
             case 3:
             {
 //                [self removePageControllerWithTitle:@"帽子"];
-                 [self removePageControllerWithIndex:0];
+                 [weakSelf removePageControllerWithIndex:0];
             }
                 break;
             case 4:
             {
-                [self replaceTitlesArrayForSort:@[@"帽子", @"衣服", @"鞋子"]];
+                [weakSelf replaceTitlesArrayForSort:@[@"帽子", @"衣服", @"鞋子"]];
             }
                 break;
             case 5:
             {
-                self.titlesM = @[@"刷新页面", @"棒球", @"篮球"].mutableCopy;
-                self.config.menuHeight = 100;
-                self.pageIndex = 0;
-                [self reloadData];
+                weakSelf.titlesM = @[@"刷新页面", @"棒球", @"篮球"].mutableCopy;
+                weakSelf.config.menuHeight = 100;
+                weakSelf.pageIndex = 0;
+                [weakSelf reloadData];
             }
                 break;
             case 6:
             {
-                self.headerView.yn_height = 300;
-                [self reloadData];
+                weakSelf.headerView.yn_height = 300;
+                [weakSelf reloadData];
             }
                 break;
         }

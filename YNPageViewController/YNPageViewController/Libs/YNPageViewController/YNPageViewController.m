@@ -181,8 +181,8 @@
     if ([self isSuspensionBottomStyle] || [self isSuspensionTopStyle]) {
         
         if (![self.cacheDictM objectForKey:[self getKeyWithTitle:title]]) {
-            
-            [self.originInsetBottomDictM setValue:@(scrollView.contentInset.bottom) forKey:[self getKeyWithTitle:title]];
+            CGFloat bottom = scrollView.contentInset.bottom > 2 * kDEFAULT_INSET_BOTTOM ? 0 : scrollView.contentInset.bottom;
+            [self.originInsetBottomDictM setValue:@(bottom) forKey:[self getKeyWithTitle:title]];
             
             /// 设置TableView内容偏移
             scrollView.contentInset = UIEdgeInsetsMake(_insetTop, 0, scrollView.contentInset.bottom + 3 * kDEFAULT_INSET_BOTTOM, 0);
@@ -405,6 +405,7 @@
     }
     [self.displayDictM removeAllObjects];
     
+    [self.originInsetBottomDictM removeAllObjects];
     [self.cacheDictM removeAllObjects];
     [self.scrollViewCacheDictionryM removeAllObjects];
     [self.headerBgView removeFromSuperview];
@@ -412,8 +413,6 @@
     [self.pageScrollView removeFromSuperview];
 
     [self.scrollMenuView removeFromSuperview];
-    
-    [self.originInsetBottomDictM removeAllObjects];
     
     [self setupSubViews];
     

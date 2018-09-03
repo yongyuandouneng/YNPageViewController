@@ -15,12 +15,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         [self swizzleInstanceMethod:NSSelectorFromString(@"_notifyDidScroll") withMethod:@selector(yn_scrollViewDidScrollView)];
-        
-        
         [self swizzleInstanceMethod:NSSelectorFromString(@"_scrollViewWillBeginDragging") withMethod:@selector(yn_scrollViewWillBeginDragging)];
-        
-        
-        
     });
 }
 
