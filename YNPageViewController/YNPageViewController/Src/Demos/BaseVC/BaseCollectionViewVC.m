@@ -22,7 +22,7 @@
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:HeaderID];
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:FooterID];
     [self.view addSubview:self.collectionView];
-//    [self addCollectionViewRefresh];
+    [self addCollectionViewRefresh];
 }
 
 - (void)addCollectionViewRefresh {
