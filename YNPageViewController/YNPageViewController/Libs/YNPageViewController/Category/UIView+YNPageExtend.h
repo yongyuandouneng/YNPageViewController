@@ -12,7 +12,10 @@
 
 #define kYNPAGE_SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
 
-#define kYNPAGE_IS_IPHONE_X  ((kYNPAGE_SCREEN_HEIGHT == 812.0f && kYNPAGE_SCREEN_WIDTH == 375.0f) ? YES : NO)
+// iPhone X/XS: 375*812 (@3x)
+// iPhone XS Max: 414*896 (@3x)
+// iPhone XR: 414*896 (@2x)
+#define kYNPAGE_IS_IPHONE_X  ((kYNPAGE_SCREEN_WIDTH == 375.f && kYNPAGE_SCREEN_HEIGHT == 812.f) || (kYNPAGE_SCREEN_WIDTH == 414.f && kYNPAGE_SCREEN_HEIGHT == 896.f))
 
 #define kYNPAGE_NAVHEIGHT (kYNPAGE_IS_IPHONE_X ? 88 : 64)
 
