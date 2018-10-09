@@ -21,6 +21,10 @@
 
 #define kYNPAGE_TABBARHEIGHT (kYNPAGE_IS_IPHONE_X ? 83 : 49)
 
+#define kYNPAGE_TOPHEIGHT (kYNPAGE_IS_IPHONE_X ? 44 : 0)
+
+#define kYNPAGE_BOTTOMHEIGHT (kYNPAGE_IS_IPHONE_X ? 34 : 0)
+
 #define kLESS_THAN_iOS11 ([[UIDevice currentDevice].systemVersion floatValue] < 11.0 ? YES : NO)
 
 @interface UIView (YNPageExtend)

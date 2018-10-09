@@ -643,8 +643,8 @@
 /// 初始化PageScrollView
 - (void)setupPageScrollView {
     
-    CGFloat navHeight = self.config.showNavigation ? kYNPAGE_NAVHEIGHT : 0;
-    CGFloat tabHeight = self.config.showTabbar ? kYNPAGE_TABBARHEIGHT : 0;
+    CGFloat navHeight = self.config.showNavigation ? kYNPAGE_NAVHEIGHT : kYNPAGE_TOPHEIGHT;
+    CGFloat tabHeight = self.config.showTabbar ? kYNPAGE_TABBARHEIGHT : kYNPAGE_BOTTOMHEIGHT;
     
     CGFloat contentHeight = kYNPAGE_SCREEN_HEIGHT - navHeight - tabHeight;
     if ([self isSuspensionTopPauseStyle]) {
