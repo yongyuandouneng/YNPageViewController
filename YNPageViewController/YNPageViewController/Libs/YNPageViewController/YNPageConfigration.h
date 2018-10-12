@@ -44,6 +44,8 @@ typedef NS_ENUM(NSInteger, YNPageHeaderViewScaleMode) {
 @property (nonatomic, assign) BOOL showNavigation;
 /** 是否显示Tabbar NO */
 @property (nonatomic, assign) BOOL showTabbar;
+/** 裁剪内容高度 用来添加最上层控件 添加在父类view上 */
+@property (nonatomic, assign) CGFloat cutOutHeight;
 /** 菜单位置风格 默认 YNPageStyleTop */
 @property (nonatomic, assign) YNPageStyle pageStyle;
 /** 悬浮ScrollMenu偏移量 默认 0 */

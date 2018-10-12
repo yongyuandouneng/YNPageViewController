@@ -638,15 +638,16 @@
     [self setupHeaderBgView];
     [self setupPageScrollMenuView];
     [self setupPageScrollView];
-
 }
+
 /// 初始化PageScrollView
 - (void)setupPageScrollView {
     
     CGFloat navHeight = self.config.showNavigation ? kYNPAGE_NAVHEIGHT : 0;
     CGFloat tabHeight = self.config.showTabbar ? kYNPAGE_TABBARHEIGHT : 0;
+    CGFloat cutOutHeight = self.config.cutOutHeight > 0 ? self.config.cutOutHeight : 0;
+    CGFloat contentHeight = kYNPAGE_SCREEN_HEIGHT - navHeight - tabHeight - cutOutHeight;
     
-    CGFloat contentHeight = kYNPAGE_SCREEN_HEIGHT - navHeight - tabHeight;
     if ([self isSuspensionTopPauseStyle]) {
         self.bgScrollView.frame = CGRectMake(0, 0, kYNPAGE_SCREEN_WIDTH, contentHeight);
         self.bgScrollView.contentSize = CGSizeMake(kYNPAGE_SCREEN_WIDTH, contentHeight + self.headerBgView.yn_height - self.config.suspenOffsetY);
