@@ -15,7 +15,7 @@
 @optional
 
 /// 点击item
-- (void)pagescrollMenuViewItemOnClick:(UIButton *)label index:(NSInteger)index;
+- (void)pagescrollMenuViewItemOnClick:(UIButton *)button index:(NSInteger)index;
 
 /// 点击Add按钮
 - (void)pagescrollMenuViewAddButtonAction:(UIButton *)button;
@@ -47,7 +47,6 @@
                                configration:(YNPageConfigration *)configration
                                    delegate:(id<YNPageScrollMenuViewDelegate>)delegate
                                currentIndex:(NSInteger)currentIndex;
-
 
 - (void)updateTitle:(NSString *)title index:(NSInteger)index;
 

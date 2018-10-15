@@ -134,5 +134,8 @@
 //    return self.cacheKeyArray[index];
 //}
 
+- (void)pageViewController:(YNPageViewController *)pageViewController didScrollMenuItem:(UIButton *)itemButton index:(NSInteger)index {
+    NSLog(@"didScrollMenuItem index %ld", index);
+}
 
 @end
