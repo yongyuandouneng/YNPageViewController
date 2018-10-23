@@ -366,7 +366,7 @@
 #pragma mark - YNPageScrollMenuViewDelegate
 - (void)pagescrollMenuViewItemOnClick:(UIButton *)button index:(NSInteger)index {
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(pagescrollMenuViewItemOnClick:index:)]) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:didScrollMenuItem:index:)]) {
         [self.delegate pageViewController:self didScrollMenuItem:button index:index];
     }
     
