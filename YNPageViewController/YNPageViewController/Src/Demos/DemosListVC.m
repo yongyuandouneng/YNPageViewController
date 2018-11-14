@@ -45,9 +45,9 @@ typedef NS_ENUM(NSInteger, YNVCType) {
     self.title = @"Demos";
     [self.view addSubview:self.tableView];
 
-    self.dataArrayM = @[@{@"title" : @"悬浮样式--下拉刷新在中间", @"type" : @(YNVCTypeSuspendCenterPageVC)},
+    self.dataArrayM = @[@{@"title" : @"悬浮样式--下拉刷新在顶部(QQ联系人样式)", @"type" :       @(YNVCTypeSuspendTopPausePageVC)},
+                        @{@"title" : @"悬浮样式--下拉刷新在中间", @"type" : @(YNVCTypeSuspendCenterPageVC)},
                         @{@"title" : @"悬浮样式--下拉刷新在顶部", @"type" : @(YNVCTypeSuspendTopPageVC)},
-                        @{@"title" : @"悬浮样式--下拉刷新在顶部(QQ联系人样式)", @"type" : @(YNVCTypeSuspendTopPausePageVC)},
                         @{@"title" : @"悬浮样式--自定义导航条或自定义悬浮位置", @"type" : @(YNVCTypeSuspendCustomNavOrSuspendPosition)},
                         @{@"title" : @"加载数据后显示页面(隐藏导航条)", @"type" : @(YNVCTypeLoadPageVC)},
                         @{@"title" : @"顶部样式", @"type" : @(YNVCTypeTopPageVC)},
