@@ -103,7 +103,7 @@
 #pragma mark - 悬浮Center刷新高度方法
 - (void)suspendTopReloadHeaderViewHeight {
     /// 布局高度
-    CGFloat netWorkHeight = 300;
+    CGFloat netWorkHeight = 400;
     __weak typeof (self) weakSelf = self;
     
     /// 结束刷新时 刷新 HeaderView高度
@@ -111,7 +111,9 @@
         YNPageViewController *VC = weakSelf.yn_pageViewController;
         if (VC.headerView.frame.size.height != netWorkHeight) {
             VC.headerView.frame = CGRectMake(0, 0, kSCREEN_WIDTH, netWorkHeight);
+//            CGFloat g = -VC.config.tempTopHeight;
             [VC reloadSuspendHeaderViewFrame];
+//            [self.tableView setContentOffset:CGPointMake(0, g - 100) animated:NO];
         }
     }];
 }
@@ -126,12 +128,13 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
-    return 0.00001;
+    return 15;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
-    return [UIView new];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 15)];
+    view.backgroundColor = randomColor;
+    return view;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -146,7 +149,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return 1;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -182,7 +185,7 @@
 
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStyleGrouped];
         _tableView.delegate = self;
         _tableView.dataSource = self;
     }

@@ -74,7 +74,7 @@
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, kSCREEN_HEIGHT)];
     headerView.layer.contents = (id)[UIImage imageNamed:@"mine_header_bg"].CGImage;
     /// 轮播图
-    SDCycleScrollView *autoScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 200) imageURLStringsGroup:vc.imagesURLs];
+    SDCycleScrollView *autoScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 200.1234) imageURLStringsGroup:vc.imagesURLs];
     autoScrollView.delegate = vc;
     
     vc.headerView = autoScrollView;

@@ -76,7 +76,7 @@
             {
                 BaseTableViewVC *vc_1 = [[BaseTableViewVC alloc] init];
                 vc_1.cellTitle = @"插入页新面";
-                [weakSelf insertPageChildControllersWithTitles:@[@"插入页面"] controllers:@[vc_1] index:1];
+                [weakSelf insertPageChildControllersWithTitles:@[@"插入页面"] controllers:@[vc_1] index:100];
             }
                 break;
             case 3:
@@ -102,6 +102,7 @@
             {
                 weakSelf.headerView.yn_height = 300;
                 [weakSelf reloadData];
+                
             }
                 break;
         }

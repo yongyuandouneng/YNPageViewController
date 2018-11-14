@@ -466,7 +466,7 @@
                                  controllers:(NSArray *)controllers
                                        index:(NSInteger)index {
     index = index < 0 ? 0 : index;
-    index = index > self.controllersM.count - 1 ? self.controllersM.count - 1 : index;
+    index = index > self.controllersM.count ? self.controllersM.count : index;
     NSInteger tarIndex = index;
     BOOL insertSuccess = NO;
     if (titles.count == controllers.count && controllers.count > 0) {
@@ -623,6 +623,19 @@
         [self.currentScrollView setContentOffset:CGPointMake(0, 0) animated:animated];
     }
 }
+
+- (void)scrollToContentOffset:(CGPoint)point animated:(BOOL)animated {
+    
+    if ([self isSuspensionTopStyle] || [self isSuspensionBottomStyle]) {
+        [self.currentScrollView setContentOffset:point animated:animated];
+    } else if ([self isSuspensionTopPauseStyle]) {
+        [self.currentScrollView setContentOffset:point animated:NO];
+        [self.bgScrollView setContentOffset:point animated:animated];
+    } else {
+        [self.currentScrollView setContentOffset:point animated:animated];
+    }
+}
+
 
 #pragma mark - Private Method
 
@@ -1069,6 +1082,11 @@
         self.headerBgView.frame = headerBgViewFrame;
         self.scaleBackgroundView.frame = scaleBgViewFrame;
     }
+}
+
+- (void)setHeaderView:(UIView *)headerView {
+    _headerView = headerView;
+    _headerView.yn_height = ceil(headerView.yn_height);
 }
 
 - (void)dealloc {

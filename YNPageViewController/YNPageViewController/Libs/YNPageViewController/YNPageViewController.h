@@ -232,6 +232,11 @@
  */
 - (void)scrollToTop:(BOOL)animated;
 
-
+/**
+ 滚动到某一位置
+ @param point 点
+ @param animated 是否动画
+ */
+- (void)scrollToContentOffset:(CGPoint)point animated:(BOOL)animated;
 
 @end
