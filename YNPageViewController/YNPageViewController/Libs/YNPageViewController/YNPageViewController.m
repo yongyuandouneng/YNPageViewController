@@ -174,7 +174,13 @@
     [self.displayDictM setObject:viewController forKey:[self getKeyWithTitle:title]];
     
     UIScrollView *scrollView = self.currentScrollView;
-    scrollView.frame = viewController.view.bounds;
+    
+    if (self.dataSource && [self.dataSource respondsToSelector:@selector(pageViewController:heightForScrollViewAtIndex:)]) {
+        CGFloat scrollViewHeight = [self.dataSource pageViewController:self heightForScrollViewAtIndex:index];
+        scrollView.frame = CGRectMake(0, 0, viewController.view.yn_width, scrollViewHeight);
+    } else {
+        scrollView.frame = viewController.view.bounds;
+    }
     
     [viewController didMoveToParentViewController:self];
     

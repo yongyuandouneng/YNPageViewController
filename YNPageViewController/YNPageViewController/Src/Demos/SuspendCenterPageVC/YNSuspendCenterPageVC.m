@@ -125,6 +125,11 @@
 //        NSLog(@"--- contentOffset = %f,    progress = %f", contentOffset, progress);
 }
 
+///// 返回列表的高度 默认是控制器的高度大小
+//- (CGFloat)pageViewController:(YNPageViewController *)pageViewController heightForScrollViewAtIndex:(NSInteger)index {
+//    return 400;
+//}
+
 #pragma mark - SDCycleScrollViewDelegate
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
     NSLog(@"----click 轮播图 index %ld", index);

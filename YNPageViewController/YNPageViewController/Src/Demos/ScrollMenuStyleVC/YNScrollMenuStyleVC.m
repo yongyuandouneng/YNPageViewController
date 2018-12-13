@@ -77,7 +77,9 @@
     YNPageConfigration *style_config_6 = [YNPageConfigration defaultConfig];
     style_config_6.scrollMenu = YES;
     style_config_6.aligmentModeCenter = NO;
-    
+    style_config_6.bottomLineHeight = 1;
+    style_config_6.bottomLineBgColor = [UIColor greenColor];
+    style_config_6.showBottomLine = YES;
     YNPageScrollMenuView *style_6 = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, style_5.yn_bottom + 20, kSCREEN_WIDTH, 44) titles:@[@"JAVA", @"Object-C", @"JS"].mutableCopy configration:style_config_6 delegate:nil currentIndex:1];
     
     /// style 7

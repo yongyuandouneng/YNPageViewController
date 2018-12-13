@@ -90,6 +90,17 @@
 
 
 @optional
+
+
+/**
+ 取得ScrollView(列表)的高度 默认是控制器的高度 可用于自定义底部按钮(订单、确认按钮)等控件
+ 
+ @param pageViewController PageVC
+ @param index pageIndex
+ @return ScrollView高度
+ */
+- (CGFloat)pageViewController:(YNPageViewController *)pageViewController heightForScrollViewAtIndex:(NSInteger )index;
+
 /**
  自定义缓存Key 如果不实现，则不允许相同的菜单栏title
  如果对页面进行了添加、删除、调整顺序、请一起调整传递进来的数据源，防止缓存Key取错
