@@ -365,6 +365,7 @@
 /// 调整scrollMenuView层级，防止TableView Section Header 挡住
 - (void)adjustSectionHeader:(UIScrollView *)scrollview {
     if (scrollview.subviews.lastObject != self.scrollMenuView) {
+        [scrollview bringSubviewToFront:self.headerBgView];
         [scrollview bringSubviewToFront:self.scrollMenuView];
     }
 }
