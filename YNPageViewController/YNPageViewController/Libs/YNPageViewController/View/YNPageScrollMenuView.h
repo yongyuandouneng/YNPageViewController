@@ -11,9 +11,7 @@
 @class YNPageConfigration;
 
 @protocol YNPageScrollMenuViewDelegate <NSObject>
-
 @optional
-
 /// 点击item
 - (void)pagescrollMenuViewItemOnClick:(UIButton *)button index:(NSInteger)index;
 
@@ -23,7 +21,7 @@
 @end
 
 @interface YNPageScrollMenuView : UIView
-/// + 按钮
+/// 添加按钮
 @property (nonatomic, strong) UIButton *addButton;
 
 /// 标题数组
@@ -48,24 +46,29 @@
                                    delegate:(id<YNPageScrollMenuViewDelegate>)delegate
                                currentIndex:(NSInteger)currentIndex;
 
+/// 根据标题修下标修改标题
 - (void)updateTitle:(NSString *)title index:(NSInteger)index;
 
+/// 根据标题数组刷新标题
 - (void)updateTitles:(NSArray *)titles;
 
+/// 根据下标调整Item位置
 - (void)adjustItemPositionWithCurrentIndex:(NSInteger)index;
 
+/// 根据上个下标和当前点击的下标调整进度
 - (void)adjustItemWithProgress:(CGFloat)progress
                      lastIndex:(NSInteger)lastIndex
                   currentIndex:(NSInteger)currentIndex;
-
+/// 选中下标
 - (void)selectedItemIndex:(NSInteger)index
                  animated:(BOOL)animated;
-
+/// 调整Item
 - (void)adjustItemWithAnimated:(BOOL)animated;
 
+/// 调整Item
 - (void)adjustItemAnimate:(BOOL)animated;
 
-/// 重新刷新(创建)
+/// 刷新视图
 - (void)reloadView;
 
 @end

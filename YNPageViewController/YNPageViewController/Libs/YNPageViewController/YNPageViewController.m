@@ -122,13 +122,11 @@
     switch (self.config.pageStyle) {
         case YNPageStyleTop:
         case YNPageStyleSuspensionTop:
-        case YNPageStyleSuspensionCenter:
-        {
+        case YNPageStyleSuspensionCenter: {
             [self.view addSubview:self.scrollMenuView];
         }
             break;
-        case YNPageStyleNavigation:
-        {
+        case YNPageStyleNavigation: {
             UIViewController *vc;
             if ([self.parentViewController isKindOfClass:[UINavigationController class]]) {
                 vc = self;
@@ -138,18 +136,15 @@
             vc.navigationItem.titleView = self.scrollMenuView;
         }
             break;
-        case YNPageStyleSuspensionTopPause:
-        {
+        case YNPageStyleSuspensionTopPause: {
             [self.bgScrollView addSubview:self.scrollMenuView];
         }
             break;
     }
-
 }
 
 #pragma mark - 初始化子控制器
 - (void)initViewControllerWithIndex:(NSInteger)index {
-    
     self.currentViewController = self.controllersM[index];
 
     self.pageIndex = index;
@@ -158,11 +153,10 @@
     
     UIViewController *cacheViewController = [self.cacheDictM objectForKey:[self getKeyWithTitle:title]];
     [self addViewControllerToParent:cacheViewController ?: self.controllersM[index] index:index];
-
 }
+
 /// 添加到父类控制器中
 - (void)addViewControllerToParent:(UIViewController *)viewController index:(NSInteger)index {
-    
     [self addChildViewController:self.controllersM[index]];
     
     viewController.view.frame = CGRectMake(kYNPAGE_SCREEN_WIDTH * index, 0, self.pageScrollView.yn_width, self.pageScrollView.yn_height);
@@ -246,7 +240,6 @@
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    
     if (scrollView == self.bgScrollView) return;
     if ([self isSuspensionBottomStyle] || [self isSuspensionTopStyle]) {
         if (!decelerate) {
@@ -260,7 +253,6 @@
 
 /// scrollView滚动结束
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    
     if (scrollView == self.bgScrollView) return;
     if ([self isSuspensionTopPauseStyle]) {
         self.currentScrollView.scrollEnabled = YES;
@@ -276,7 +268,6 @@
 
 /// scrollView滚动ing
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
     if (scrollView == self.bgScrollView) {
         [self calcuSuspendTopPauseWithBgScrollView:scrollView];
         [self invokeDelegateForScrollWithOffsetY:scrollView.contentOffset.y];
@@ -354,9 +345,7 @@
         [self headerScaleWithOffsetY:offsetY];
         
     } else if ([self isSuspensionTopPauseStyle]) {
-        
         [self calcuSuspendTopPauseWithCurrentScrollView:scrollView];
-        
     } else {
          [self invokeDelegateForScrollWithOffsetY:scrollView.contentOffset.y];
     }
@@ -372,11 +361,9 @@
 
 #pragma mark - YNPageScrollMenuViewDelegate
 - (void)pagescrollMenuViewItemOnClick:(UIButton *)button index:(NSInteger)index {
-    
     if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:didScrollMenuItem:index:)]) {
         [self.delegate pageViewController:self didScrollMenuItem:button index:index];
     }
-    
     [self setSelectedPageIndex:index];
 }
 
@@ -388,7 +375,6 @@
 
 #pragma mark - Public Method
 - (void)setSelectedPageIndex:(NSInteger)pageIndex {
-    
     if (self.cacheDictM.count > 0 && pageIndex == self.pageIndex) return;
     
     if (pageIndex > self.controllersM.count - 1) return;
@@ -401,11 +387,9 @@
     }
     
     [self scrollViewDidEndDecelerating:self.pageScrollView];
-    
 }
 
 - (void)reloadData {
-    
     [self checkParams];
     
     self.pageIndex = self.pageIndex < 0 ? 0 : self.pageIndex;
@@ -428,7 +412,6 @@
     [self setupSubViews];
     
     [self setSelectedPageIndex:self.pageIndex];
-    
 }
 
 - (void)updateMenuItemTitle:(NSString *)title index:(NSInteger)index {
@@ -492,11 +475,9 @@
     NSInteger pageIndex = index > self.pageIndex ? self.pageIndex : self.pageIndex + controllers.count;
     
     [self updateViewWithIndex:pageIndex];
-    
 }
 
 - (void)updateViewWithIndex:(NSInteger)pageIndex {
-    
     self.pageScrollView.contentSize = CGSizeMake(kYNPAGE_SCREEN_WIDTH * self.controllersM.count, self.pageScrollView.yn_height);
     
     UIViewController *vc = self.controllersM[pageIndex];
@@ -529,7 +510,6 @@
 }
 
 - (void)removePageControllerWithIndex:(NSInteger)index {
-    
     if (index < 0 || index >= self.titlesM.count || self.titlesM.count == 1) return;
     NSInteger pageIndex = 0;
     if (self.pageIndex >= index) {
@@ -586,7 +566,6 @@
     [self.controllersM addObjectsFromArray:resultArrayM];
     
     [self updateViewWithIndex:self.pageIndex];
-    
 }
 
 - (void)reloadSuspendHeaderViewFrame {
@@ -620,7 +599,6 @@
 }
 
 - (void)scrollToTop:(BOOL)animated {
-    
     if ([self isSuspensionTopStyle] || [self isSuspensionBottomStyle]) {
         [self.currentScrollView setContentOffset:CGPointMake(0, -self.config.tempTopHeight) animated:animated];
     } else if ([self isSuspensionTopPauseStyle]) {
@@ -632,7 +610,6 @@
 }
 
 - (void)scrollToContentOffset:(CGPoint)point animated:(BOOL)animated {
-    
     if ([self isSuspensionTopStyle] || [self isSuspensionBottomStyle]) {
         [self.currentScrollView setContentOffset:point animated:animated];
     } else if ([self isSuspensionTopPauseStyle]) {
@@ -643,22 +620,19 @@
     }
 }
 
-
 #pragma mark - Private Method
 
 - (void)initData {
-    
     [self checkParams];
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     _headerViewInTableView = YES;
-
 }
+
 /// 初始化子View
 - (void)setupSubViews {
-    
     [self setupHeaderBgView];
     [self setupPageScrollMenuView];
     [self setupPageScrollView];
@@ -666,7 +640,6 @@
 
 /// 初始化PageScrollView
 - (void)setupPageScrollView {
-    
     CGFloat navHeight = self.config.showNavigation ? kYNPAGE_NAVHEIGHT : 0;
     CGFloat tabHeight = self.config.showTabbar ? kYNPAGE_TABBARHEIGHT : 0;
     CGFloat cutOutHeight = self.config.cutOutHeight > 0 ? self.config.cutOutHeight : 0;
@@ -764,7 +737,6 @@
 
 /// 将headerView 从 tableview 上 放置 view 上
 - (void)replaceHeaderViewFromTableView {
-    
     if ([self isSuspensionBottomStyle] || [self isSuspensionTopStyle]) {
         if (_headerViewInTableView) {
             
@@ -787,7 +759,6 @@
 /// - 最终效果 current 拖到指定时 bg 才能下拉 ， bg 悬浮时 current 才能上拉
 /// 计算悬浮顶部偏移量 - BgScrollView
 - (void)calcuSuspendTopPauseWithBgScrollView:(UIScrollView *)scrollView {
-    
     if ([self isSuspensionTopPauseStyle] && scrollView == self.bgScrollView) {
         
         CGFloat bg_OffsetY = scrollView.contentOffset.y;
@@ -817,12 +788,10 @@
             [scrollView yn_setContentOffsetY:0];
         }
     }
-
 }
 
 /// 计算悬浮顶部偏移量 - CurrentScrollView
 - (void)calcuSuspendTopPauseWithCurrentScrollView:(UIScrollView *)scrollView {
-
     if ([self isSuspensionTopPauseStyle]) {
         if (!scrollView.isDragging) return;
         CGFloat bg_OffsetY = self.bgScrollView.contentOffset.y;
@@ -860,11 +829,8 @@
 
 /// 从父类控制器移除控制器
 - (void)removeViewControllerWithChildVC:(UIViewController *)childVC key:(NSString *)key {
-    
     [self removeViewControllerWithChildVC:childVC];
-    
     [self.displayDictM removeObjectForKey:key];
-    
     if (![self.cacheDictM objectForKey:key]) {
         [self.cacheDictM setObject:childVC forKey:key];
     }
@@ -959,24 +925,21 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:contentOffsetY:progress:)]) {
         switch (self.config.pageStyle) {
             case YNPageStyleSuspensionTop:
-            case YNPageStyleSuspensionCenter:
-            {
+            case YNPageStyleSuspensionCenter: {
                 CGFloat progress = 1 + (offsetY + self.scrollMenuView.yn_height + self.config.suspenOffsetY) / (self.headerBgView.yn_height -self.config.suspenOffsetY);
                 progress = progress > 1 ? 1 : progress;
                 progress = progress < 0 ? 0 : progress;
                 [self.delegate pageViewController:self contentOffsetY:offsetY progress:progress];
             }
                 break;
-            case YNPageStyleSuspensionTopPause:
-            {
+            case YNPageStyleSuspensionTopPause: {
                 CGFloat progress = offsetY / (self.headerBgView.yn_height - self.config.suspenOffsetY);
                 progress = progress > 1 ? 1 : progress;
                 progress = progress < 0 ? 0 : progress;
                 [self.delegate pageViewController:self contentOffsetY:offsetY progress:progress];
             }
                 break;
-            default:
-            {
+            default: {
                 [self.delegate pageViewController:self contentOffsetY:offsetY progress:1];
             }
                 break;
@@ -1024,13 +987,11 @@
 
 /// 根据pageIndex 取 数据源 ScrollView
 - (UIScrollView *)getScrollViewWithPageIndex:(NSInteger)pageIndex {
-    
     NSString *title = [self titleWithIndex:self.pageIndex];
     NSString *key = [self getKeyWithTitle:title];
     UIScrollView *scrollView = nil;
     
     if (![self.scrollViewCacheDictionryM objectForKey:key]) {
-        
         if (self.dataSource && [self.dataSource respondsToSelector:@selector(pageViewController:pageForIndex:)]) {
             scrollView = [self.dataSource pageViewController:self pageForIndex:pageIndex];
             scrollView.yn_observerDidScrollView = YES;
@@ -1061,7 +1022,6 @@
 
 /// 处理头部伸缩
 - (void)headerScaleWithOffsetY:(CGFloat)offsetY {
-    
     if (self.config.headerViewCouldScale && self.scaleBackgroundView) {
         CGFloat yOffset  = offsetY + _insetTop;
         CGFloat xOffset = (yOffset) / 2;

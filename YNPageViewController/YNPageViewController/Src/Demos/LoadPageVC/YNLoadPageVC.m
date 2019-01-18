@@ -47,19 +47,14 @@
     
     /// 模拟器请求
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
         [self setupPageVC];
-        
         [_indicatorView stopAnimating];
         [_indicatorView setHidden:YES];
     });
-    
     [self.view addSubview:_indicatorView];
-    
 }
 
 - (void)setupPageVC {
-    
     YNPageConfigration *configration = [YNPageConfigration defaultConfig];
     configration.pageStyle = YNPageStyleSuspensionCenter;
     configration.headerViewCouldScale = YES;
@@ -89,7 +84,6 @@
     UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, kSCREEN_HEIGHT - 44, kSCREEN_WIDTH, 44)];
     v.backgroundColor = [UIColor redColor];
     [self.view addSubview:v];
-    
 }
 
 @end

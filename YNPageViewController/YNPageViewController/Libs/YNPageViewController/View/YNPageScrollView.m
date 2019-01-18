@@ -25,7 +25,6 @@
 }
 
 - (BOOL)panBack:(UIGestureRecognizer *)gestureRecognizer {
-
     int location_X = 0.15 * kYNPAGE_SCREEN_WIDTH;
 
     if (gestureRecognizer == self.panGestureRecognizer) {
@@ -40,23 +39,16 @@
             if (point.x >0 && XX < location_X) {
                 return YES;
             }
-            /*
-            if (point.x > 0 && location.x < location_X && self.contentOffset.x <= 0) {
-                return YES;
-            }
-             */
         }
     }
     return NO;
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-
     if ([self panBack:gestureRecognizer]) {
         return NO;
     }
     return YES;
 }
-
 
 @end

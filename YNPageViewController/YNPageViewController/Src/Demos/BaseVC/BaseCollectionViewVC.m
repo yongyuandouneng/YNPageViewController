@@ -17,7 +17,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"id"];
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:HeaderID];
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:FooterID];
@@ -26,9 +25,7 @@
 }
 
 - (void)addCollectionViewRefresh {
-    
     __weak typeof (self) weakSelf = self;
-    
     self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [weakSelf.collectionView.mj_header endRefreshing];
@@ -43,9 +40,7 @@
 }
 
 #pragma mark - UICollectionViewDelegate, UICollectionViewDataSource
-
 static NSString *HeaderID = @"header";
-
 static NSString *FooterID = @"footer";
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
@@ -53,7 +48,7 @@ static NSString *FooterID = @"footer";
         UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:HeaderID forIndexPath:indexPath];
         headerView.backgroundColor = randomColor;
         return headerView;
-    } else { // 返回每一组的尾部视图
+    } else {
         UICollectionReusableView *footerView =  [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:FooterID forIndexPath:indexPath];
         
         footerView.backgroundColor = randomColor;
@@ -83,7 +78,6 @@ static NSString *FooterID = @"footer";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"id" forIndexPath:indexPath];
     cell.backgroundColor = randomColor;
     return cell;
@@ -93,7 +87,6 @@ static NSString *FooterID = @"footer";
     if (!_collectionView) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
         layout.itemSize = CGSizeMake(100, 100);
-        
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) collectionViewLayout:layout];
         _collectionView.dataSource = self;
         _collectionView.delegate = self;

@@ -46,10 +46,6 @@
     NSLog(@"--%@--%@", [self class], NSStringFromSelector(_cmd));
 }
 
-#pragma mark - Event Response
-
-#pragma mark - --Notification Event Response
-
 #pragma mark - --Button Event Response
 - (void)rightButtonOnClick:(UIBarButtonItem *)item event:(UIEvent *)event {
     __weak typeof(self) weakSelf = self;
@@ -61,63 +57,44 @@
                                                        @"reload",
                                                        @"刷新头部高度"] doneBlock:^(NSInteger selectedIndex) {
         switch (selectedIndex) {
-            case 0:
-            {
+            case 0: {
                 [weakSelf scrollToTop:YES];
             }
                 break;
-            case 1:
-            {
+            case 1: {
 //                [self updateMenuItemTitle:@"更新的标题" index:0];
                 [weakSelf updateMenuItemTitles:@[@"足球", @"棒球", @"篮球"]];
             }
                 break;
-            case 2:
-            {
+            case 2: {
                 BaseTableViewVC *vc_1 = [[BaseTableViewVC alloc] init];
                 vc_1.cellTitle = @"插入页新面";
                 [weakSelf insertPageChildControllersWithTitles:@[@"插入页面"] controllers:@[vc_1] index:100];
             }
                 break;
-            case 3:
-            {
+            case 3: {
 //                [self removePageControllerWithTitle:@"帽子"];
                  [weakSelf removePageControllerWithIndex:0];
             }
                 break;
-            case 4:
-            {
+            case 4: {
                 [weakSelf replaceTitlesArrayForSort:@[@"帽子", @"衣服", @"鞋子"]];
             }
                 break;
-            case 5:
-            {
+            case 5: {
                 weakSelf.titlesM = @[@"刷新页面", @"棒球", @"篮球"].mutableCopy;
                 weakSelf.config.menuHeight = 100;
                 weakSelf.pageIndex = 0;
                 [weakSelf reloadData];
             }
                 break;
-            case 6:
-            {
+            case 6: {
                 weakSelf.headerView.yn_height = 300;
                 [weakSelf reloadData];
-                
             }
                 break;
         }
     } dismissBlock:nil];
 }
-#pragma mark - --Gesture Event Response
-
-#pragma mark - System Delegate
-
-#pragma mark - Custom Delegate
-
-#pragma mark - Public Function
-
-#pragma mark - Private Function
-
-#pragma mark - Getter and Setter
 
 @end

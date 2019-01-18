@@ -27,12 +27,10 @@
 }
 
 - (void)yn_scrollViewWillBeginDragging {
-    
     [self yn_scrollViewWillBeginDragging];
     if (self.yn_observerDidScrollView && self.yn_pageScrollViewBeginDragginScrollView) {
         self.yn_pageScrollViewBeginDragginScrollView(self);
     }
-    
 }
 
 #pragma mark - Getter - Setter

@@ -29,32 +29,17 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-//    [self.navigationController setNavigationBarHidden:YES animated:animated];
+    //    [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-//     [self.navigationController setNavigationBarHidden:NO animated:animated];
+    //     [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
-
-#pragma mark - Event Response
-
-#pragma mark - --Notification Event Response
-
-#pragma mark - --Button Event Response
-
-#pragma mark - --Gesture Event Response
-
-#pragma mark - System Delegate
-
-#pragma mark - Custom Delegate
 
 #pragma mark - Public Function
 
 + (instancetype)suspendTopPausePageVC {
-    
     YNPageConfigration *configration = [YNPageConfigration defaultConfig];
     configration.pageStyle = YNPageStyleSuspensionTopPause;
     configration.headerViewCouldScale = YES;
@@ -73,13 +58,13 @@
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, kSCREEN_HEIGHT)];
     headerView.layer.contents = (id)[UIImage imageNamed:@"mine_header_bg"].CGImage;
-    /// 轮播图
+    
     SDCycleScrollView *autoScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 200.1234) imageURLStringsGroup:vc.imagesURLs];
     autoScrollView.delegate = vc;
     
     vc.headerView = autoScrollView;
     
-//    vc.headerView = headerView;
+    //    vc.headerView = headerView;
     /// 指定默认选择index 页面
     vc.pageIndex = 1;
     
@@ -90,7 +75,6 @@
         NSInteger refreshPage = weakVC.pageIndex;
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            
             /// 取到之前的页面进行刷新 pageIndex 是当前页面
             YNSuspendTopPauseBaseTableViewVC *vc2 = weakVC.controllersM[refreshPage];
             [vc2.tableView reloadData];
@@ -104,21 +88,19 @@
             }
         });
     }];
-    
     return vc;
 }
 
 + (NSArray *)getArrayVCs {
+    YNSuspendTopPauseBaseTableViewVC *firstVC = [[YNSuspendTopPauseBaseTableViewVC alloc] init];
+    firstVC.cellTitle = @"鞋子";
     
-    YNSuspendTopPauseBaseTableViewVC *vc_1 = [[YNSuspendTopPauseBaseTableViewVC alloc] init];
-    vc_1.cellTitle = @"鞋子";
+    YNSuspendTopPauseBaseTableViewVC *secondVC = [[YNSuspendTopPauseBaseTableViewVC alloc] init];
+    secondVC.cellTitle = @"衣服";
     
-    YNSuspendTopPauseBaseTableViewVC *vc_2 = [[YNSuspendTopPauseBaseTableViewVC alloc] init];
-    vc_2.cellTitle = @"衣服";
-    
-    YNSuspendTopPauseBaseTableViewVC *vc_3 = [[YNSuspendTopPauseBaseTableViewVC alloc] init];
-    vc_3.cellTitle = @"帽子";
-    return @[vc_1, vc_2, vc_3];
+    YNSuspendTopPauseBaseTableViewVC *thirdVC = [[YNSuspendTopPauseBaseTableViewVC alloc] init];
+    thirdVC.cellTitle = @"帽子";
+    return @[firstVC, secondVC, thirdVC];
 }
 
 + (NSArray *)getArrayTitles {
@@ -137,17 +119,18 @@
     }
     return _imagesURLs;
 }
+
 #pragma mark - YNPageViewControllerDataSource
 - (UIScrollView *)pageViewController:(YNPageViewController *)pageViewController pageForIndex:(NSInteger)index {
     UIViewController *vc = pageViewController.controllersM[index];
-    
     return [(YNSuspendTopPauseBaseTableViewVC *)vc tableView];
 }
+
 #pragma mark - YNPageViewControllerDelegate
 - (void)pageViewController:(YNPageViewController *)pageViewController
             contentOffsetY:(CGFloat)contentOffset
                   progress:(CGFloat)progress {
-            NSLog(@"--- contentOffset = %f,    progress = %f", contentOffset, progress);
+    NSLog(@"--- contentOffset = %f,    progress = %f", contentOffset, progress);
 }
 
 #pragma mark - SDCycleScrollViewDelegate

@@ -42,53 +42,21 @@
     NSLog(@"--%@--%@", [self class], NSStringFromSelector(_cmd));
 }
 
-
-//- (void)viewDidLayoutSubviews {
-//    [super viewDidLayoutSubviews];
-//    
-//    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-//    if (statusBarHeight == 40.0f) {
-//        self.pageVC.view.yn_y = -20;
-//        self.pageVC.config.suspenOffsetY = 20;
-//    } else {
-//        self.pageVC.view.yn_y = 0;
-//        self.pageVC.config.suspenOffsetY = 0;
-//    }
-//    
-//}
-
-
-#pragma mark - Event Response
-
-#pragma mark - --Notification Event Response
-
-#pragma mark - --Button Event Response
-
-#pragma mark - --Gesture Event Response
-
-#pragma mark - System Delegate
-
-#pragma mark - Custom Delegate
-
-
-
 #pragma mark - Public Function
-
 + (instancetype)testPageVC {
-    
     YNPageConfigration *configration = [YNPageConfigration defaultConfig];
     configration.pageStyle = YNPageStyleSuspensionTopPause;
-//    configration.pageStyle = YNPageStyleNavigation;
-//    configration.pageStyle = YNPageStyleTop;
+    //    configration.pageStyle = YNPageStyleNavigation;
+    //    configration.pageStyle = YNPageStyleTop;
     configration.headerViewCouldScale = YES;
-//    configration.headerViewScaleMode = YNPageHeaderViewScaleModeCenter;
+    //    configration.headerViewScaleMode = YNPageHeaderViewScaleModeCenter;
     configration.headerViewScaleMode = YNPageHeaderViewScaleModeTop;
     configration.showTabbar = NO;
     configration.showNavigation = YES;
     configration.scrollMenu = NO;
     configration.aligmentModeCenter = NO;
     configration.lineWidthEqualFontWidth = NO;
-//    configration.menuWidth = 250;
+    //    configration.menuWidth = 250;
     
     YNTestPageVC *vc = [YNTestPageVC pageViewControllerWithControllers:[self getArrayVCs]
                                                                 titles:[self getArrayTitles]
@@ -98,35 +66,23 @@
     /// 轮播图
     SDCycleScrollView *autoScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 200) imageURLStringsGroup:vc.imagesURLs];
     autoScrollView.delegate = vc;
-//
+    //
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 200)];
     headerView.backgroundColor = [UIColor redColor];
     vc.headerView = headerView;
-    
-//    vc.pageIndex = 1;
-//    设置拉伸View
-//    UIImageView *imageViewScale = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 200)];
-//    imageViewScale.image = [UIImage imageNamed:@"mine_header_bg"];
-//    vc.scaleBackgroundView = imageViewScale;
-    
     return vc;
 }
 
-
 + (NSArray *)getArrayVCs {
+    YNTestBaseVC *firstVC = [[YNTestBaseVC alloc] init];
     
-    YNTestBaseVC *vc_1 = [[YNTestBaseVC alloc] init];
-    
-    YNTestBaseVC *vc_2 = [[YNTestBaseVC alloc] init];
-    
-    return @[vc_1, vc_2];
+    YNTestBaseVC *secondVC = [[YNTestBaseVC alloc] init];
+    return @[firstVC, secondVC];
 }
 
 + (NSArray *)getArrayTitles {
     return @[@"鞋子", @"衣服"];
 }
-
-#pragma mark - Private Function
 
 #pragma mark - Getter and Setter
 - (NSArray *)imagesURLs {
@@ -138,17 +94,17 @@
     }
     return _imagesURLs;
 }
+
 #pragma mark - YNPageViewControllerDataSource
 - (UIScrollView *)pageViewController:(YNPageViewController *)pageViewController pageForIndex:(NSInteger)index {
     YNTestBaseVC *baseVC = pageViewController.controllersM[index];
-    
     return [baseVC tableView];
 }
+
 #pragma mark - YNPageViewControllerDelegate
 - (void)pageViewController:(YNPageViewController *)pageViewController contentOffsetY:(CGFloat)contentOffset progress:(CGFloat)progress {
-//    NSLog(@"--- contentOffset = %f,    progress = %f", contentOffset, progress);
+    //    NSLog(@"--- contentOffset = %f,    progress = %f", contentOffset, progress);
 }
-
 
 #pragma mark - SDCycleScrollViewDelegate
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {

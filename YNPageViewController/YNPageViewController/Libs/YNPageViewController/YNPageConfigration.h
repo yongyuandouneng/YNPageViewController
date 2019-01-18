@@ -148,7 +148,6 @@ typedef NS_ENUM(NSInteger, YNPageHeaderViewScaleMode) {
 
 + (instancetype)defaultConfig;
 
-
 //##################################无需关注##########################################
 
 @property (nonatomic, assign) CGFloat deltaScale;

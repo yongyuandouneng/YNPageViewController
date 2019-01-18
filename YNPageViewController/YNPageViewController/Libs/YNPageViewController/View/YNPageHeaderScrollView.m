@@ -14,8 +14,7 @@
 
 @implementation YNPageHeaderScrollView
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         self.delegate = self;
@@ -27,10 +26,6 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [scrollView setContentOffset:CGPointMake(0, 0) animated:NO];
-    
 }
-
-
-
 
 @end

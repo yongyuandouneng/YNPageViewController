@@ -23,22 +23,9 @@
     [super viewDidLoad];
 }
 
-#pragma mark - Event Response
-
-#pragma mark - --Notification Event Response
-
-#pragma mark - --Button Event Response
-
-#pragma mark - --Gesture Event Response
-
-#pragma mark - System Delegate
-
-#pragma mark - Custom Delegate
-
 #pragma mark - Public Function
 
 + (instancetype)suspendTopPageVC {
-    
     YNPageConfigration *configration = [YNPageConfigration defaultConfig];
     configration.pageStyle = YNPageStyleSuspensionTop;
     configration.headerViewCouldScale = YES;
@@ -69,25 +56,20 @@
     return vc;
 }
 
-
 + (NSArray *)getArrayVCs {
+    YNSuspendTopBaseTableViewVC *firstVC = [[YNSuspendTopBaseTableViewVC alloc] init];
+    firstVC.cellTitle = @"鞋子";
     
-    YNSuspendTopBaseTableViewVC *vc_1 = [[YNSuspendTopBaseTableViewVC alloc] init];
-    vc_1.cellTitle = @"鞋子";
+    YNSuspendTopBaseTableViewVC *secondVC = [[YNSuspendTopBaseTableViewVC alloc] init];
+    secondVC.cellTitle = @"衣服";
     
-    YNSuspendTopBaseTableViewVC *vc_2 = [[YNSuspendTopBaseTableViewVC alloc] init];
-    vc_2.cellTitle = @"衣服";
-    
-    YNSuspendTopBaseTableViewVC *vc_3 = [[YNSuspendTopBaseTableViewVC alloc] init];
-    
-    return @[vc_1, vc_2, vc_3];
+    YNSuspendTopBaseTableViewVC *thirdVC = [[YNSuspendTopBaseTableViewVC alloc] init];
+    return @[firstVC, secondVC, thirdVC];
 }
 
 + (NSArray *)getArrayTitles {
     return @[@"鞋子", @"衣服", @"帽子"];
 }
-
-#pragma mark - Private Function
 
 #pragma mark - Getter and Setter
 - (NSArray *)imagesURLs {
@@ -99,12 +81,13 @@
     }
     return _imagesURLs;
 }
+
 #pragma mark - YNPageViewControllerDataSource
 - (UIScrollView *)pageViewController:(YNPageViewController *)pageViewController pageForIndex:(NSInteger)index {
     YNSuspendTopBaseTableViewVC *vc = pageViewController.controllersM[index];
-    
     return [vc tableView];
 }
+
 #pragma mark - YNPageViewControllerDelegate
 - (void)pageViewController:(YNPageViewController *)pageViewController
             contentOffsetY:(CGFloat)contentOffset

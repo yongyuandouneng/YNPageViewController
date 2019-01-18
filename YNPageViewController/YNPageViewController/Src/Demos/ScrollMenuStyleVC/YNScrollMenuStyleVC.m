@@ -26,66 +26,64 @@
     _scrollView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
     /// style 1
-    YNPageConfigration *style_config_1 = [YNPageConfigration defaultConfig];
-    YNPageScrollMenuView *style_1 = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 44) titles:@[@"JAVA", @"Object-C", @"JS"].mutableCopy configration:style_config_1 delegate:nil currentIndex:0];
-    
+    YNPageConfigration *firstConfigStyle = [YNPageConfigration defaultConfig];
+    YNPageScrollMenuView *firstStyle = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 44) titles:@[@"JAVA", @"Object-C", @"JS"].mutableCopy configration:firstConfigStyle delegate:nil currentIndex:0];
     
     /// style 2
-    YNPageConfigration *style_config_2 = [YNPageConfigration defaultConfig];
-    style_config_2.showBottomLine = YES;
-    style_config_2.bottomLineBgColor = [UIColor greenColor];
-    style_config_2.bottomLineHeight = 1;
+    YNPageConfigration *secondConfigStyle = [YNPageConfigration defaultConfig];
+    secondConfigStyle.showBottomLine = YES;
+    secondConfigStyle.bottomLineBgColor = [UIColor greenColor];
+    secondConfigStyle.bottomLineHeight = 1;
     
-    YNPageScrollMenuView *style_2 = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, style_1.yn_bottom + 20, kSCREEN_WIDTH, 44) titles:@[@"系统偏好设置", @"网易云音乐", @"有道词典", @"微信", @"QQ游戏", @"QQ邮箱", @"数码测色计"].mutableCopy configration:style_config_2 delegate:nil currentIndex:0];
+    YNPageScrollMenuView *secondStyle = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, firstStyle.yn_bottom + 20, kSCREEN_WIDTH, 44) titles:@[@"系统偏好设置", @"网易云音乐", @"有道词典", @"微信", @"QQ游戏", @"QQ邮箱", @"数码测色计"].mutableCopy configration:secondConfigStyle delegate:nil currentIndex:0];
     
     /// style 3
-    YNPageConfigration *style_config_3 = [YNPageConfigration defaultConfig];
-    style_config_3.showBottomLine = YES;
-    style_config_3.bottomLineBgColor = [UIColor greenColor];
-    style_config_3.bottomLineHeight = 1;
-    style_config_3.scrollMenu = NO;
-    style_config_3.aligmentModeCenter = NO;
-    style_config_3.lineWidthEqualFontWidth = NO;
-    style_config_3.showBottomLine = YES;
-    style_config_3.itemFont = [UIFont systemFontOfSize:14];
-    style_config_3.selectedItemColor = [UIColor redColor];
-    style_config_3.normalItemColor = [UIColor blackColor];
+    YNPageConfigration *thirdConfigStyle = [YNPageConfigration defaultConfig];
+    thirdConfigStyle.showBottomLine = YES;
+    thirdConfigStyle.bottomLineBgColor = [UIColor greenColor];
+    thirdConfigStyle.bottomLineHeight = 1;
+    thirdConfigStyle.scrollMenu = NO;
+    thirdConfigStyle.aligmentModeCenter = NO;
+    thirdConfigStyle.lineWidthEqualFontWidth = NO;
+    thirdConfigStyle.showBottomLine = YES;
+    thirdConfigStyle.itemFont = [UIFont systemFontOfSize:14];
+    thirdConfigStyle.selectedItemColor = [UIColor redColor];
+    thirdConfigStyle.normalItemColor = [UIColor blackColor];
     
-    YNPageScrollMenuView *style_3 = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, style_2.yn_bottom + 20, kSCREEN_WIDTH, 44) titles:@[@"QQ游戏", @"QQ邮箱", @"数码测色计"].mutableCopy configration:style_config_3 delegate:nil currentIndex:0];
-    
+    YNPageScrollMenuView *thirdStyle = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, secondStyle.yn_bottom + 20, kSCREEN_WIDTH, 44) titles:@[@"QQ游戏", @"QQ邮箱", @"数码测色计"].mutableCopy configration:thirdConfigStyle delegate:nil currentIndex:0];
     
     /// style 4
-    YNPageConfigration *style_config_4 = [YNPageConfigration defaultConfig];
-    style_config_4.converColor = [UIColor grayColor];
-    style_config_4.showConver = YES;
-    style_config_4.itemFont = [UIFont systemFontOfSize:14];
-    style_config_4.selectedItemColor = [UIColor redColor];
-    style_config_4.normalItemColor = [UIColor blackColor];
-    style_config_4.itemMaxScale = 1.3;
+    YNPageConfigration *fourthConfigStyle = [YNPageConfigration defaultConfig];
+    fourthConfigStyle.converColor = [UIColor grayColor];
+    fourthConfigStyle.showConver = YES;
+    fourthConfigStyle.itemFont = [UIFont systemFontOfSize:20];
+    fourthConfigStyle.selectedItemFont = [UIFont systemFontOfSize:20];
+    fourthConfigStyle.selectedItemColor = [UIColor redColor];
+    fourthConfigStyle.normalItemColor = [UIColor blackColor];
+    fourthConfigStyle.itemMaxScale = 1.3;
     
-    
-    YNPageScrollMenuView *style_4 = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, style_3.yn_bottom + 20, kSCREEN_WIDTH, 44) titles:@[@"QQ游戏", @"QQ邮箱", @"数码测色计"].mutableCopy configration:style_config_4 delegate:nil currentIndex:2];
+    YNPageScrollMenuView *fourthStyle = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, thirdStyle.yn_bottom + 20, kSCREEN_WIDTH, 44) titles:@[@"QQ游戏", @"QQ邮箱", @"数码测色计"].mutableCopy configration:fourthConfigStyle delegate:nil currentIndex:2];
     
     /// style 5
-    YNPageConfigration *style_config_5 = [YNPageConfigration defaultConfig];
-    style_config_5.selectedItemColor = [UIColor redColor];
-    style_config_5.selectedItemFont = [UIFont systemFontOfSize:15];
+    YNPageConfigration *fifthConfigStyle = [YNPageConfigration defaultConfig];
+    fifthConfigStyle.selectedItemColor = [UIColor redColor];
+    fifthConfigStyle.selectedItemFont = [UIFont systemFontOfSize:15];
     
-    YNPageScrollMenuView *style_5 = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, style_4.yn_bottom + 20, kSCREEN_WIDTH, 44) titles:@[@"JAVA", @"Object-C", @"JS"].mutableCopy configration:style_config_5 delegate:nil currentIndex:1];
+    YNPageScrollMenuView *fifthStyle = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, fourthStyle.yn_bottom + 20, kSCREEN_WIDTH, 44) titles:@[@"JAVA", @"Object-C", @"JS"].mutableCopy configration:fifthConfigStyle delegate:nil currentIndex:1];
     
     /// style 6
-    YNPageConfigration *style_config_6 = [YNPageConfigration defaultConfig];
-    style_config_6.scrollMenu = YES;
-    style_config_6.aligmentModeCenter = NO;
-    style_config_6.bottomLineHeight = 1;
-    style_config_6.bottomLineBgColor = [UIColor greenColor];
-    style_config_6.showBottomLine = YES;
-    YNPageScrollMenuView *style_6 = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, style_5.yn_bottom + 20, kSCREEN_WIDTH, 44) titles:@[@"JAVA", @"Object-C", @"JS"].mutableCopy configration:style_config_6 delegate:nil currentIndex:1];
+    YNPageConfigration *sixthConfigStyle = [YNPageConfigration defaultConfig];
+    sixthConfigStyle.scrollMenu = YES;
+    sixthConfigStyle.aligmentModeCenter = NO;
+    sixthConfigStyle.bottomLineHeight = 1;
+    sixthConfigStyle.bottomLineBgColor = [UIColor greenColor];
+    sixthConfigStyle.showBottomLine = YES;
+    YNPageScrollMenuView *sixthStyle = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, fifthStyle.yn_bottom + 20, kSCREEN_WIDTH, 44) titles:@[@"JAVA", @"Object-C", @"JS"].mutableCopy configration:sixthConfigStyle delegate:nil currentIndex:1];
     
     /// style 7
-    YNPageConfigration *style_config_7 = [YNPageConfigration defaultConfig];
-    style_config_7.scrollMenu = NO;
-    style_config_7.aligmentModeCenter = NO;
+    YNPageConfigration *seventhConfigStyle = [YNPageConfigration defaultConfig];
+    seventhConfigStyle.scrollMenu = NO;
+    seventhConfigStyle.aligmentModeCenter = NO;
     NSMutableArray *buttonArrayM = @[].mutableCopy;
     for (int i = 0; i < 3; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -96,22 +94,19 @@
         /// button.imageEdgeInsets = UIEdgeInsetsMake(0, 100, 0, 0);
         [buttonArrayM addObject:button];
     }
-    style_config_7.buttonArray = buttonArrayM;
+    seventhConfigStyle.buttonArray = buttonArrayM;
     
+    YNPageScrollMenuView *seventhStyle = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, sixthStyle.yn_bottom + 20, kSCREEN_WIDTH, 44) titles:@[@"带iCON", @"小图标", @"位置"].mutableCopy configration:seventhConfigStyle delegate:nil currentIndex:1];
     
-    YNPageScrollMenuView *style_7 = [YNPageScrollMenuView pagescrollMenuViewWithFrame:CGRectMake(0, style_6.yn_bottom + 20, kSCREEN_WIDTH, 44) titles:@[@"带iCON", @"小图标", @"位置"].mutableCopy configration:style_config_7 delegate:nil currentIndex:1];
-    
-    [_scrollView addSubview:style_1];
-    [_scrollView addSubview:style_2];
-    [_scrollView addSubview:style_3];
-    [_scrollView addSubview:style_4];
-    [_scrollView addSubview:style_5];
-    [_scrollView addSubview:style_6];
-    [_scrollView addSubview:style_7];
+    [_scrollView addSubview:firstStyle];
+    [_scrollView addSubview:secondStyle];
+    [_scrollView addSubview:thirdStyle];
+    [_scrollView addSubview:fourthStyle];
+    [_scrollView addSubview:fifthStyle];
+    [_scrollView addSubview:sixthStyle];
+    [_scrollView addSubview:seventhStyle];
     
     [self.view addSubview:_scrollView];
-    
 }
-
 
 @end

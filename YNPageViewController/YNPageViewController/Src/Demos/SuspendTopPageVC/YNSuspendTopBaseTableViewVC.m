@@ -21,7 +21,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     if (kOpenRefreshHeaderViewHeight) {
         if (self.tableView.mj_header.ignoredScrollViewContentInsetTop != self.yn_pageViewController.config.tempTopHeight) {
             [self addTableViewRefresh];
@@ -35,9 +34,7 @@
 
 /// 重写父类方法 添加 刷新方法
 - (void)addTableViewRefresh {
-    
     __weak typeof (self) weakSelf = self;
-    
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             if (kOpenRefreshHeaderViewHeight) {
@@ -60,7 +57,6 @@
 
 #pragma mark - 悬浮Top刷新高度方法
 - (void)suspendTopReloadHeaderViewHeight {
-    
     /// 布局高度
     CGFloat netWorkHeight = 900;
     __weak typeof (self) weakSelf = self;
@@ -74,8 +70,6 @@
             [weakSelf addTableViewRefresh];
         }
     }];
-    
 }
-
 
 @end

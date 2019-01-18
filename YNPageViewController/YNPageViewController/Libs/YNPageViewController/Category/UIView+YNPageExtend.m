@@ -9,6 +9,7 @@
 #import "UIView+YNPageExtend.h"
 
 @implementation UIView (YNPageExtend)
+
 - (void)setYn_x:(CGFloat)yn_x {
     CGRect frame = self.frame;
     frame.origin.x = yn_x;

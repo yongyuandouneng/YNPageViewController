@@ -18,14 +18,14 @@
 #import "YNSuspendCustomNavOrSuspendPositionVC.h"
 
 typedef NS_ENUM(NSInteger, YNVCType) {
-    YNVCTypeSuspendCenterPageVC = 1,
-    YNVCTypeSuspendTopPageVC = 2,
-    YNVCTypeTopPageVC = 3,
-    YNVCTypeSuspendTopPausePageVC = 4,
-    YNVCTypeSuspendCustomNavOrSuspendPosition = 5,
-    YNVCTypeNavPageVC = 6,
-    YNVCTypeScrollMenuStyleVC = 7,
-    YNVCTypeLoadPageVC = 8,
+    YNVCTypeSuspendCenterPageVC = 0,
+    YNVCTypeSuspendTopPageVC = 1,
+    YNVCTypeTopPageVC = 2,
+    YNVCTypeSuspendTopPausePageVC = 3,
+    YNVCTypeSuspendCustomNavOrSuspendPosition = 4,
+    YNVCTypeNavPageVC = 5,
+    YNVCTypeScrollMenuStyleVC = 6,
+    YNVCTypeLoadPageVC = 7,
     YNVCTypeYNTestPageVC = 100
 };
 
@@ -43,8 +43,9 @@ typedef NS_ENUM(NSInteger, YNVCType) {
     [super viewDidLoad];
     
     self.title = @"Demos";
+    
     [self.view addSubview:self.tableView];
-
+    
     self.dataArrayM = @[@{@"title" : @"悬浮样式--下拉刷新在顶部(QQ联系人样式)", @"type" :       @(YNVCTypeSuspendTopPausePageVC)},
                         @{@"title" : @"悬浮样式--下拉刷新在中间", @"type" : @(YNVCTypeSuspendCenterPageVC)},
                         @{@"title" : @"悬浮样式--下拉刷新在顶部", @"type" : @(YNVCTypeSuspendTopPageVC)},
@@ -57,48 +58,37 @@ typedef NS_ENUM(NSInteger, YNVCType) {
                         ].mutableCopy;
 }
 
-
 #pragma mark - UITableViewDelegate  UITableViewDataSource
-
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    
     return 0.00001;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
     return [UIView new];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    
     return 0.00001;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    
     return [UIView new];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
     return self.dataArrayM.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     return 55;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     static NSString *identifier = @"identifier";
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
@@ -108,9 +98,7 @@ typedef NS_ENUM(NSInteger, YNVCType) {
     }
     NSDictionary *dict = self.dataArrayM[indexPath.row];
     cell.textLabel.text = dict[@"title"];
-    
     return cell;
-    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -120,38 +108,31 @@ typedef NS_ENUM(NSInteger, YNVCType) {
     YNVCType type = [dict[@"type"] integerValue];
     UIViewController *vc = nil;
     switch (type) {
-        case YNVCTypeSuspendTopPageVC:
-        {
+        case YNVCTypeSuspendTopPageVC: {
             vc = [YNSuspendTopPageVC suspendTopPageVC] ;
         }
             break;
-        case YNVCTypeSuspendCenterPageVC:
-        {
+        case YNVCTypeSuspendCenterPageVC: {
             vc = [YNSuspendCenterPageVC suspendCenterPageVC];
         }
             break;
-        case YNVCTypeSuspendTopPausePageVC:
-        {
+        case YNVCTypeSuspendTopPausePageVC: {
             vc = [YNSuspendTopPausePageVC suspendTopPausePageVC];
         }
             break;
-        case YNVCTypeSuspendCustomNavOrSuspendPosition:
-        {
+        case YNVCTypeSuspendCustomNavOrSuspendPosition: {
             vc = [YNSuspendCustomNavOrSuspendPositionVC new];
         }
             break;
-        case YNVCTypeTopPageVC:
-        {
+        case YNVCTypeTopPageVC: {
             vc = [YNTopPageVC topPageVC];
         }
             break;
-        case YNVCTypeNavPageVC:
-        {
+        case YNVCTypeNavPageVC: {
             vc = [YNNavPageVC navPageVC];
         }
             break;
-        case YNVCTypeLoadPageVC:
-        {
+        case YNVCTypeLoadPageVC: {
             vc = [YNLoadPageVC new];
         }
             break;
@@ -159,8 +140,7 @@ typedef NS_ENUM(NSInteger, YNVCType) {
             vc = [YNScrollMenuStyleVC new];
         }
             break;
-        case YNVCTypeYNTestPageVC:
-        {
+        case YNVCTypeYNTestPageVC: {
             vc = [YNTestPageVC testPageVC];
         }
             break;
@@ -179,6 +159,5 @@ typedef NS_ENUM(NSInteger, YNVCType) {
     }
     return _tableView;
 }
-
 
 @end

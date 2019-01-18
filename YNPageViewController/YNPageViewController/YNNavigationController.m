@@ -46,7 +46,6 @@
         [backBtn sizeToFit];
         UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
         viewController.navigationItem.leftBarButtonItem = leftItem;
-        
         viewController.hidesBottomBarWhenPushed = YES;
     }
     
@@ -56,4 +55,5 @@
 - (void)backBtnClick {
     [self popViewControllerAnimated:YES];
 }
+
 @end

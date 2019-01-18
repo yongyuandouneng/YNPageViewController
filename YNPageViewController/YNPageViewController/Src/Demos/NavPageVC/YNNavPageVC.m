@@ -17,11 +17,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
 }
 
 + (instancetype)navPageVC {
-    
     YNPageConfigration *configration = [YNPageConfigration defaultConfig];
     configration.pageStyle = YNPageStyleNavigation;
     configration.headerViewCouldScale = YES;
@@ -44,19 +42,16 @@
     return vc;
 }
 
-
 + (NSArray *)getArrayVCs {
+    BaseTableViewVC *firstVC = [[BaseTableViewVC alloc] init];
+    firstVC.cellTitle = @"鞋子";
     
-    BaseTableViewVC *vc_1 = [[BaseTableViewVC alloc] init];
-    vc_1.cellTitle = @"鞋子";
+    BaseTableViewVC *secondVC = [[BaseTableViewVC alloc] init];
+    secondVC.cellTitle = @"衣服";
     
-    BaseTableViewVC *vc_2 = [[BaseTableViewVC alloc] init];
-    vc_2.cellTitle = @"衣服";
-    
-    BaseTableViewVC *vc_3 = [[BaseTableViewVC alloc] init];
-    vc_3.cellTitle = @"帽子";
-    
-    return @[vc_1, vc_2, vc_3];
+    BaseTableViewVC *thirdVC = [[BaseTableViewVC alloc] init];
+    thirdVC.cellTitle = @"帽子";
+    return @[firstVC, secondVC, thirdVC];
 }
 
 + (NSArray *)getArrayTitles {

@@ -13,7 +13,7 @@
 
 /// 开启刷新头部高度
 #define kOpenRefreshHeaderViewHeight 0
-
+/// cell高度
 #define kCellHeight 44
 
 @interface BaseTableViewVC () <UITableViewDataSource, UITableViewDelegate>
@@ -40,9 +40,6 @@
         [self.tableView reloadData];
     });
     [self addTableViewRefresh];
-    
-    
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -70,12 +67,9 @@
 
 /// 添加下拉刷新
 - (void)addTableViewRefresh {
-    
     __weak typeof (self) weakSelf = self;
-    
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            
             for (int i = 0; i < 3; i++) {
                 [weakSelf.dataArray addObject:@""];
             }
@@ -85,7 +79,6 @@
             } else {
                 [weakSelf.tableView.mj_header endRefreshing];
             }
-
         });
     }];
     
@@ -117,6 +110,7 @@
         }
     }];
 }
+
 #pragma mark - 求出占位cell高度
 - (CGFloat)placeHolderCellHeight {
     CGFloat height = self.config.contentHeight - kCellHeight * self.dataArray.count;
@@ -127,7 +121,6 @@
 #pragma mark - UITableViewDelegate  UITableViewDataSource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    
     return 15;
 }
 
@@ -138,27 +131,22 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    
     return 0.00001;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    
     return [UIView new];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
     return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
     return self.dataArray.count + 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     if (indexPath.row < self.dataArray.count) {
         return kCellHeight;
     }
@@ -166,7 +154,6 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"id"];
     if (indexPath.row < self.dataArray.count) {
         cell.textLabel.text = [NSString stringWithFormat:@"%@ section: %zd row:%zd", self.cellTitle ?: @"测试", indexPath.section, indexPath.row];

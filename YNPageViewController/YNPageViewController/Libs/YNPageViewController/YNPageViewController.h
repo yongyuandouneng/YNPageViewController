@@ -11,9 +11,9 @@
 #import "YNPageScrollMenuView.h"
 #import "YNPageScrollView.h"
 
-
 @class YNPageViewController;
 
+#pragma mark - YNPageViewControllerDelegate
 @protocol YNPageViewControllerDelegate <NSObject>
 @optional
 
@@ -75,6 +75,7 @@
 
 @end
 
+#pragma mark - YNPageViewControllerDataSource
 @protocol YNPageViewControllerDataSource <NSObject>
 @required
 
@@ -88,10 +89,7 @@
 - (__kindof UIScrollView *)pageViewController:(YNPageViewController *)pageViewController
                                  pageForIndex:(NSInteger )index;
 
-
 @optional
-
-
 /**
  取得ScrollView(列表)的高度 默认是控制器的高度 可用于自定义底部按钮(订单、确认按钮)等控件
  
@@ -104,6 +102,7 @@
 /**
  自定义缓存Key 如果不实现，则不允许相同的菜单栏title
  如果对页面进行了添加、删除、调整顺序、请一起调整传递进来的数据源，防止缓存Key取错
+ 
  @param pageViewController pageVC
  @param index pageIndex
  @return 唯一标识 (一般是后台ID)
@@ -114,6 +113,7 @@
 @end
 
 @interface YNPageViewController : UIViewController
+
 /// 配置信息
 @property (nonatomic, strong) YNPageConfigration *config;
 /// 控制器数组
@@ -174,6 +174,7 @@
 /**
  刷新数据页面、所有View、菜单栏、headerView - 默认移除缓存控制器
  刷新菜单栏配置 标题数组
+ 
  e.g: vc.config = ...
  vc.titlesM = [self getArrayTitles].mutableCopy;
  
@@ -185,12 +186,14 @@
 
 /**
  选中页码
+ 
  @param pageIndex 页面下标
  */
 - (void)setSelectedPageIndex:(NSInteger)pageIndex;
 
 /**
  更新菜单栏标题
+ 
  @param title 标题
  @param index index
  */
@@ -198,12 +201,14 @@
 
 /**
  更新全部菜单栏标题
+ 
  @param titles 标题数组
  */
 - (void)updateMenuItemTitles:(NSArray *)titles;
 
 /**
  批量插入控制器
+ 
  @param titles 标题数组
  @param controllers 控制器数组
  @param index 插入的下标
@@ -213,12 +218,14 @@
                                        index:(NSInteger)index;
 /**
  根据标题移除控制器
+ 
  @param title 标题
  */
 - (void)removePageControllerWithTitle:(NSString *)title;
 
 /**
  根据下标移除控制器
+ 
  @param index 下标
  */
 - (void)removePageControllerWithIndex:(NSInteger)index;
@@ -232,6 +239,7 @@
 
 /**
  * 刷新悬浮HeaderViewFrame
+ 
  * YNPageStyleSuspensionTop 样式 1.需要对刷新控件进行特殊处理 2.需要在下拉刷新完成时调用该方法
  * YNPageStyleSuspensionCenter 样式 1.需要在下拉刷新完成时调用该方法
  */
@@ -239,12 +247,14 @@
 
 /**
  滚动到顶部(置顶)
+ 
  @param animated 是否动画
  */
 - (void)scrollToTop:(BOOL)animated;
 
 /**
  滚动到某一位置
+ 
  @param point 点
  @param animated 是否动画
  */

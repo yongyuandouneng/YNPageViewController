@@ -18,14 +18,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 200)];
     headerView.backgroundColor = [UIColor greenColor];
-    
-//    self.tableView.tableHeaderView = headerView;
     [self.view addSubview:self.tableView];
-    
-//    [self addTableViewRefresh];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -49,9 +44,7 @@
 }
 
 - (void)addTableViewRefresh {
-    
     __weak typeof (self) weakSelf = self;
-//
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [weakSelf.tableView.mj_header endRefreshing];
@@ -63,63 +56,45 @@
             [weakSelf.tableView.mj_footer endRefreshing];
         });
     }];
-    
-//    self.tableView.mj_header.hidden = YES;
-    
-//    self.tableView.backgroundColor = [UIColor clearColor];
-//    self.tableView.mj_header.ignoredScrollViewContentInsetTop = 244;
-    
 }
 
 #pragma mark - UITableViewDelegate  UITableViewDataSource
-
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    
     return 0.00001;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
     return [UIView new];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    
     return 0.00001;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    
     return [UIView new];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
     return 5;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     return 44;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     static NSString *identifier = @"identifier";
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
     }
     cell.textLabel.text = [NSString stringWithFormat:@"测试 section: %zd row:%zd", indexPath.section, indexPath.row];
-    
     return cell;
-    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

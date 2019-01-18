@@ -27,16 +27,12 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
     [self.navigationController setNavigationBarHidden:YES animated:animated];
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
     [self.navigationController setNavigationBarHidden:NO animated:animated];
-    
 }
 
 - (void)viewDidLoad {
@@ -45,16 +41,12 @@
     _indicatorView.frame = CGRectMake(0, 0, 80, 80);
     _indicatorView.center = self.view.center;
     [_indicatorView startAnimating];
-    
     /// 模拟器请求
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
         [self setupPageVC];
-        
         [_indicatorView stopAnimating];
         [_indicatorView setHidden:YES];
     });
-    
     [self.view addSubview:_indicatorView];
 }
 
@@ -73,13 +65,12 @@
     /// 设置悬浮停顿偏移量
     configration.suspenOffsetY = kYNPAGE_NAVHEIGHT;
     
-    
     YNPageViewController *vc = [YNPageViewController pageViewControllerWithControllers:self.getArrayVCs
                                                                                 titles:[self getArrayTitles]
                                                                                 config:configration];
     vc.dataSource = self;
     vc.delegate = self;
-    /// 轮播图
+    
     SDCycleScrollView *autoScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 200) imageURLStringsGroup:self.imagesURLs];
     autoScrollView.delegate = self;
     
@@ -87,28 +78,24 @@
     /// 指定默认选择index 页面
     vc.pageIndex = 2;
     
-    
     /// 作为自控制器加入到当前控制器
     [vc addSelfToParentViewController:self];
     
     /// 如果隐藏了导航条可以 适当改y值
-//    pageVC.view.yn_y = kYNPAGE_NAVHEIGHT;
+    //    pageVC.view.yn_y = kYNPAGE_NAVHEIGHT;
     
     [self.view addSubview:self.navView];
-    
 }
 
 - (NSArray *)getArrayVCs {
+    BaseTableViewVC *firstVC = [[BaseTableViewVC alloc] init];
+    firstVC.cellTitle = @"鞋子";
     
-    BaseTableViewVC *vc_1 = [[BaseTableViewVC alloc] init];
-    vc_1.cellTitle = @"鞋子";
+    BaseTableViewVC *secondVC = [[BaseTableViewVC alloc] init];
+    secondVC.cellTitle = @"衣服";
     
-    BaseTableViewVC *vc_2 = [[BaseTableViewVC alloc] init];
-    vc_2.cellTitle = @"衣服";
-    
-    BaseCollectionViewVC *vc_3 = [[BaseCollectionViewVC alloc] init];
-    
-    return @[vc_1, vc_2, vc_3];
+    BaseCollectionViewVC *thirdVC = [[BaseCollectionViewVC alloc] init];
+    return @[firstVC, secondVC, thirdVC];
 }
 
 - (NSArray *)getArrayTitles {
@@ -123,8 +110,6 @@
     return _navView;
 }
 
-#pragma mark - Private Function
-
 #pragma mark - Getter and Setter
 - (NSArray *)imagesURLs {
     if (!_imagesURLs) {
@@ -135,6 +120,7 @@
     }
     return _imagesURLs;
 }
+
 #pragma mark - YNPageViewControllerDataSource
 - (UIScrollView *)pageViewController:(YNPageViewController *)pageViewController pageForIndex:(NSInteger)index {
     UIViewController *vc = pageViewController.controllersM[index];
@@ -144,21 +130,18 @@
         return [(BaseCollectionViewVC *)vc collectionView];
     }
 }
+
 #pragma mark - YNPageViewControllerDelegate
 - (void)pageViewController:(YNPageViewController *)pageViewController
             contentOffsetY:(CGFloat)contentOffset
                   progress:(CGFloat)progress {
     NSLog(@"--- contentOffset = %f, progress = %f", contentOffset, progress);
-    
     self.navView.backgroundColor = RGBA(246, 246, 246, progress);
-    
 }
-
 
 #pragma mark - SDCycleScrollViewDelegate
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
     NSLog(@"----click 轮播图 index %ld", index);
 }
-
 
 @end

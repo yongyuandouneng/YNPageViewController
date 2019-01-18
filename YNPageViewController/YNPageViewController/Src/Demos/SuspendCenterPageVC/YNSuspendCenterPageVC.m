@@ -24,20 +24,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 }
-#pragma mark - Event Response
-
-#pragma mark - --Notification Event Response
-
-#pragma mark - --Button Event Response
-
-#pragma mark - --Gesture Event Response
-
-#pragma mark - System Delegate
-
-#pragma mark - Custom Delegate
 
 #pragma mark - Public Function
-
 + (instancetype)suspendCenterPageVC {
     YNPageConfigration *configration = [YNPageConfigration defaultConfig];
     configration.pageStyle = YNPageStyleSuspensionCenter;
@@ -50,39 +38,34 @@
     configration.aligmentModeCenter = NO;
     configration.lineWidthEqualFontWidth = true;
     configration.showBottomLine = YES;
-    
     return [self suspendCenterPageVCWithConfig:configration];
 }
 
 + (instancetype)suspendCenterPageVCWithConfig:(YNPageConfigration *)config {
-    
     YNSuspendCenterPageVC *vc = [YNSuspendCenterPageVC pageViewControllerWithControllers:[self getArrayVCs]
                                                                                   titles:[self getArrayTitles]
                                                                                   config:config];
     vc.dataSource = vc;
     vc.delegate = vc;
-    /// 轮播图
+    
     SDCycleScrollView *autoScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 200) imageURLStringsGroup:vc.imagesURLs];
     autoScrollView.delegate = vc;
     
     vc.headerView = autoScrollView;
     /// 指定默认选择index 页面
     vc.pageIndex = 2;
-    
     return vc;
 }
 
 + (NSArray *)getArrayVCs {
+    BaseTableViewVC *firstVC = [[BaseTableViewVC alloc] init];
+    firstVC.cellTitle = @"鞋子";
     
-    BaseTableViewVC *vc_1 = [[BaseTableViewVC alloc] init];
-    vc_1.cellTitle = @"鞋子";
+    BaseTableViewVC *secondVC = [[BaseTableViewVC alloc] init];
+    secondVC.cellTitle = @"衣服";
     
-    BaseTableViewVC *vc_2 = [[BaseTableViewVC alloc] init];
-    vc_2.cellTitle = @"衣服";
-    
-    BaseCollectionViewVC *vc_3 = [[BaseCollectionViewVC alloc] init];
-    
-    return @[vc_1, vc_2, vc_3];
+    BaseCollectionViewVC *thirdVC = [[BaseCollectionViewVC alloc] init];
+    return @[firstVC, secondVC, thirdVC];
 }
 
 + (NSArray *)getArrayTitles {
@@ -122,10 +105,10 @@
 - (void)pageViewController:(YNPageViewController *)pageViewController
             contentOffsetY:(CGFloat)contentOffset
                   progress:(CGFloat)progress {
-//        NSLog(@"--- contentOffset = %f,    progress = %f", contentOffset, progress);
+    //        NSLog(@"--- contentOffset = %f,    progress = %f", contentOffset, progress);
 }
 
-///// 返回列表的高度 默认是控制器的高度大小
+/// 返回列表的高度 默认是控制器的高度大小
 //- (CGFloat)pageViewController:(YNPageViewController *)pageViewController heightForScrollViewAtIndex:(NSInteger)index {
 //    return 400;
 //}
