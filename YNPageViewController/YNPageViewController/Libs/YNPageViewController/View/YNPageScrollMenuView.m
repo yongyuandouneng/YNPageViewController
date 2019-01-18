@@ -206,7 +206,6 @@
 }
 
 - (void)setDefaultTheme {
-    
     UIButton *currentButton = self.itemsArrayM[self.currentIndex];
     /// 缩放
     if (self.configration.itemMaxScale > 1) {
@@ -294,7 +293,6 @@
 }
 
 #pragma mark - Public Method
-
 - (void)updateTitle:(NSString *)title index:(NSInteger)index {
     if (index < 0 || index > self.titles.count - 1) return;
     if (title.length == 0) return;
@@ -429,7 +427,6 @@
 }
 
 #pragma mark - Lazy Method
-
 - (UIView *)lineView {
     if (!_lineView) {
         _lineView = [[UIView alloc]init];
@@ -476,7 +473,6 @@
 }
 
 #pragma mark - itemButtonTapOnClick
-
 - (void)itemButtonOnClick:(UIButton *)button {
     self.currentIndex= button.tag;
     [self adjustItemWithAnimated:YES];
@@ -493,7 +489,7 @@
     for (UIView *view in self.scrollView.subviews) {
         [view removeFromSuperview];
     }
-    
+
     [self.itemsArrayM removeAllObjects];
     [self.itemsWidthArraM removeAllObjects];
     [self setupSubViews];

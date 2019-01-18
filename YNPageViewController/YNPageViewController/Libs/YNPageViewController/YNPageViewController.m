@@ -64,7 +64,6 @@
 }
 
 #pragma mark - Initialize Method
-
 /**
  初始化方法
  @param controllers 子控制器
@@ -74,7 +73,6 @@
 + (instancetype)pageViewControllerWithControllers:(NSArray *)controllers
                                            titles:(NSArray *)titles
                                            config:(YNPageConfigration *)config {
-    
     return [[self alloc] initPageViewControllerWithControllers:controllers
                                                         titles:titles
                                                         config:config];
@@ -112,7 +110,6 @@
 
 #pragma mark - 初始化PageScrollMenu
 - (void)initPagescrollMenuViewWithFrame:(CGRect)frame {
-    
     YNPageScrollMenuView *scrollMenuView = [YNPageScrollMenuView pagescrollMenuViewWithFrame:frame
                                                                                       titles:self.titlesM
                                                                                 configration:self.config
@@ -621,7 +618,6 @@
 }
 
 #pragma mark - Private Method
-
 - (void)initData {
     [self checkParams];
     
@@ -948,7 +944,6 @@
 }
 
 #pragma mark - Lazy Method
-
 - (YNPageScrollView *)bgScrollView {
     if (!_bgScrollView) {
         _bgScrollView = [[YNPageScrollView alloc] init];
