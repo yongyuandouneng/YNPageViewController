@@ -89,7 +89,7 @@
 		2E89D018208C569700D038D6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E89D016208C569700D038D6 /* LaunchScreen.storyboard */; };
 		2E89D01B208C569700D038D6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E89D01A208C569700D038D6 /* main.m */; };
 		2E89D02E208C5A1100D038D6 /* YNPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E89D02D208C5A1100D038D6 /* YNPageViewController.m */; };
-		2E89D031208C5AFE00D038D6 /* YNPageConfigration.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E89D030208C5AFE00D038D6 /* YNPageConfigration.m */; };
+		2E89D031208C5AFE00D038D6 /* YNPageConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E89D030208C5AFE00D038D6 /* YNPageConfiguration.m */; };
 		2EFDC1D520E0E9B10018455F /* YNScrollMenuStyleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EFDC1D420E0E9B10018455F /* YNScrollMenuStyleVC.m */; };
 		2EFDC1D920E213440018455F /* YNLoadPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EFDC1D820E213440018455F /* YNLoadPageVC.m */; };
 		2EFDC1DC20E2156E0018455F /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EFDC1DB20E2156E0018455F /* BaseViewController.m */; };
@@ -261,8 +261,8 @@
 		2E89D01A208C569700D038D6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2E89D02C208C5A1100D038D6 /* YNPageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YNPageViewController.h; sourceTree = "<group>"; };
 		2E89D02D208C5A1100D038D6 /* YNPageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YNPageViewController.m; sourceTree = "<group>"; };
-		2E89D02F208C5AFE00D038D6 /* YNPageConfigration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YNPageConfigration.h; sourceTree = "<group>"; };
-		2E89D030208C5AFE00D038D6 /* YNPageConfigration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YNPageConfigration.m; sourceTree = "<group>"; };
+		2E89D02F208C5AFE00D038D6 /* YNPageConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YNPageConfiguration.h; sourceTree = "<group>"; };
+		2E89D030208C5AFE00D038D6 /* YNPageConfiguration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YNPageConfiguration.m; sourceTree = "<group>"; };
 		2EFDC1D320E0E9B10018455F /* YNScrollMenuStyleVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YNScrollMenuStyleVC.h; sourceTree = "<group>"; };
 		2EFDC1D420E0E9B10018455F /* YNScrollMenuStyleVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YNScrollMenuStyleVC.m; sourceTree = "<group>"; };
 		2EFDC1D720E213440018455F /* YNLoadPageVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YNLoadPageVC.h; sourceTree = "<group>"; };
@@ -702,8 +702,8 @@
 				2E3F8DCE20F9FA6A009FDA84 /* View */,
 				2E89D02C208C5A1100D038D6 /* YNPageViewController.h */,
 				2E89D02D208C5A1100D038D6 /* YNPageViewController.m */,
-				2E89D02F208C5AFE00D038D6 /* YNPageConfigration.h */,
-				2E89D030208C5AFE00D038D6 /* YNPageConfigration.m */,
+				2E89D02F208C5AFE00D038D6 /* YNPageConfiguration.h */,
+				2E89D030208C5AFE00D038D6 /* YNPageConfiguration.m */,
 			);
 			path = YNPageViewController;
 			sourceTree = "<group>";
@@ -752,7 +752,7 @@
 		2E89D000208C569700D038D6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = yongneng;
 				TargetAttributes = {
 					2E89D007208C569700D038D6 = {
@@ -808,7 +808,7 @@
 				2E5F7E8520DCA5860069962B /* SDCycleScrollView.m in Sources */,
 				2E7FFF6021F16E2A00F29750 /* UITouch+MemoryLeak.m in Sources */,
 				2E5F7E8720DCA5860069962B /* NSData+ImageContentType.m in Sources */,
-				2E89D031208C5AFE00D038D6 /* YNPageConfigration.m in Sources */,
+				2E89D031208C5AFE00D038D6 /* YNPageConfiguration.m in Sources */,
 				2E5F7EA020DCAC840069962B /* YNSuspendCenterPageVC.m in Sources */,
 				2E5F7E7220DCA5860069962B /* MJRefreshAutoNormalFooter.m in Sources */,
 				2E5F7E6F20DCA5860069962B /* MJRefreshFooter.m in Sources */,
@@ -919,6 +919,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -926,8 +927,10 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -974,6 +977,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -981,8 +985,10 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;

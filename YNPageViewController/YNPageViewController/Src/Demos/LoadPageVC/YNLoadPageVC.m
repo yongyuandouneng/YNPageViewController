@@ -48,29 +48,29 @@
     /// 模拟器请求
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self setupPageVC];
-        [_indicatorView stopAnimating];
-        [_indicatorView setHidden:YES];
+        [self->_indicatorView stopAnimating];
+        [self->_indicatorView setHidden:YES];
     });
     [self.view addSubview:_indicatorView];
 }
 
 - (void)setupPageVC {
-    YNPageConfigration *configration = [YNPageConfigration defaultConfig];
-    configration.pageStyle = YNPageStyleSuspensionCenter;
-    configration.headerViewCouldScale = YES;
-    //    configration.headerViewScaleMode = YNPageHeaderViewScaleModeCenter;
-    configration.headerViewScaleMode = YNPageHeaderViewScaleModeTop;
+    YNPageConfiguration *configuration = [YNPageConfiguration defaultConfig];
+    configuration.pageStyle = YNPageStyleSuspensionCenter;
+    configuration.headerViewCouldScale = YES;
+    //    configuration.headerViewScaleMode = YNPageHeaderViewScaleModeCenter;
+    configuration.headerViewScaleMode = YNPageHeaderViewScaleModeTop;
     /// 控制tabbar 和 nav
-    configration.showTabbar = NO;
-    configration.showNavigation = NO;
-    configration.scrollMenu = NO;
-    configration.aligmentModeCenter = NO;
-    configration.lineWidthEqualFontWidth = NO;
-    configration.showBottomLine = YES;
-    configration.suspenOffsetY = 64;
+    configuration.showTabBar = NO;
+    configuration.showNavigation = NO;
+    configuration.scrollMenu = NO;
+    configuration.alignmentModeCenter = NO;
+    configuration.lineWidthEqualFontWidth = NO;
+    configuration.showBottomLine = YES;
+    configuration.suspendOffsetY = 64;
     /// 裁剪高度
-    configration.cutOutHeight = 44;
-    YNSuspendCenterPageVC *pageVC = [YNSuspendCenterPageVC suspendCenterPageVCWithConfig:configration];
+    configuration.cutOutHeight = 44;
+    YNSuspendCenterPageVC *pageVC = [YNSuspendCenterPageVC suspendCenterPageVCWithConfig:configuration];
     
     /// 作为自控制器加入到当前控制器
     [pageVC addSelfToParentViewController:self];

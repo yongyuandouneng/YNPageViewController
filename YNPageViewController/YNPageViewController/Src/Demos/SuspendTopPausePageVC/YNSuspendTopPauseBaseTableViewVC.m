@@ -31,7 +31,7 @@
     /// 加载数据
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         for (int i = 0; i < 420; i++) {
-            [_dataArray addObject:@""];
+            [self->_dataArray addObject:@""];
         }
         [self.tableView reloadData];
     });

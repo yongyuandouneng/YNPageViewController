@@ -10,7 +10,7 @@
 
 typedef void(^YNPageScrollViewDidScrollView)(UIScrollView *scrollView);
 
-typedef void(^YNPageScrollViewBeginDragginScrollView)(UIScrollView *scrollView);
+typedef void(^YNPageScrollViewBeginDraggingScrollView)(UIScrollView *scrollView);
 
 @interface UIScrollView (YNPageExtend)
 
@@ -18,7 +18,7 @@ typedef void(^YNPageScrollViewBeginDragginScrollView)(UIScrollView *scrollView);
 
 @property (nonatomic, copy) YNPageScrollViewDidScrollView yn_pageScrollViewDidScrollView;
 
-@property (nonatomic, copy) YNPageScrollViewBeginDragginScrollView yn_pageScrollViewBeginDragginScrollView;
+@property (nonatomic, copy) YNPageScrollViewBeginDraggingScrollView yn_pageScrollViewBeginDraggingScrollView;
 
 - (void)yn_setContentOffsetY:(CGFloat)offsetY;
 

@@ -8,15 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@class YNPageConfigration;
+@class YNPageConfiguration;
 
 @protocol YNPageScrollMenuViewDelegate <NSObject>
 @optional
 /// 点击item
-- (void)pagescrollMenuViewItemOnClick:(UIButton *)button index:(NSInteger)index;
+- (void)pageScrollMenuViewItemOnClick:(UIButton *)button index:(NSInteger)index;
 
 /// 点击Add按钮
-- (void)pagescrollMenuViewAddButtonAction:(UIButton *)button;
+- (void)pageScrollMenuViewAddButtonAction:(UIButton *)button;
 
 @end
 
@@ -36,13 +36,13 @@
 
  @param frame 大小
  @param titles 标题
- @param configration 配置信息
+ @param configuration 配置信息
  @param delegate 代理
  @param currentIndex 当前选中下标
  */
-+ (instancetype)pagescrollMenuViewWithFrame:(CGRect)frame
++ (instancetype)pageScrollMenuViewWithFrame:(CGRect)frame
                                      titles:(NSMutableArray *)titles
-                               configration:(YNPageConfigration *)configration
+                               configuration:(YNPageConfiguration *)configuration
                                    delegate:(id<YNPageScrollMenuViewDelegate>)delegate
                                currentIndex:(NSInteger)currentIndex;
 

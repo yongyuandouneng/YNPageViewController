@@ -40,13 +40,13 @@
 #pragma mark - Public Function
 
 + (instancetype)suspendTopPausePageVC {
-    YNPageConfigration *configration = [YNPageConfigration defaultConfig];
+    YNPageConfiguration *configration = [YNPageConfiguration defaultConfig];
     configration.pageStyle = YNPageStyleSuspensionTopPause;
     configration.headerViewCouldScale = YES;
-    configration.showTabbar = NO;
+    configration.showTabBar = NO;
     configration.showNavigation = YES;
     configration.scrollMenu = NO;
-    configration.aligmentModeCenter = NO;
+    configration.alignmentModeCenter = NO;
     configration.lineWidthEqualFontWidth = NO;
     configration.showBottomLine = YES;
     

@@ -150,7 +150,7 @@ typedef NS_ENUM(NSUInteger, FTPopOverMenuArrowDirection) {
                             if (configuration.ignoreImageOriginalColor) {
                                 image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
                             }
-                            _iconImageView.image = image;
+            self->_iconImageView.image = image;
                         }];
         [self.contentView addSubview:self.iconImageView];
     }
@@ -166,7 +166,7 @@ typedef NS_ENUM(NSUInteger, FTPopOverMenuArrowDirection) {
  get image from local or remote
  
  @param resource image reource
- @param doneBlock get image back
+ @param completion get image back
  */
 -(void)getImageWithResource:(id)resource completion:(void (^)(UIImage *image))completion
 {
@@ -181,7 +181,7 @@ typedef NS_ENUM(NSUInteger, FTPopOverMenuArrowDirection) {
     }else if ([resource isKindOfClass:[NSURL class]]) {
         [self downloadImageWithURL:resource completion:completion];
     }else{
-        NSLog(@"Image resource not recougnized.");
+        NSLog(@"Image resource not recognized.");
         completion(nil);
     }
 }
@@ -190,7 +190,7 @@ typedef NS_ENUM(NSUInteger, FTPopOverMenuArrowDirection) {
  download image if needed, cache image into disk if needed.
  
  @param url imageURL
- @param doneBlock get image back
+ @param completion get image back
  */
 -(void)downloadImageWithURL:(NSURL *)url completion:(void (^)(UIImage *image))completion
 {
@@ -224,7 +224,7 @@ typedef NS_ENUM(NSUInteger, FTPopOverMenuArrowDirection) {
 }
 
 /**
- get local disk cash filePath for imageurl
+ get local disk cash filePath for image url
  
  @param url imageURL
  @return filePath
@@ -765,8 +765,8 @@ typedef NS_ENUM(NSUInteger, FTPopOverMenuArrowDirection) {
     self.isCurrentlyOnScreen = YES;
     [UIView animateWithDuration:FTDefaultAnimationDuration
                      animations:^{
-                         _popMenuView.alpha = 1;
-                         _popMenuView.transform = CGAffineTransformMakeScale(1, 1);
+                        self->_popMenuView.alpha = 1;
+                        self->_popMenuView.transform = CGAffineTransformMakeScale(1, 1);
                      }];
 }
 
@@ -784,8 +784,8 @@ typedef NS_ENUM(NSUInteger, FTPopOverMenuArrowDirection) {
 {
     [UIView animateWithDuration:FTDefaultAnimationDuration
                      animations:^{
-                         _popMenuView.alpha = 0;
-                         _popMenuView.transform = CGAffineTransformMakeScale(0.1, 0.1);
+                        self->_popMenuView.alpha = 0;
+                        self->_popMenuView.transform = CGAffineTransformMakeScale(0.1, 0.1);
                      }completion:^(BOOL finished) {
                          if (finished) {
                              [self.popMenuView removeFromSuperview];

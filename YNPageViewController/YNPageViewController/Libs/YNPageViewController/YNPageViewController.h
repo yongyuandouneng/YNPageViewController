@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "YNPageConfigration.h"
+#import "YNPageConfiguration.h"
 #import "YNPageScrollMenuView.h"
 #import "YNPageScrollView.h"
 
@@ -115,7 +115,7 @@
 @interface YNPageViewController : UIViewController
 
 /// 配置信息
-@property (nonatomic, strong) YNPageConfigration *config;
+@property (nonatomic, strong) YNPageConfiguration *config;
 /// 控制器数组
 @property (nonatomic, strong) NSMutableArray<__kindof UIViewController *> *controllersM;
 /// 标题数组 默认 缓存 key 为 title 可通过数据源代理 进行替换
@@ -149,7 +149,7 @@
  */
 + (instancetype)pageViewControllerWithControllers:(NSArray *)controllers
                                            titles:(NSArray *)titles
-                                           config:(YNPageConfigration *)config;
+                                           config:(YNPageConfiguration *)config;
 /**
  初始化方法
  @param controllers 子控制器
@@ -158,13 +158,13 @@
  */
 - (instancetype)initPageViewControllerWithControllers:(NSArray *)controllers
                                                titles:(NSArray *)titles
-                                               config:(YNPageConfigration *)config;
+                                               config:(YNPageConfiguration *)config;
 
 /**
  *  当前PageScrollViewVC作为子控制器
- *  @param parentViewControler 父类控制器
+ *  @param parentViewController 父类控制器
  */
-- (void)addSelfToParentViewController:(UIViewController *)parentViewControler;
+- (void)addSelfToParentViewController:(UIViewController *)parentViewController;
 
 /**
  *  从父类控制器里面移除自己（PageScrollViewVC）

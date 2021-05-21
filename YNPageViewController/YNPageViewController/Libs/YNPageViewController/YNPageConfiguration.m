@@ -6,10 +6,10 @@
 //  Copyright © 2018年 yongneng. All rights reserved.
 //
 
-#import "YNPageConfigration.h"
+#import "YNPageConfiguration.h"
 #import "UIView+YNPageExtend.h"
 
-@interface YNPageConfigration ()
+@interface YNPageConfiguration ()
 
 @property (nonatomic, strong) NSArray *normalColorArrays;
 
@@ -19,22 +19,22 @@
 
 @end
 
-@implementation YNPageConfigration
+@implementation YNPageConfiguration
 
 - (instancetype)init {
     self = [super init];
     if (self) {
         _showNavigation = YES;
-        _showTabbar = NO;
+        _showTabBar = NO;
         _pageStyle = YNPageStyleTop;
-        _showConver = NO;
+        _showCover = NO;
         _showScrollLine = YES;
         _showBottomLine = NO;
         _showGradientColor =YES;
         _showAddButton = NO;
         _scrollMenu = YES;
         _bounces = YES;
-        _aligmentModeCenter = YES;
+        _alignmentModeCenter = YES;
         _lineWidthEqualFontWidth = NO;
         
         _pageScrollEnabled = YES;
@@ -42,14 +42,14 @@
         _headerViewCouldScale = NO;
         
         _lineColor = [UIColor redColor];
-        _converColor = [UIColor groupTableViewBackgroundColor];
+        _coverColor = [UIColor groupTableViewBackgroundColor];
         _addButtonBackgroundColor = [UIColor whiteColor];
         _bottomLineBgColor = [UIColor greenColor];
         _scrollViewBackgroundColor = [UIColor whiteColor];
         _normalItemColor = [UIColor grayColor];
         _selectedItemColor = [UIColor greenColor];
         _lineHeight = 2;
-        _converHeight = 28;
+        _coverHeight = 28;
         
         _menuHeight = 44;
         _menuWidth = kYNPAGE_SCREEN_WIDTH;

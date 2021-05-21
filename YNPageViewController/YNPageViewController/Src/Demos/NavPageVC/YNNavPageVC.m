@@ -20,14 +20,14 @@
 }
 
 + (instancetype)navPageVC {
-    YNPageConfigration *configration = [YNPageConfigration defaultConfig];
+    YNPageConfiguration *configration = [YNPageConfiguration defaultConfig];
     configration.pageStyle = YNPageStyleNavigation;
     configration.headerViewCouldScale = YES;
     configration.headerViewScaleMode = YNPageHeaderViewScaleModeTop;
-    configration.showTabbar = NO;
+    configration.showTabBar = NO;
     configration.showNavigation = YES;
     configration.scrollMenu = NO;
-    configration.aligmentModeCenter = NO;
+    configration.alignmentModeCenter = NO;
     configration.lineWidthEqualFontWidth = NO;
     configration.showBottomLine = YES;
     /// 设置菜单栏宽度

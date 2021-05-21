@@ -44,30 +44,30 @@
     /// 模拟器请求
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self setupPageVC];
-        [_indicatorView stopAnimating];
-        [_indicatorView setHidden:YES];
+        [self->_indicatorView stopAnimating];
+        [self->_indicatorView setHidden:YES];
     });
     [self.view addSubview:_indicatorView];
 }
 
 - (void)setupPageVC {
     
-    YNPageConfigration *configration = [YNPageConfigration defaultConfig];
-    configration.pageStyle = YNPageStyleSuspensionCenter;
-    configration.headerViewCouldScale = YES;
+    YNPageConfiguration *configuration = [YNPageConfiguration defaultConfig];
+    configuration.pageStyle = YNPageStyleSuspensionCenter;
+    configuration.headerViewCouldScale = YES;
     /// 控制tabbar 和 nav
-    configration.showTabbar = NO;
-    configration.showNavigation = NO;
-    configration.scrollMenu = NO;
-    configration.aligmentModeCenter = NO;
-    configration.lineWidthEqualFontWidth = NO;
-    configration.showBottomLine = YES;
+    configuration.showTabBar = NO;
+    configuration.showNavigation = NO;
+    configuration.scrollMenu = NO;
+    configuration.alignmentModeCenter = NO;
+    configuration.lineWidthEqualFontWidth = NO;
+    configuration.showBottomLine = YES;
     /// 设置悬浮停顿偏移量
-    configration.suspenOffsetY = kYNPAGE_NAVHEIGHT;
+    configuration.suspendOffsetY = kYNPAGE_NAVHEIGHT;
     
     YNPageViewController *vc = [YNPageViewController pageViewControllerWithControllers:self.getArrayVCs
                                                                                 titles:[self getArrayTitles]
-                                                                                config:configration];
+                                                                                config:configuration];
     vc.dataSource = self;
     vc.delegate = self;
     

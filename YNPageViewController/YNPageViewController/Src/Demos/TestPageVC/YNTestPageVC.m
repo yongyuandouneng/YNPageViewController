@@ -44,17 +44,17 @@
 
 #pragma mark - Public Function
 + (instancetype)testPageVC {
-    YNPageConfigration *configration = [YNPageConfigration defaultConfig];
+    YNPageConfiguration *configration = [YNPageConfiguration defaultConfig];
     configration.pageStyle = YNPageStyleSuspensionTopPause;
     //    configration.pageStyle = YNPageStyleNavigation;
     //    configration.pageStyle = YNPageStyleTop;
     configration.headerViewCouldScale = YES;
     //    configration.headerViewScaleMode = YNPageHeaderViewScaleModeCenter;
     configration.headerViewScaleMode = YNPageHeaderViewScaleModeTop;
-    configration.showTabbar = NO;
+    configration.showTabBar = NO;
     configration.showNavigation = YES;
     configration.scrollMenu = NO;
-    configration.aligmentModeCenter = NO;
+    configration.alignmentModeCenter = NO;
     configration.lineWidthEqualFontWidth = NO;
     //    configration.menuWidth = 250;
     
