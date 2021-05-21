@@ -7,12 +7,12 @@
 //
 
 #import "BasePageViewController.h"
-#import "YNPageConfigration.h"
+#import "YNPageConfiguration.h"
 
 @interface YNSuspendCenterPageVC : BasePageViewController
 
 + (instancetype)suspendCenterPageVC;
 
-+ (instancetype)suspendCenterPageVCWithConfig:(YNPageConfigration *)config;
++ (instancetype)suspendCenterPageVCWithConfig:(YNPageConfiguration *)config;
 
 @end

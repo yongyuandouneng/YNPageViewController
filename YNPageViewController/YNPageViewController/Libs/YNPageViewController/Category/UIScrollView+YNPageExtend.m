@@ -28,8 +28,8 @@
 
 - (void)yn_scrollViewWillBeginDragging {
     [self yn_scrollViewWillBeginDragging];
-    if (self.yn_observerDidScrollView && self.yn_pageScrollViewBeginDragginScrollView) {
-        self.yn_pageScrollViewBeginDragginScrollView(self);
+    if (self.yn_observerDidScrollView && self.yn_pageScrollViewBeginDraggingScrollView) {
+        self.yn_pageScrollViewBeginDraggingScrollView(self);
     }
 }
 
@@ -51,12 +51,12 @@
     objc_setAssociatedObject(self, @selector(yn_pageScrollViewDidScrollView), yn_pageScrollViewDidScrollView, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-- (YNPageScrollViewBeginDragginScrollView)yn_pageScrollViewBeginDragginScrollView {
+- (YNPageScrollViewBeginDraggingScrollView)yn_pageScrollViewBeginDraggingScrollView {
     return objc_getAssociatedObject(self, _cmd);
 }
 
-- (void)setYn_pageScrollViewBeginDragginScrollView:(YNPageScrollViewBeginDragginScrollView)yn_pageScrollViewBeginDragginScrollView {
-    objc_setAssociatedObject(self, @selector(yn_pageScrollViewBeginDragginScrollView), yn_pageScrollViewBeginDragginScrollView, OBJC_ASSOCIATION_COPY_NONATOMIC);
+- (void)setYn_pageScrollViewBeginDraggingScrollView:(YNPageScrollViewBeginDraggingScrollView)yn_pageScrollViewBeginDraggingScrollView {
+    objc_setAssociatedObject(self, @selector(yn_pageScrollViewBeginDraggingScrollView), yn_pageScrollViewBeginDraggingScrollView, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 #pragma amrk - Swizzle

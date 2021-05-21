@@ -27,21 +27,21 @@
 
 #pragma mark - Public Function
 + (instancetype)suspendCenterPageVC {
-    YNPageConfigration *configration = [YNPageConfigration defaultConfig];
+    YNPageConfiguration *configration = [YNPageConfiguration defaultConfig];
     configration.pageStyle = YNPageStyleSuspensionCenter;
     configration.headerViewCouldScale = YES;
     //    configration.headerViewScaleMode = YNPageHeaderViewScaleModeCenter;
     configration.headerViewScaleMode = YNPageHeaderViewScaleModeTop;
-    configration.showTabbar = NO;
+    configration.showTabBar = NO;
     configration.showNavigation = YES;
     configration.scrollMenu = NO;
-    configration.aligmentModeCenter = NO;
+    configration.alignmentModeCenter = NO;
     configration.lineWidthEqualFontWidth = true;
     configration.showBottomLine = YES;
     return [self suspendCenterPageVCWithConfig:configration];
 }
 
-+ (instancetype)suspendCenterPageVCWithConfig:(YNPageConfigration *)config {
++ (instancetype)suspendCenterPageVCWithConfig:(YNPageConfiguration *)config {
     YNSuspendCenterPageVC *vc = [YNSuspendCenterPageVC pageViewControllerWithControllers:[self getArrayVCs]
                                                                                   titles:[self getArrayTitles]
                                                                                   config:config];

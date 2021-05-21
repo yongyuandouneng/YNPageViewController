@@ -7,26 +7,26 @@
 //
 
 #import "YNPageScrollMenuView.h"
-#import "YNPageConfigration.h"
+#import "YNPageConfiguration.h"
 #import "YNPageScrollView.h"
 #import "UIView+YNPageExtend.h"
 
-#define kYNPageScrollMenuViewConverMarginX 5
+#define kYNPageScrollMenuViewCoverMarginX 5
 
-#define kYNPageScrollMenuViewConverMarginW 10
+#define kYNPageScrollMenuViewCoverMarginW 10
 
 @interface YNPageScrollMenuView ()
 
 /// line指示器
 @property (nonatomic, strong) UIView *lineView;
 /// 蒙层
-@property (nonatomic, strong) UIView *converView;
+@property (nonatomic, strong) UIView *coverView;
 /// ScrollView
 @property (nonatomic, strong) YNPageScrollView *scrollView;
 /// 底部线条
 @property (nonatomic, strong) UIView *bottomLine;
 /// 配置信息
-@property (nonatomic, strong) YNPageConfigration *configration;
+@property (nonatomic, strong) YNPageConfiguration *configuration;
 /// 代理
 @property (nonatomic, weak) id<YNPageScrollMenuViewDelegate> delegate;
 /// 上次index
@@ -44,18 +44,18 @@
 
 #pragma mark - Init Method
 
-+ (instancetype)pagescrollMenuViewWithFrame:(CGRect)frame
++ (instancetype)pageScrollMenuViewWithFrame:(CGRect)frame
                                      titles:(NSMutableArray *)titles
-                               configration:(YNPageConfigration *)configration
+                               configuration:(YNPageConfiguration *)configuration
                                    delegate:(id<YNPageScrollMenuViewDelegate>)delegate
                                currentIndex:(NSInteger)currentIndex {
-    frame.size.height = configration.menuHeight;
-    frame.size.width = configration.menuWidth;
+    frame.size.height = configuration.menuHeight;
+    frame.size.width = configuration.menuWidth;
     
     YNPageScrollMenuView *menuView = [[YNPageScrollMenuView alloc] initWithFrame:frame];
     menuView.titles = titles;
     menuView.delegate = delegate;
-    menuView.configration = configration ?: [YNPageConfigration defaultConfig];
+    menuView.configuration = configuration ?: [YNPageConfiguration defaultConfig];
     menuView.currentIndex = currentIndex;
     menuView.itemsArrayM = @[].mutableCopy;
     menuView.itemsWidthArraM = @[].mutableCopy;
@@ -66,14 +66,14 @@
 
 #pragma mark - Private Method
 - (void)setupSubViews {
-    self.backgroundColor = self.configration.scrollViewBackgroundColor;
+    self.backgroundColor = self.configuration.scrollViewBackgroundColor;
     [self setupItems];
     [self setupOtherViews];
 }
 
 - (void)setupItems {
-    if (self.configration.buttonArray.count > 0 && self.titles.count == self.configration.buttonArray.count) {
-        [self.configration.buttonArray enumerateObjectsUsingBlock:^(UIButton * _Nonnull itemButton, NSUInteger idx, BOOL * _Nonnull stop) {
+    if (self.configuration.buttonArray.count > 0 && self.titles.count == self.configuration.buttonArray.count) {
+        [self.configuration.buttonArray enumerateObjectsUsingBlock:^(UIButton * _Nonnull itemButton, NSUInteger idx, BOOL * _Nonnull stop) {
             [self setupButton:itemButton title:self.titles[idx] idx:idx];
         }];
     } else {
@@ -85,8 +85,8 @@
 }
 
 - (void)setupButton:(UIButton *)itemButton title:(NSString *)title idx:(NSInteger)idx {
-    itemButton.titleLabel.font = self.configration.selectedItemFont;
-    [itemButton setTitleColor:self.configration.normalItemColor forState:UIControlStateNormal];
+    itemButton.titleLabel.font = self.configuration.selectedItemFont;
+    [itemButton setTitleColor:self.configuration.normalItemColor forState:UIControlStateNormal];
     [itemButton setTitle:title forState:UIControlStateNormal];
     itemButton.tag = idx;
     [itemButton addTarget:self action:@selector(itemButtonOnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -97,9 +97,9 @@
 }
 
 - (void)setupOtherViews {
-    self.scrollView.frame = CGRectMake(0, 0, self.configration.showAddButton ? self.yn_width - self.yn_height : self.yn_width, self.yn_height);
+    self.scrollView.frame = CGRectMake(0, 0, self.configuration.showAddButton ? self.yn_width - self.yn_height : self.yn_width, self.yn_height);
     [self addSubview:self.scrollView];
-    if (self.configration.showAddButton) {
+    if (self.configuration.showAddButton) {
         self.addButton.frame = CGRectMake(self.yn_width - self.yn_height, 0, self.yn_height, self.yn_height);
         [self addSubview:self.addButton];
     }
@@ -108,19 +108,19 @@
     __block CGFloat itemX = 0;
     __block CGFloat itemY = 0;
     __block CGFloat itemW = 0;
-    __block CGFloat itemH = self.yn_height - self.configration.lineHeight;
+    __block CGFloat itemH = self.yn_height - self.configuration.lineHeight;
     
     [self.itemsArrayM enumerateObjectsUsingBlock:^(UIButton * _Nonnull button, NSUInteger idx, BOOL * _Nonnull stop) {
         if (idx == 0) {
-            itemX += self.configration.itemLeftAndRightMargin;
+            itemX += self.configuration.itemLeftAndRightMargin;
         }else{
-            itemX += self.configration.itemMargin + [self.itemsWidthArraM[idx - 1] floatValue];
+            itemX += self.configuration.itemMargin + [self.itemsWidthArraM[idx - 1] floatValue];
         }
         button.frame = CGRectMake(itemX, itemY, [self.itemsWidthArraM[idx] floatValue], itemH);
     }];
     
-    CGFloat scrollSizeWidht = self.configration.itemLeftAndRightMargin + CGRectGetMaxX([[self.itemsArrayM lastObject] frame]);
-    if (scrollSizeWidht < self.scrollView.yn_width) {//不超出宽度
+    CGFloat scrollSizeWidth = self.configuration.itemLeftAndRightMargin + CGRectGetMaxX([[self.itemsArrayM lastObject] frame]);
+    if (scrollSizeWidth < self.scrollView.yn_width) {//不超出宽度
         itemX = 0;
         itemY = 0;
         itemW = 0;
@@ -129,15 +129,15 @@
             left += [width floatValue];
         }
         
-        left = (self.scrollView.yn_width - left - self.configration.itemMargin * (self.itemsWidthArraM.count-1)) * 0.5;
+        left = (self.scrollView.yn_width - left - self.configuration.itemMargin * (self.itemsWidthArraM.count-1)) * 0.5;
         /// 居中且有剩余间距
-        if (self.configration.aligmentModeCenter && left >= 0) {
+        if (self.configuration.alignmentModeCenter && left >= 0) {
             [self.itemsArrayM enumerateObjectsUsingBlock:^(UIButton  * button, NSUInteger idx, BOOL * _Nonnull stop) {
                 
                 if (idx == 0) {
                     itemX += left;
                 }else{
-                    itemX += self.configration.itemMargin + [self.itemsWidthArraM[idx - 1] floatValue];
+                    itemX += self.configuration.itemMargin + [self.itemsWidthArraM[idx - 1] floatValue];
                 }
                 button.frame = CGRectMake(itemX, itemY, [self.itemsWidthArraM[idx] floatValue], itemH);
             }];
@@ -146,7 +146,7 @@
             
         } else {
             /// 不能滚动则平分
-            if (!self.configration.scrollMenu) {
+            if (!self.configuration.scrollMenu) {
                 [self.itemsArrayM enumerateObjectsUsingBlock:^(UIButton  * button, NSUInteger idx, BOOL * _Nonnull stop) {
                     itemW = self.scrollView.yn_width / self.itemsArrayM.count;
                     itemX = itemW *idx;
@@ -156,50 +156,50 @@
                 self.scrollView.contentSize = CGSizeMake(CGRectGetMaxX([[self.itemsArrayM lastObject] frame]), self.scrollView.yn_height);
                 
             } else {
-                self.scrollView.contentSize = CGSizeMake(scrollSizeWidht, self.scrollView.yn_height);
+                self.scrollView.contentSize = CGSizeMake(scrollSizeWidth, self.scrollView.yn_height);
             }
         }
     } else { /// 大于scrollView的width·
-        self.scrollView.contentSize = CGSizeMake(scrollSizeWidht, self.scrollView.yn_height);
+        self.scrollView.contentSize = CGSizeMake(scrollSizeWidth, self.scrollView.yn_height);
     }
     
     CGFloat lineX = [(UIButton *)[self.itemsArrayM firstObject] yn_x];
-    CGFloat lineY = self.scrollView.yn_height - self.configration.lineHeight;
+    CGFloat lineY = self.scrollView.yn_height - self.configuration.lineHeight;
     CGFloat lineW = [[self.itemsArrayM firstObject] yn_width];
-    CGFloat lineH = self.configration.lineHeight;
+    CGFloat lineH = self.configuration.lineHeight;
     
     /// 处理Line宽度等于字体宽度
-    if (!self.configration.scrollMenu &&
-        !self.configration.aligmentModeCenter &&
-        self.configration.lineWidthEqualFontWidth) {
+    if (!self.configuration.scrollMenu &&
+        !self.configuration.alignmentModeCenter &&
+        self.configuration.lineWidthEqualFontWidth) {
         lineX = [(UIButton *)[self.itemsArrayM firstObject] yn_x] + ([[self.itemsArrayM firstObject] yn_width]  - ([self.itemsWidthArraM.firstObject floatValue])) / 2;
         lineW = [self.itemsWidthArraM.firstObject floatValue];
     }
     
-    /// conver
-    if (self.configration.showConver) {
-        self.converView.frame = CGRectMake(lineX - kYNPageScrollMenuViewConverMarginX, (self.scrollView.yn_height - self.configration.converHeight - self.configration.lineHeight) * 0.5, lineW + kYNPageScrollMenuViewConverMarginW, self.configration.converHeight);
-        [self.scrollView insertSubview:self.converView atIndex:0];
+    /// cover
+    if (self.configuration.showCover) {
+        self.coverView.frame = CGRectMake(lineX - kYNPageScrollMenuViewCoverMarginX, (self.scrollView.yn_height - self.configuration.coverHeight - self.configuration.lineHeight) * 0.5, lineW + kYNPageScrollMenuViewCoverMarginW, self.configuration.coverHeight);
+        [self.scrollView insertSubview:self.coverView atIndex:0];
     }
     
     /// bottomLine
-    if (self.configration.showBottomLine) {
+    if (self.configuration.showBottomLine) {
         self.bottomLine = [[UIView alloc] init];
-        self.bottomLine.backgroundColor = self.configration.bottomLineBgColor;
-        self.bottomLine.frame = CGRectMake(self.configration.bottomLineLeftAndRightMargin, self.yn_height - self.configration.bottomLineHeight, self.scrollView.yn_width - 2 * self.configration.bottomLineLeftAndRightMargin, self.configration.bottomLineHeight);
-        self.bottomLine.layer.cornerRadius = self.configration.bottomLineCorner;
+        self.bottomLine.backgroundColor = self.configuration.bottomLineBgColor;
+        self.bottomLine.frame = CGRectMake(self.configuration.bottomLineLeftAndRightMargin, self.yn_height - self.configuration.bottomLineHeight, self.scrollView.yn_width - 2 * self.configuration.bottomLineLeftAndRightMargin, self.configuration.bottomLineHeight);
+        self.bottomLine.layer.cornerRadius = self.configuration.bottomLineCorner;
         [self insertSubview:self.bottomLine atIndex:0];
     }
     
     /// scrollLine
-    if (self.configration.showScrollLine) {
-        self.lineView.frame = CGRectMake(lineX - self.configration.lineLeftAndRightAddWidth + self.configration.lineLeftAndRightMargin, lineY - self.configration.lineBottomMargin, lineW + self.configration.lineLeftAndRightAddWidth * 2 - 2 * self.configration.lineLeftAndRightMargin, lineH);
-        self.lineView.layer.cornerRadius = self.configration.lineCorner;
+    if (self.configuration.showScrollLine) {
+        self.lineView.frame = CGRectMake(lineX - self.configuration.lineLeftAndRightAddWidth + self.configuration.lineLeftAndRightMargin, lineY - self.configuration.lineBottomMargin, lineW + self.configuration.lineLeftAndRightAddWidth * 2 - 2 * self.configuration.lineLeftAndRightMargin, lineH);
+        self.lineView.layer.cornerRadius = self.configuration.lineCorner;
         [self.scrollView addSubview:self.lineView];
     }
     
-    if (self.configration.itemMaxScale > 1) {
-        ((UIButton *)self.itemsArrayM[self.currentIndex]).transform = CGAffineTransformMakeScale(self.configration.itemMaxScale, self.configration.itemMaxScale);
+    if (self.configuration.itemMaxScale > 1) {
+        ((UIButton *)self.itemsArrayM[self.currentIndex]).transform = CGAffineTransformMakeScale(self.configuration.itemMaxScale, self.configuration.itemMaxScale);
     }
     [self setDefaultTheme];
     [self selectedItemIndex:self.currentIndex animated:NO];
@@ -208,35 +208,35 @@
 - (void)setDefaultTheme {
     UIButton *currentButton = self.itemsArrayM[self.currentIndex];
     /// 缩放
-    if (self.configration.itemMaxScale > 1) {
-        currentButton.transform = CGAffineTransformMakeScale(self.configration.itemMaxScale, self.configration.itemMaxScale);
+    if (self.configuration.itemMaxScale > 1) {
+        currentButton.transform = CGAffineTransformMakeScale(self.configuration.itemMaxScale, self.configuration.itemMaxScale);
     }
     /// 颜色
     currentButton.selected = YES;
-    [currentButton setTitleColor:self.configration.selectedItemColor forState:UIControlStateNormal];
-    currentButton.titleLabel.font = self.configration.selectedItemFont;
+    [currentButton setTitleColor:self.configuration.selectedItemColor forState:UIControlStateNormal];
+    currentButton.titleLabel.font = self.configuration.selectedItemFont;
     /// 线条
-    if (self.configration.showScrollLine) {
-        self.lineView.yn_x = currentButton.yn_x - self.configration.lineLeftAndRightAddWidth + self.configration.lineLeftAndRightMargin;
-        self.lineView.yn_width = currentButton.yn_width + self.configration.lineLeftAndRightAddWidth *2 - self.configration.lineLeftAndRightMargin * 2;
+    if (self.configuration.showScrollLine) {
+        self.lineView.yn_x = currentButton.yn_x - self.configuration.lineLeftAndRightAddWidth + self.configuration.lineLeftAndRightMargin;
+        self.lineView.yn_width = currentButton.yn_width + self.configuration.lineLeftAndRightAddWidth *2 - self.configuration.lineLeftAndRightMargin * 2;
         /// 处理Line宽度等于字体宽度
-        if (!self.configration.scrollMenu &&
-            !self.configration.aligmentModeCenter &&
-            self.configration.lineWidthEqualFontWidth) {
-            self.lineView.yn_x = currentButton.yn_x + ([currentButton yn_width]  - ([self.itemsWidthArraM[currentButton.tag] floatValue])) / 2 - self.configration.lineLeftAndRightAddWidth - self.configration.lineLeftAndRightAddWidth;
-            self.lineView.yn_width = [self.itemsWidthArraM[currentButton.tag] floatValue] + self.configration.lineLeftAndRightAddWidth *2;
+        if (!self.configuration.scrollMenu &&
+            !self.configuration.alignmentModeCenter &&
+            self.configuration.lineWidthEqualFontWidth) {
+            self.lineView.yn_x = currentButton.yn_x + ([currentButton yn_width]  - ([self.itemsWidthArraM[currentButton.tag] floatValue])) / 2 - self.configuration.lineLeftAndRightAddWidth - self.configuration.lineLeftAndRightAddWidth;
+            self.lineView.yn_width = [self.itemsWidthArraM[currentButton.tag] floatValue] + self.configuration.lineLeftAndRightAddWidth *2;
         }
     }
     /// 遮盖
-    if (self.configration.showConver) {
-        self.converView.yn_x = currentButton.yn_x - kYNPageScrollMenuViewConverMarginX;
-        self.converView.yn_width = currentButton.yn_width +kYNPageScrollMenuViewConverMarginW;
-        /// 处理conver宽度等于字体宽度
-        if (!self.configration.scrollMenu &&
-            !self.configration.aligmentModeCenter &&
-            self.configration.lineWidthEqualFontWidth) {
-            self.converView.yn_x = currentButton.yn_x + ([currentButton yn_width]  - ([self.itemsWidthArraM[currentButton.tag] floatValue])) / 2 - kYNPageScrollMenuViewConverMarginX;
-            self.converView.yn_width = [self.itemsWidthArraM[currentButton.tag] floatValue] + kYNPageScrollMenuViewConverMarginW;
+    if (self.configuration.showCover) {
+        self.coverView.yn_x = currentButton.yn_x - kYNPageScrollMenuViewCoverMarginX;
+        self.coverView.yn_width = currentButton.yn_width +kYNPageScrollMenuViewCoverMarginW;
+        /// 处理cover宽度等于字体宽度
+        if (!self.configuration.scrollMenu &&
+            !self.configuration.alignmentModeCenter &&
+            self.configuration.lineWidthEqualFontWidth) {
+            self.coverView.yn_x = currentButton.yn_x + ([currentButton yn_width]  - ([self.itemsWidthArraM[currentButton.tag] floatValue])) / 2 - kYNPageScrollMenuViewCoverMarginX;
+            self.coverView.yn_width = [self.itemsWidthArraM[currentButton.tag] floatValue] + kYNPageScrollMenuViewCoverMarginW;
         }
     }
     self.lastIndex = self.currentIndex;
@@ -247,43 +247,43 @@
     UIButton *currentButton = self.itemsArrayM[self.currentIndex];
     [UIView animateWithDuration:animated ? 0.3 : 0 animations:^{
         /// 缩放
-        if (self.configration.itemMaxScale > 1) {
+        if (self.configuration.itemMaxScale > 1) {
             lastButton.transform = CGAffineTransformMakeScale(1, 1);
-            currentButton.transform = CGAffineTransformMakeScale(self.configration.itemMaxScale, self.configration.itemMaxScale);
+            currentButton.transform = CGAffineTransformMakeScale(self.configuration.itemMaxScale, self.configuration.itemMaxScale);
         }
         /// 颜色
         [self.itemsArrayM enumerateObjectsUsingBlock:^(UIButton  * obj, NSUInteger idx, BOOL * _Nonnull stop) {
             obj.selected = NO;
-            [obj setTitleColor:self.configration.normalItemColor forState:UIControlStateNormal];
-            obj.titleLabel.font = self.configration.itemFont;
+            [obj setTitleColor:self.configuration.normalItemColor forState:UIControlStateNormal];
+            obj.titleLabel.font = self.configuration.itemFont;
             if (idx == self.itemsArrayM.count - 1) {
                currentButton.selected = YES;
-               [currentButton setTitleColor:self.configration.selectedItemColor forState:UIControlStateNormal];
-                currentButton.titleLabel.font = self.configration.selectedItemFont;
+               [currentButton setTitleColor:self.configuration.selectedItemColor forState:UIControlStateNormal];
+                currentButton.titleLabel.font = self.configuration.selectedItemFont;
             }
         }];
         
         /// 线条
-        if (self.configration.showScrollLine) {
-            self.lineView.yn_x = currentButton.yn_x - self.configration.lineLeftAndRightAddWidth + self.configration.lineLeftAndRightMargin;
-            self.lineView.yn_width = currentButton.yn_width + self.configration.lineLeftAndRightAddWidth * 2 - 2 * self.configration.lineLeftAndRightMargin;
+        if (self.configuration.showScrollLine) {
+            self.lineView.yn_x = currentButton.yn_x - self.configuration.lineLeftAndRightAddWidth + self.configuration.lineLeftAndRightMargin;
+            self.lineView.yn_width = currentButton.yn_width + self.configuration.lineLeftAndRightAddWidth * 2 - 2 * self.configuration.lineLeftAndRightMargin;
             
-            if (!self.configration.scrollMenu &&
-                !self.configration.aligmentModeCenter &&
-                self.configration.lineWidthEqualFontWidth) {//处理Line宽度等于字体宽度
+            if (!self.configuration.scrollMenu &&
+                !self.configuration.alignmentModeCenter &&
+                self.configuration.lineWidthEqualFontWidth) {//处理Line宽度等于字体宽度
                 
-                self.lineView.yn_x = currentButton.yn_x + ([currentButton yn_width]  - ([self.itemsWidthArraM[currentButton.tag] floatValue])) / 2 - self.configration.lineLeftAndRightAddWidth;;
-                self.lineView.yn_width = [self.itemsWidthArraM[currentButton.tag] floatValue] + self.configration.lineLeftAndRightAddWidth *2;
+                self.lineView.yn_x = currentButton.yn_x + ([currentButton yn_width]  - ([self.itemsWidthArraM[currentButton.tag] floatValue])) / 2 - self.configuration.lineLeftAndRightAddWidth;;
+                self.lineView.yn_width = [self.itemsWidthArraM[currentButton.tag] floatValue] + self.configuration.lineLeftAndRightAddWidth *2;
             }
         }
         /// 遮盖
-        if (self.configration.showConver) {
-            self.converView.yn_x = currentButton.yn_x - kYNPageScrollMenuViewConverMarginX;
-            self.converView.yn_width = currentButton.yn_width +kYNPageScrollMenuViewConverMarginW;
-            /// 处理conver宽度等于字体宽度
-            if (!self.configration.scrollMenu&&!self.configration.aligmentModeCenter&&self.configration.lineWidthEqualFontWidth) {
-                self.converView.yn_x = currentButton.yn_x + ([currentButton yn_width]  - ([self.itemsWidthArraM[currentButton.tag] floatValue])) / 2  - kYNPageScrollMenuViewConverMarginX;
-                self.converView.yn_width = [self.itemsWidthArraM[currentButton.tag] floatValue] +kYNPageScrollMenuViewConverMarginW;
+        if (self.configuration.showCover) {
+            self.coverView.yn_x = currentButton.yn_x - kYNPageScrollMenuViewCoverMarginX;
+            self.coverView.yn_width = currentButton.yn_width +kYNPageScrollMenuViewCoverMarginW;
+            /// 处理cover宽度等于字体宽度
+            if (!self.configuration.scrollMenu&&!self.configuration.alignmentModeCenter&&self.configuration.lineWidthEqualFontWidth) {
+                self.coverView.yn_x = currentButton.yn_x + ([currentButton yn_width]  - ([self.itemsWidthArraM[currentButton.tag] floatValue])) / 2  - kYNPageScrollMenuViewCoverMarginX;
+                self.coverView.yn_width = [self.itemsWidthArraM[currentButton.tag] floatValue] +kYNPageScrollMenuViewCoverMarginW;
             }
         }
         self.lastIndex = self.currentIndex;
@@ -334,18 +334,18 @@
     UIButton *currentButton = self.itemsArrayM[self.currentIndex];
     
     /// 缩放系数
-    if (self.configration.itemMaxScale > 1) {
-        CGFloat scaleB = self.configration.itemMaxScale - self.configration.deltaScale * progress;
-        CGFloat scaleS = 1 + self.configration.deltaScale * progress;
+    if (self.configuration.itemMaxScale > 1) {
+        CGFloat scaleB = self.configuration.itemMaxScale - self.configuration.deltaScale * progress;
+        CGFloat scaleS = 1 + self.configuration.deltaScale * progress;
         lastButton.transform = CGAffineTransformMakeScale(scaleB, scaleB);
         currentButton.transform = CGAffineTransformMakeScale(scaleS, scaleS);
     }
     
-    if (self.configration.showGradientColor) {
+    if (self.configuration.showGradientColor) {
         /// 颜色渐变
-        [self.configration setRGBWithProgress:progress];
-        UIColor *norColor = [UIColor colorWithRed:self.configration.deltaNorR green:self.configration.deltaNorG blue:self.configration.deltaNorB alpha:1];
-        UIColor *selColor = [UIColor colorWithRed:self.configration.deltaSelR green:self.configration.deltaSelG blue:self.configration.deltaSelB alpha:1];
+        [self.configuration setRGBWithProgress:progress];
+        UIColor *norColor = [UIColor colorWithRed:self.configuration.deltaNorR green:self.configuration.deltaNorG blue:self.configuration.deltaNorB alpha:1];
+        UIColor *selColor = [UIColor colorWithRed:self.configuration.deltaSelR green:self.configuration.deltaSelG blue:self.configuration.deltaSelB alpha:1];
         [lastButton setTitleColor:norColor forState:UIControlStateNormal];
         [currentButton setTitleColor:selColor forState:UIControlStateNormal];
         
@@ -353,32 +353,32 @@
         if (progress > 0.5) {
             lastButton.selected = NO;
             currentButton.selected = YES;
-            [lastButton setTitleColor:self.configration.normalItemColor forState:UIControlStateNormal];
-            [currentButton setTitleColor:self.configration.selectedItemColor forState:UIControlStateNormal];
-            currentButton.titleLabel.font = self.configration.selectedItemFont;
+            [lastButton setTitleColor:self.configuration.normalItemColor forState:UIControlStateNormal];
+            [currentButton setTitleColor:self.configuration.selectedItemColor forState:UIControlStateNormal];
+            currentButton.titleLabel.font = self.configuration.selectedItemFont;
         } else if (progress < 0.5 && progress > 0){
             lastButton.selected = YES;
-            [lastButton setTitleColor:self.configration.selectedItemColor forState:UIControlStateNormal];
-            lastButton.titleLabel.font = self.configration.selectedItemFont;
+            [lastButton setTitleColor:self.configuration.selectedItemColor forState:UIControlStateNormal];
+            lastButton.titleLabel.font = self.configuration.selectedItemFont;
             currentButton.selected = NO;
-            [currentButton setTitleColor:self.configration.normalItemColor forState:UIControlStateNormal];
-            currentButton.titleLabel.font = self.configration.itemFont;
+            [currentButton setTitleColor:self.configuration.normalItemColor forState:UIControlStateNormal];
+            currentButton.titleLabel.font = self.configuration.itemFont;
         }
     }
     
     if (progress > 0.5) {
-        lastButton.titleLabel.font = self.configration.itemFont;
-        currentButton.titleLabel.font = self.configration.selectedItemFont;
+        lastButton.titleLabel.font = self.configuration.itemFont;
+        currentButton.titleLabel.font = self.configuration.selectedItemFont;
     } else if (progress < 0.5 && progress > 0){
-        lastButton.titleLabel.font = self.configration.selectedItemFont;
-        currentButton.titleLabel.font = self.configration.itemFont;
+        lastButton.titleLabel.font = self.configuration.selectedItemFont;
+        currentButton.titleLabel.font = self.configuration.itemFont;
     }
     
     CGFloat xD = 0;
     CGFloat wD = 0;
-    if (!self.configration.scrollMenu &&
-        !self.configration.aligmentModeCenter &&
-        self.configration.lineWidthEqualFontWidth) {
+    if (!self.configuration.scrollMenu &&
+        !self.configuration.alignmentModeCenter &&
+        self.configuration.lineWidthEqualFontWidth) {
         xD = currentButton.titleLabel.yn_x + currentButton.yn_x -( lastButton.titleLabel.yn_x + lastButton.yn_x );
         wD = currentButton.titleLabel.yn_width - lastButton.titleLabel.yn_width;
     } else {
@@ -387,30 +387,30 @@
     }
     
     /// 线条
-    if (self.configration.showScrollLine) {
+    if (self.configuration.showScrollLine) {
         
-        if (!self.configration.scrollMenu &&
-            !self.configration.aligmentModeCenter &&
-            self.configration.lineWidthEqualFontWidth) { /// 处理Line宽度等于字体宽度
-            self.lineView.yn_x = lastButton.yn_x + ([lastButton yn_width]  - ([self.itemsWidthArraM[lastButton.tag] floatValue])) / 2 - self.configration.lineLeftAndRightAddWidth + xD *progress;
+        if (!self.configuration.scrollMenu &&
+            !self.configuration.alignmentModeCenter &&
+            self.configuration.lineWidthEqualFontWidth) { /// 处理Line宽度等于字体宽度
+            self.lineView.yn_x = lastButton.yn_x + ([lastButton yn_width]  - ([self.itemsWidthArraM[lastButton.tag] floatValue])) / 2 - self.configuration.lineLeftAndRightAddWidth + xD *progress;
             
-            self.lineView.yn_width = [self.itemsWidthArraM[lastButton.tag] floatValue] + self.configration.lineLeftAndRightAddWidth *2 + wD *progress;
+            self.lineView.yn_width = [self.itemsWidthArraM[lastButton.tag] floatValue] + self.configuration.lineLeftAndRightAddWidth *2 + wD *progress;
             
         } else {
-            self.lineView.yn_x = lastButton.yn_x + xD *progress - self.configration.lineLeftAndRightAddWidth + self.configration.lineLeftAndRightMargin;
-            self.lineView.yn_width = lastButton.yn_width + wD *progress + self.configration.lineLeftAndRightAddWidth *2 - 2 * self.configration.lineLeftAndRightMargin;
+            self.lineView.yn_x = lastButton.yn_x + xD *progress - self.configuration.lineLeftAndRightAddWidth + self.configuration.lineLeftAndRightMargin;
+            self.lineView.yn_width = lastButton.yn_width + wD *progress + self.configuration.lineLeftAndRightAddWidth *2 - 2 * self.configuration.lineLeftAndRightMargin;
         }
     }
     /// 遮盖
-    if (self.configration.showConver) {
-        self.converView.yn_x = lastButton.yn_x + xD *progress - kYNPageScrollMenuViewConverMarginX;
-        self.converView.yn_width = lastButton.yn_width  + wD *progress + kYNPageScrollMenuViewConverMarginW;
+    if (self.configuration.showCover) {
+        self.coverView.yn_x = lastButton.yn_x + xD *progress - kYNPageScrollMenuViewCoverMarginX;
+        self.coverView.yn_width = lastButton.yn_width  + wD *progress + kYNPageScrollMenuViewCoverMarginW;
         
-        if (!self.configration.scrollMenu &&
-            !self.configration.aligmentModeCenter &&
-            self.configration.lineWidthEqualFontWidth) { /// 处理cover宽度等于字体宽度
-            self.converView.yn_x = lastButton.yn_x + ([lastButton yn_width]  - ([self.itemsWidthArraM[lastButton.tag] floatValue])) / 2 -  kYNPageScrollMenuViewConverMarginX + xD *progress;
-            self.converView.yn_width = [self.itemsWidthArraM[lastButton.tag] floatValue] + kYNPageScrollMenuViewConverMarginW + wD *progress;
+        if (!self.configuration.scrollMenu &&
+            !self.configuration.alignmentModeCenter &&
+            self.configuration.lineWidthEqualFontWidth) { /// 处理cover宽度等于字体宽度
+            self.coverView.yn_x = lastButton.yn_x + ([lastButton yn_width]  - ([self.itemsWidthArraM[lastButton.tag] floatValue])) / 2 -  kYNPageScrollMenuViewCoverMarginX + xD *progress;
+            self.coverView.yn_width = [self.itemsWidthArraM[lastButton.tag] floatValue] + kYNPageScrollMenuViewCoverMarginW + wD *progress;
         }
     }
 }
@@ -430,30 +430,30 @@
 - (UIView *)lineView {
     if (!_lineView) {
         _lineView = [[UIView alloc]init];
-        _lineView.backgroundColor = self.configration.lineColor;
+        _lineView.backgroundColor = self.configuration.lineColor;
     }
     return _lineView;
 }
 
-- (UIView *)converView {
-    if (!_converView) {
-        _converView = [[UIView alloc] init];
-        _converView.layer.backgroundColor = self.configration.converColor.CGColor;
-        _converView.layer.cornerRadius = self.configration.coverCornerRadius;
-        _converView.layer.masksToBounds = YES;
-        _converView.userInteractionEnabled = NO;
+- (UIView *)coverView {
+    if (!_coverView) {
+        _coverView = [[UIView alloc] init];
+        _coverView.layer.backgroundColor = self.configuration.coverColor.CGColor;
+        _coverView.layer.cornerRadius = self.configuration.coverCornerRadius;
+        _coverView.layer.masksToBounds = YES;
+        _coverView.userInteractionEnabled = NO;
     }
-    return _converView;
+    return _coverView;
 }
 
 - (UIScrollView *)scrollView {
     if (!_scrollView) {
         _scrollView = [[YNPageScrollView alloc] init];
         _scrollView.pagingEnabled = NO;
-        _scrollView.bounces = self.configration.bounces;;
+        _scrollView.bounces = self.configuration.bounces;;
         _scrollView.showsVerticalScrollIndicator = NO;
         _scrollView.showsHorizontalScrollIndicator = NO;
-        _scrollView.scrollEnabled = self.configration.scrollMenu;
+        _scrollView.scrollEnabled = self.configuration.scrollMenu;
     }
     return _scrollView;
 }
@@ -461,12 +461,12 @@
 - (UIButton *)addButton {
     if (!_addButton) {
         _addButton = [[UIButton alloc] init];
-        [_addButton setBackgroundImage:[UIImage imageNamed:self.configration.addButtonNormalImageName] forState:UIControlStateNormal];
-        [_addButton setBackgroundImage:[UIImage imageNamed:self.configration.addButtonHightImageName] forState:UIControlStateHighlighted];
+        [_addButton setBackgroundImage:[UIImage imageNamed:self.configuration.addButtonNormalImageName] forState:UIControlStateNormal];
+        [_addButton setBackgroundImage:[UIImage imageNamed:self.configuration.addButtonHightImageName] forState:UIControlStateHighlighted];
         _addButton.layer.shadowColor = [UIColor grayColor].CGColor;
         _addButton.layer.shadowOffset = CGSizeMake(-1, 0);
         _addButton.layer.shadowOpacity = 0.5;
-        _addButton.backgroundColor = self.configration.addButtonBackgroundColor;
+        _addButton.backgroundColor = self.configuration.addButtonBackgroundColor;
         [_addButton addTarget:self action:@selector(addButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _addButton;
@@ -476,8 +476,8 @@
 - (void)itemButtonOnClick:(UIButton *)button {
     self.currentIndex= button.tag;
     [self adjustItemWithAnimated:YES];
-    if (self.delegate &&[self.delegate respondsToSelector:@selector(pagescrollMenuViewItemOnClick:index:)]) {
-        [self.delegate pagescrollMenuViewItemOnClick:button index:self.lastIndex];
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(pageScrollMenuViewItemOnClick:index:)]) {
+        [self.delegate pageScrollMenuViewItemOnClick:button index:self.lastIndex];
     }
 }
 
@@ -497,8 +497,8 @@
 
 #pragma mark -  addButtonAction
 - (void)addButtonAction:(UIButton *)button {
-    if(self.delegate && [self.delegate respondsToSelector:@selector(pagescrollMenuViewAddButtonAction:)]){
-        [self.delegate pagescrollMenuViewAddButtonAction:button];
+    if(self.delegate && [self.delegate respondsToSelector:@selector(pageScrollMenuViewAddButtonAction:)]){
+        [self.delegate pageScrollMenuViewAddButtonAction:button];
     }
 }
 

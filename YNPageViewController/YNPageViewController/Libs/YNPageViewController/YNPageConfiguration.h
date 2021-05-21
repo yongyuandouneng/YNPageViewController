@@ -37,19 +37,19 @@ typedef NS_ENUM(NSInteger, YNPageHeaderViewScaleMode) {
     YNPageHeaderViewScaleModeCenter = 1,
 };
 
-@interface YNPageConfigration : NSObject
+@interface YNPageConfiguration : NSObject
 
 #pragma mark - YNPage Config
 /** 是否显示导航条 YES */
 @property (nonatomic, assign) BOOL showNavigation;
 /** 是否显示Tabbar NO */
-@property (nonatomic, assign) BOOL showTabbar;
+@property (nonatomic, assign) BOOL showTabBar;
 /** 裁剪内容高度 用来添加最上层控件 添加在父类view上 */
 @property (nonatomic, assign) CGFloat cutOutHeight;
 /** 菜单位置风格 默认 YNPageStyleTop */
 @property (nonatomic, assign) YNPageStyle pageStyle;
 /** 悬浮ScrollMenu偏移量 默认 0 */
-@property (nonatomic, assign) CGFloat suspenOffsetY;
+@property (nonatomic, assign) CGFloat suspendOffsetY;
 /** 页面是否可以滚动 默认 YES */
 @property (nonatomic, assign) BOOL pageScrollEnabled;
 /** 头部是否能伸缩效果   要伸缩效果最好不要有下拉刷新控件 NO */
@@ -63,7 +63,7 @@ typedef NS_ENUM(NSInteger, YNPageHeaderViewScaleMode) {
 
 #pragma mark - UIScrollMenuView Config
 /** 是否显示遮盖*/
-@property (nonatomic, assign) BOOL showConver;
+@property (nonatomic, assign) BOOL showCover;
 /** 是否显示线条 YES */
 @property (nonatomic, assign) BOOL showScrollLine;
 /** 是否显示底部线条 NO */
@@ -78,9 +78,9 @@ typedef NS_ENUM(NSInteger, YNPageHeaderViewScaleMode) {
 @property (nonatomic, assign) BOOL bounces;
 /**
  *  是否是居中 (当所有的Item+margin的宽度小于ScrollView宽度)  默认 YES
- *  scrollMenu = NO,aligmentModeCenter = NO 会变成平分
+ *  scrollMenu = NO,alignmentModeCenter = NO 会变成平分
  */
-@property (nonatomic, assign) BOOL aligmentModeCenter;
+@property (nonatomic, assign) BOOL alignmentModeCenter;
 /** 当aligmentModeCenter 变为平分时 是否需要线条宽度等于字体宽度 默认 NO */
 @property (nonatomic, assign) BOOL lineWidthEqualFontWidth;
 /** 自定义Item 加图片 图片间隙 ... */
@@ -94,7 +94,7 @@ typedef NS_ENUM(NSInteger, YNPageHeaderViewScaleMode) {
 /** 线条color */
 @property (nonatomic, strong) UIColor *lineColor;
 /** 遮盖color */
-@property (nonatomic, strong) UIColor *converColor;
+@property (nonatomic, strong) UIColor *coverColor;
 /** 菜单背景color */
 @property (nonatomic, strong) UIColor *scrollViewBackgroundColor;
 /** 选项正常color */
@@ -120,10 +120,10 @@ typedef NS_ENUM(NSInteger, YNPageHeaderViewScaleMode) {
 /** 底部线height 2 */
 @property (nonatomic, assign) CGFloat bottomLineHeight;
 /** 遮盖height 28 */
-@property (nonatomic, assign) CGFloat converHeight;
+@property (nonatomic, assign) CGFloat coverHeight;
 /** 菜单height 默认 44 */
 @property (nonatomic, assign) CGFloat menuHeight;
-/** 菜单widht 默认是 屏幕宽度 */
+/** 菜单width 默认是 屏幕宽度 */
 @property (nonatomic, assign) CGFloat menuWidth;
 /** 遮盖圆角 14 */
 @property (nonatomic, assign) CGFloat coverCornerRadius;

@@ -13,7 +13,7 @@
 
 - (YNPageViewController *)yn_pageViewController;
 
-- (YNPageConfigration *)config;
+- (YNPageConfiguration *)config;
 
 - (YNPageScrollView *)bgScrollView;
 
